@@ -1,0 +1,99 @@
+.layout {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.sider {
+  border-right: 1px solid var(--border-primary);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+}
+
+.sider .ant-menu {
+  border-right: none;
+}
+
+.menu {
+  border-right: none !important;
+  padding: 12px 8px;
+}
+
+.logo {
+  height: 64px;
+  margin: 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: var(--brand-gradient);
+  color: #fff;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.header {
+  background: #ffffff;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  border-bottom: 1px solid var(--border-primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.headerLeft h2 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.iconBtn {
+  font-size: 20px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.iconBtn:hover {
+  color: var(--text-primary);
+}
+
+.badge {
+  cursor: pointer;
+}
+
+.avatar {
+  background: var(--brand-gradient);
+  cursor: pointer;
+  border: 2px solid var(--border-primary);
+}
+
+.content {
+  margin: 24px;
+  padding: 24px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--border-primary);
+  min-height: 280px;
+  animation: fadeIn 0.4s ease-out;
+  box-shadow: var(--shadow-sm);
+}

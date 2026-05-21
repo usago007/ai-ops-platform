@@ -1,0 +1,25 @@
+.container {
+  padding: var(--spacing-xl);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.configCard {
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.configCard:hover {
+  box-shadow: var(--shadow-md);
+}

@@ -1,0 +1,37 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.card {
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-accent) !important;
+  transform: translateY(-1px);
+}
+
+.statCard {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  border-left: 3px solid var(--brand-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+}

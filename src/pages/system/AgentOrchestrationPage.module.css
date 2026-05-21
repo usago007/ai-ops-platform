@@ -1,0 +1,984 @@
+.container {
+  padding: 24px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.alert {
+  margin-bottom: 24px;
+}
+
+.mainTabs {
+  margin-top: 16px;
+}
+
+.mainTabs .ant-tabs-nav {
+  margin-bottom: 24px;
+}
+
+.card {
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  margin-bottom: 16px;
+}
+
+.card:hover {
+  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.subCard {
+  border-radius: var(--radius-lg);
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  margin-bottom: 16px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+/* Architecture Diagram Styles */
+.architectureDiagram {
+  padding: 16px;
+}
+
+.coreHub {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.hubHeader {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border-radius: var(--radius-xl);
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg), 0 0 24px rgba(99, 102, 241, 0.25);
+}
+
+.hubIcon {
+  font-size: 24px;
+}
+
+.archComponentCard {
+  text-align: center;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.archComponentCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.llmGatewayCard {
+  border-top: 3px solid #1890ff !important;
+}
+
+.workflowCard {
+  border-top: 3px solid #52c41a !important;
+}
+
+.ragCard {
+  border-top: 3px solid #722ed1 !important;
+}
+
+.promptCard {
+  border-top: 3px solid #fa8c16 !important;
+}
+
+.componentIcon {
+  margin: 16px 0 8px;
+}
+
+.componentTitle {
+  margin: 0 0 16px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.componentFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+
+.componentStats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  padding: 0 16px;
+}
+
+.componentStats .ant-statistic {
+  text-align: center;
+}
+
+.componentStats .ant-statistic-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.componentStats .ant-statistic-content {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dataFlow {
+  margin-top: 32px;
+}
+
+/* Agent Topology Styles (Legacy) */
+.topologyContainer {
+  min-height: 400px;
+}
+
+.masterSections {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.masterCard {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  min-width: 350px;
+  max-width: 500px;
+  border: none !important;
+  box-shadow: var(--shadow-lg), 0 0 24px rgba(99, 102, 241, 0.25);
+  transition: all var(--transition-normal);
+}
+
+.masterCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), 0 0 32px rgba(99, 102, 241, 0.35);
+}
+
+.masterCard h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: white;
+  font-weight: 600;
+}
+
+.workerSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.workerCard {
+  background: var(--bg-secondary) !important;
+  padding: 16px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-primary) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.workerCard:hover {
+  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.agentHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.agentIcon {
+  font-size: 24px;
+}
+
+.agentHeader h4 {
+  margin: 0;
+  font-size: 16px;
+  flex: 1;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.agentModel {
+  margin-bottom: 12px;
+}
+
+.agentModules {
+  margin-bottom: 12px;
+}
+
+.moduleTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.agentRoutes {
+  margin-bottom: 12px;
+}
+
+.routeList {
+  margin-top: 4px;
+}
+
+.routeItem {
+  margin-bottom: 4px;
+}
+
+.routeItem a {
+  font-size: 12px;
+}
+
+.agentControl {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary);
+}
+
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.controlRow:last-child {
+  margin-bottom: 0;
+}
+
+.controlRow span {
+  min-width: 60px;
+  color: var(--text-secondary);
+}
+
+/* Workflow Buttons */
+.workflowButtons {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.moduleWorkflowButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.moduleTag:hover {
+  opacity: 0.8;
+  transform: scale(1.02);
+  transition: all 0.2s ease;
+}
+
+/* Timeline Item (legacy) */
+.timelineItem {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Prompt Content */
+.promptContent {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+}
+
+.promptContent:read-only {
+  opacity: 0.9;
+}
+
+/* Table Styles */
+.ant-table {
+  background: transparent !important;
+}
+
+.ant-table-thead > tr > th {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-secondary) !important;
+}
+
+.ant-table-tbody > tr > td {
+  border-color: var(--border-secondary) !important;
+  color: var(--text-primary);
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: var(--bg-tertiary) !important;
+}
+
+/* Form Styles */
+.ant-form-item-label > label {
+  color: var(--text-secondary);
+}
+
+.ant-input,
+.ant-input-password,
+.ant-input-number,
+.ant-select-selector {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-input:hover,
+.ant-input-password:hover,
+.ant-input-number:hover,
+.ant-select-selector:hover {
+  border-color: var(--border-accent) !important;
+}
+
+.ant-input:focus,
+.ant-input-password:focus,
+.ant-input-number:focus,
+.ant-select-focused .ant-select-selector {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* Modal Styles */
+.ant-modal-content {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary);
+}
+
+.ant-modal-header {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-secondary) !important;
+}
+
+.ant-modal-title {
+  color: var(--text-primary) !important;
+}
+
+/* List Styles */
+.ant-list-item {
+  border-color: var(--border-secondary) !important;
+}
+
+.ant-list-item:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Health Status Indicators */
+.healthStatusCard {
+  text-align: center;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+  transition: all var(--transition-normal);
+}
+
+.healthStatusCard:hover {
+  transform: translateY(-2px);
+}
+
+.healthStatusCard.healthy {
+  background: linear-gradient(135deg, rgba(82, 196, 26, 0.1) 0%, rgba(82, 196, 26, 0.05) 100%);
+  border: 1px solid rgba(82, 196, 26, 0.3);
+}
+
+.healthStatusCard.degraded {
+  background: linear-gradient(135deg, rgba(250, 173, 20, 0.1) 0%, rgba(250, 173, 20, 0.05) 100%);
+  border: 1px solid rgba(250, 173, 20, 0.3);
+}
+
+.healthStatusCard.unhealthy {
+  background: linear-gradient(135deg, rgba(245, 34, 45, 0.1) 0%, rgba(245, 34, 45, 0.05) 100%);
+  border: 1px solid rgba(245, 34, 45, 0.3);
+}
+
+.healthIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.healthTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.healthStatus {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Business Mapping */
+.businessMappingCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+}
+
+.businessMappingCard .ant-tag {
+  margin: 4px;
+}
+
+/* Performance Metrics */
+.metricValue {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.metricLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Alert Banner */
+.alertBanner {
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+}
+
+/* Data Flow Visual */
+.dataFlowVisual {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 16px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.flowNode {
+  text-align: center;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  min-width: 120px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.flowNode:hover {
+  border-color: var(--color-primary);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.flowNode.active {
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.1) 0%, rgba(24, 144, 255, 0.05) 100%);
+}
+
+.flowNodeIcon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.flowNodeLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.flowArrow {
+  font-size: 20px;
+  color: var(--text-secondary);
+}
+
+/* Traffic Distribution Chart */
+.trafficChartContainer {
+  height: 280px;
+  margin-top: 16px;
+}
+
+/* Monitoring Panel */
+.monitoringPanel {
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-secondary);
+  margin-bottom: 16px;
+}
+
+.monitoringGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.monitoringItem {
+  text-align: center;
+}
+
+.monitoringValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.monitoringLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* API Key Management */
+.apiKeyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+}
+
+.apiKeyStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Request Log */
+.requestLogContainer {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary);
+}
+
+.requestLogItem {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-secondary);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.requestLogItem:last-child {
+  border-bottom: none;
+}
+
+.requestLogTime {
+  color: var(--text-secondary);
+  min-width: 140px;
+}
+
+.requestLogEndpoint {
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.requestLogLatency {
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Workflow Execution History */
+.executionHistoryCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+.executionStatsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.executionStatCard {
+  text-align: center;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+}
+
+.executionStatValue {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.executionStatLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Business Mapping Table */
+.businessMappingTable {
+  margin-top: 16px;
+}
+
+/* Success Rate Chart */
+.successRateChartContainer {
+  height: 250px;
+  margin-top: 16px;
+}
+
+/* Workflow Trigger Config */
+.triggerConfigCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+/* Workflow Template */
+.templateCard {
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.templateCard:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.templateIcon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.templateName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.templateDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* RAG Index Management */
+.indexItem {
+  padding: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  margin-bottom: 12px;
+  transition: all var(--transition-normal);
+}
+
+.indexItem:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.indexHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.indexName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.indexStats {
+  display: flex;
+  gap: 24px;
+}
+
+.indexStat {
+  text-align: center;
+}
+
+.indexStatValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.indexStatLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Retrieval Evaluation */
+.evaluationCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+/* Document History */
+.documentHistoryCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+/* A/B Test Configuration */
+.abTestCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.abTestHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.abTestName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.abTestVariants {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.abVariant {
+  flex: 1;
+  padding: 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.abVariantName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.abVariantTraffic {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.abVariantMetrics {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Version Comparison */
+.versionDiffContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.versionPanel {
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.versionPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.versionPanelTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.versionContent {
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary);
+}
+
+.diffAdded {
+  background: rgba(82, 196, 26, 0.2);
+  color: #52c41a;
+}
+
+.diffRemoved {
+  background: rgba(245, 34, 45, 0.2);
+  color: #f5222d;
+}
+
+/* Canary Release */
+.canaryConfigCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+/* Usage Statistics */
+.usageStatsCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+/* Evaluation Results */
+.evaluationResultsCard {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  border-radius: var(--radius-lg);
+  margin-top: 16px;
+}
+
+/* Chart Container */
+.chartContainer {
+  height: 280px;
+  margin-top: 16px;
+}
+
+/* Scrollbar Styles */
+.requestLogContainer::-webkit-scrollbar,
+.versionContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.requestLogContainer::-webkit-scrollbar-track,
+.versionContent::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+
+.requestLogContainer::-webkit-scrollbar-thumb,
+.versionContent::-webkit-scrollbar-thumb {
+  background: var(--border-secondary);
+  border-radius: 3px;
+}
+
+.requestLogContainer::-webkit-scrollbar-thumb:hover,
+.versionContent::-webkit-scrollbar-thumb:hover {
+  background: var(--border-accent);
+}
+
+/* Workflow Topology Styles */
+.topologyRow {
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-secondary);
+  transition: all var(--transition-normal);
+}
+
+.topologyRow:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.topologyRowDimmed {
+  background: var(--bg-tertiary);
+  border-color: transparent;
+}
+
+.workflowNodeCard {
+  min-width: 150px;
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+}
+
+.workflowNodeCard:hover {
+  border-color: #1890ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.workflowNodeSelected {
+  border-color: #1890ff;
+  background: #e6f7ff;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.topologyArrow {
+  font-size: 24px;
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.businessModuleNode {
+  transition: all 0.3s ease;
+}
+
+.businessModuleNode:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

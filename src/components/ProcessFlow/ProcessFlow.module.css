@@ -1,0 +1,34 @@
+.container {
+  padding: var(--spacing-lg) 0;
+}
+
+.container.vertical {
+  padding: 0;
+}
+
+.steps {
+  background: var(--bg-secondary);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--radius-md);
+}
+
+.vertical .steps {
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.stepTitle {
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.stepTitle:hover {
+  color: var(--primary-color);
+}
+
+.stepDesc {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  max-width: 200px;
+  display: inline-block;
+}

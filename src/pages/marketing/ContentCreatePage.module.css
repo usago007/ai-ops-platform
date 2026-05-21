@@ -1,0 +1,107 @@
+.container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.sidebar > * {
+  margin-bottom: var(--spacing-md);
+}
+
+.main {
+  min-height: 600px;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: var(--text-tertiary);
+}
+
+.empty p {
+  margin-top: var(--spacing-md);
+}
+
+.versions {
+  display: grid;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.versionCard {
+  border-left: 3px solid var(--brand-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.versionCard:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(2px);
+  border-color: var(--brand-primary);
+}
+
+.versionTitle {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.versionActions {
+  margin-top: var(--spacing-md);
+}
+
+.scanning {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--brand-primary);
+  font-weight: 500;
+}
+
+.complianceCard {
+  margin-top: var(--spacing-md);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.violation {
+  background: rgba(239, 68, 68, 0.2);
+  text-decoration: wavy underline #ef4444;
+  cursor: help;
+  padding: 0 var(--spacing-xs);
+  border-radius: var(--radius-sm);
+}
+
+.materialCard {
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.materialItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.materialItem:last-child {
+  border-bottom: none;
+}
+
+.materialName {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}

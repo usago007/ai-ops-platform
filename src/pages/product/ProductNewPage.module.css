@@ -1,0 +1,22 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.guideCard {
+  position: sticky;
+  top: 24px;
+}
+
+.guideList {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.guideList li {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}

@@ -1,0 +1,78 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.desc {
+  display: block;
+  margin-bottom: var(--spacing-lg);
+}
+
+.card {
+  margin-bottom: var(--spacing-lg);
+}
+
+.metricsRow {
+  margin-bottom: var(--spacing-lg);
+}
+
+.templateCard {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-secondary);
+}
+
+.templateCard:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  border-color: var(--border-accent) !important;
+}
+
+.templateDesc {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.5;
+}
+
+.templateMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+}
+
+.expected {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.attrItem {
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.attrValue {
+  margin: var(--spacing-xs) 0;
+  font-size: var(--font-size-md);
+}
+
+.attrNote {
+  display: block;
+  font-size: var(--font-size-xs);
+}

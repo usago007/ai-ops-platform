@@ -1,0 +1,109 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin: 0 0 var(--spacing-sm);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+.statCard {
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.statCard:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin: var(--spacing-lg) 0 var(--spacing-md);
+  color: var(--text-primary);
+}
+
+.quickCard {
+  border-radius: var(--radius-lg) !important;
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.quickCard:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--border-accent) !important;
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.quickTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.quickDesc {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.quickStats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.quickCount {
+  font-weight: 500;
+}
+
+.quickTrend {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tableCard {
+  border-radius: var(--radius-xl) !important;
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: var(--shadow-sm);
+}

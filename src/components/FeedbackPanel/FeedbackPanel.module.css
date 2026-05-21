@@ -1,0 +1,2 @@
+.panel { margin-top: var(--spacing-md); }
+.submitted { text-align: center; padding: var(--spacing-md); color: var(--success); font-weight: 500; }

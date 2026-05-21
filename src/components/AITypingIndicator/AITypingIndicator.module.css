@@ -1,0 +1,5 @@
+.container { display: inline-flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-xs) 0; }
+.icon { font-size: var(--font-size-md); }
+.text { color: var(--text-secondary); font-size: var(--font-size-sm); }
+.cursor { animation: blink 1s infinite; color: var(--color-primary); font-weight: bold; }
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }

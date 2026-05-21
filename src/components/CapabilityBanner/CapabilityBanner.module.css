@@ -1,0 +1,52 @@
+.banner {
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-md);
+}
+
+.icon {
+  font-size: var(--font-size-lg);
+}
+
+.content {
+  margin-top: var(--spacing-sm);
+}
+
+.section {
+  margin-bottom: var(--spacing-sm);
+}
+
+.sectionTitle {
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+.list {
+  margin: 0;
+  padding-left: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+}
+
+.collapse {
+  margin-top: var(--spacing-sm);
+  border-top: 1px solid var(--border-primary);
+}
+
+.collapse :global(.ant-collapse-header) {
+  padding: var(--spacing-xs) 0 !important;
+}
+
+.actions {
+  margin-top: var(--spacing-sm);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}

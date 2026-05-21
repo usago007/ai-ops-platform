@@ -1,0 +1,96 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.activeCard {
+  margin-bottom: var(--spacing-lg);
+  border: 2px solid var(--primary-color) !important;
+}
+
+.stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+
+.stage.pending {
+  opacity: 0.5;
+}
+
+.stage.processing {
+  background: #e6f7ff;
+  border-left: 3px solid #1890ff;
+}
+
+.stage.done {
+  background: #f6ffed;
+  border-left: 3px solid #52c41a;
+}
+
+.stageIcon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.stage.processing .stageIcon {
+  color: #1890ff;
+}
+
+.stage.done .stageIcon {
+  color: #52c41a;
+}
+
+.stageInfo {
+  flex: 1;
+}
+
+.completedCard {
+  margin-bottom: var(--spacing-lg);
+}
+
+.resultCard {
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resultPreview {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.queueCard {
+  margin-bottom: var(--spacing-lg);
+}
+
+.doneAlert {
+  border-radius: var(--radius-md);
+}

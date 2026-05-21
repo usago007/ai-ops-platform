@@ -1,0 +1,47 @@
+.card {
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.inner {
+  text-align: center;
+  padding: var(--spacing-md) 0;
+}
+
+.prefix {
+  font-size: 24px;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.trend {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+.positive {
+  color: var(--success);
+}
+
+.negative {
+  color: var(--error);
+}

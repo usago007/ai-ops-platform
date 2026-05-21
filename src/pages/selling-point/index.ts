@@ -1,0 +1,1 @@
+export { SellingPointPage } from './SellingPointPage'

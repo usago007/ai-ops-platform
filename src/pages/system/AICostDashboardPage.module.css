@@ -1,0 +1,74 @@
+.container {
+  padding: var(--spacing-xl);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.statCard {
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  backdrop-filter: blur(8px);
+}
+
+.statCard:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--border-accent) !important;
+}
+
+.chartCard {
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
+}
+
+.chartContainer {
+  height: 300px;
+  margin-top: var(--spacing-md);
+}
+
+.modelTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  transition: all var(--transition-normal);
+}
+
+.modelTag:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-tertiary);
+}
+
+.modelPercentage {
+  margin-left: 6px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.sectionTitle {
+  margin: 0 0 var(--spacing-md);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.totalRow {
+  font-weight: 700;
+}

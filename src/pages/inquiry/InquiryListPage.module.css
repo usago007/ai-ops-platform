@@ -1,0 +1,36 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+}
+
+.toolbar {
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tableCard {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.table {
+  margin-bottom: var(--spacing-md);
+}
+
+.footer {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-secondary);
+}

@@ -1,0 +1,25 @@
+.card {
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  border: 1px solid var(--border-secondary);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+  border-color: var(--border-accent) !important;
+}
+
+.description {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.6;
+}
+
+.preview {
+  padding-top: var(--spacing-xs);
+  border-top: 1px dashed var(--border-primary);
+}
