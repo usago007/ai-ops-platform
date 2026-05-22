@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, Avatar, Badge } from 'antd'
+import { Layout, Menu, Avatar, Badge, Breadcrumb } from 'antd'
 import {
   UserOutlined,
   InboxOutlined,
@@ -30,6 +30,23 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './MainLayout.module.css'
 
 const { Header, Content, Sider } = Layout
+
+function buildBreadcrumb(pathname: string): string[] {
+  function find(items: any[], ancestors: string[] = []): string[] | null {
+    for (const item of items) {
+      if (item.key === pathname) {
+        return [...ancestors, item.label]
+      }
+      if (item.children) {
+        const next = item.type === 'group' ? [...ancestors, item.label] : ancestors
+        const result = find(item.children, next)
+        if (result) return result
+      }
+    }
+    return null
+  }
+  return find(menuItems) || ['AI Ops Platform']
+}
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -137,7 +154,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <Layout>
         <Header className={styles.header}>
           <div className={styles.headerLeft}>
-            <h2>智能商业平台</h2>
+            <Breadcrumb items={buildBreadcrumb(location.pathname).map(name => ({ title: name }))} />
           </div>
           <div className={styles.headerRight}>
             <Badge count={3} dot className={styles.badge}>
