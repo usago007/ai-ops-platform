@@ -4,6 +4,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/ai-ops-platform/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
