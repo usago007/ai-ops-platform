@@ -1,16 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, HashRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import App from './App'
 import './styles/global.css'
 
-const isSingleFile = import.meta.env.VITE_SINGLE_FILE === 'true'
-const basename = import.meta.env.BASE_URL.replace(/\/$/, '')
-const Router = isSingleFile ? HashRouter : BrowserRouter
-
 async function enableMocking() {
-  if (import.meta.env.DEV && !isSingleFile) {
+  if (import.meta.env.DEV) {
     const { worker } = await import('./mock/browser')
     await worker.start({
       onUnhandledRequest: 'bypass',
@@ -21,10 +17,10 @@ async function enableMocking() {
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <Router basename={isSingleFile ? undefined : basename}>
+      <HashRouter>
         <Toaster position="top-right" richColors closeButton />
         <App />
-      </Router>
+      </HashRouter>
     </React.StrictMode>,
   )
 })
