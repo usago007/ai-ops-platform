@@ -122,7 +122,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <path d="M2 17l10 5 10-5"/>
             <path d="M2 12l10 5 10-5"/>
           </svg>
-          AI 平台
+          AI Ops Platform
         </div>
         <Menu
           mode="inline"

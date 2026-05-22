@@ -1,61 +1,99 @@
-# AI 平台演示
+# AI Ops Platform
 
-AI 赋能产业增效平台的前端 Demo 项目，使用 Mock 数据模拟完整业务流程，无需后端服务即可独立运行。
+An AI-powered operations management platform built with React and TypeScript. It uses MSW (Mock Service Worker) to simulate complete business workflows, allowing the application to run independently without any backend services.
 
-## 技术栈
+## Features
 
-- **框架**: React 19 + TypeScript
-- **构建工具**: Vite 8
-- **样式**: Tailwind CSS 4 + CSS Modules
-- **UI 组件**: Radix UI
-- **路由**: React Router DOM 7
-- **状态管理**: Zustand
-- **图表**: ECharts
-- **Mock 服务**: MSW (Mock Service Worker)
+- **Business Efficiency** — Overview dashboard, inquiry-to-quotation transformation, product structuring
+- **Marketing Efficiency** — AI-powered content creation, selling point extraction, landing page preview
+- **Customer Service Workspace** — Intelligent customer service assistance, dialogue intent recognition
+- **System Administration** — Model configuration, Agent orchestration, AI cost dashboard, audit logging, user management, observability
 
-## 快速开始
+## Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Framework | React 19 + TypeScript 6 |
+| Build Tool | Vite 8 |
+| Styling | Tailwind CSS 4 + CSS Modules |
+| UI Components | Radix UI |
+| Routing | React Router DOM 7 |
+| State Management | Zustand |
+| Charts | ECharts |
+| Data Mocking | MSW (Mock Service Worker) |
+| Forms | React Hook Form |
+| Notifications | Sonner |
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js >= 18
+- npm >= 9
+
+### Install & Run
 
 ```bash
-# 安装依赖
 npm install
-
-# 启动开发服务器
 npm run dev
+```
 
-# 构建生产版本
+The dev server starts at [http://localhost:3000](http://localhost:3000) and opens automatically.
+
+### Build
+
+```bash
+# Standard production build
 npm run build
 
-# 构建单文件版本（所有资源内联到一个 HTML）
+# Single-file build (all assets inlined into one HTML)
 npm run build:single
+```
 
-# 代码检查
+### Lint
+
+```bash
 npm run lint
 ```
 
-## 业务模块
-
-| 模块 | 说明 |
-|------|------|
-| 业务提效 | 业务总览、询价转报价、商品结构化 |
-| 营销提效 | 营销内容创作、卖点提取 |
-| 客服工作台 | 智能客服辅助、对话意图识别 |
-| 系统管理 | 模型配置、Agent 编排、成本看板、审计日志 |
-
-## 项目结构
+## Project Structure
 
 ```
 src/
-├── components/    # 通用组件
-├── hooks/         # 自定义 Hooks
-├── layouts/       # 布局组件
-├── mock/          # MSW Mock 数据与处理器
-├── pages/         # 页面组件
-├── router/        # 路由配置
-├── services/      # 数据服务层
-├── styles/        # 全局样式与 Design Tokens
-└── utils/         # 工具函数
+├── components/       Reusable UI components
+├── hooks/            Custom React hooks
+├── layouts/          Layout components (sidebar, navigation)
+├── mock/             MSW handlers & mock data
+│   ├── data/         Data factories
+│   └── handlers/     API mock handlers by module
+├── pages/            Page-level components
+│   ├── biz/          Business efficiency
+│   ├── conversion/   Conversion & landing pages
+│   ├── cs/           Customer service workspace
+│   ├── dashboard/    Overview dashboard
+│   ├── inquiry/      Inquiry & quotation
+│   ├── marketing/    Content creation
+│   ├── mkt/          Marketing overview
+│   ├── product/      Product management
+│   ├── rules/        Rule configuration
+│   ├── selling-point/ Selling point extraction
+│   └── system/       System administration
+├── router/           Route definitions
+├── services/         Data service layer
+├── styles/           Global styles & design tokens
+└── utils/            Utility functions
 ```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server on port 3000 |
+| `npm run build` | Production build to `dist/` |
+| `npm run build:single` | Single-file build (all assets inlined) |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint checks |
 
 ## License
 
-Private
+[MIT](./LICENSE)
