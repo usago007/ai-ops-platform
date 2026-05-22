@@ -1,11 +1,17 @@
 .layout {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--bg-primary);
 }
 
 .sider {
   border-right: 1px solid var(--border-primary);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.sider :global(.ant-layout-sider-children) {
+  overflow-y: auto;
 }
 
 .sider .ant-menu {
@@ -46,8 +52,6 @@
   justify-content: space-between;
   height: 64px;
   border-bottom: 1px solid var(--border-primary);
-  position: sticky;
-  top: 0;
   z-index: 100;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
@@ -96,4 +100,5 @@
   min-height: 280px;
   animation: fadeIn 0.4s ease-out;
   box-shadow: var(--shadow-sm);
+  overflow-y: auto;
 }
