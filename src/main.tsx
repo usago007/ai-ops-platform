@@ -6,6 +6,7 @@ import App from './App'
 import './styles/global.css'
 
 const isSingleFile = import.meta.env.VITE_SINGLE_FILE === 'true'
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '')
 const Router = isSingleFile ? HashRouter : BrowserRouter
 
 async function enableMocking() {
@@ -20,7 +21,7 @@ async function enableMocking() {
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <Router>
+      <Router basename={isSingleFile ? undefined : basename}>
         <Toaster position="top-right" richColors closeButton />
         <App />
       </Router>
