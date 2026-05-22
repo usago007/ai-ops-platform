@@ -56,12 +56,26 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
-.headerLeft h2 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  margin: 0;
+.headerLeft {
+  display: flex;
+  align-items: center;
+}
+
+.headerLeft :global(.ant-breadcrumb) {
+  font-size: 15px;
+}
+
+.headerLeft :global(.ant-breadcrumb-link) {
+  color: var(--text-secondary);
+}
+
+.headerLeft :global(.ant-breadcrumb-separator) {
+  color: var(--text-tertiary);
+}
+
+.headerLeft :global(.ant-breadcrumb > span:last-child .ant-breadcrumb-link) {
   color: var(--text-primary);
+  font-weight: 600;
 }
 
 .headerRight {

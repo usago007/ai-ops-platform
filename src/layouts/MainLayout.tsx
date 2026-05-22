@@ -31,21 +31,45 @@ import styles from './MainLayout.module.css'
 
 const { Header, Content, Sider } = Layout
 
+const breadcrumbRouteMap: Record<string, string[]> = {
+  '/biz/overview':            ['业务提效', '业务概览'],
+  '/inquiry/list':            ['业务提效', '询价线索池'],
+  '/inquiry/manual-entry':    ['业务提效', '手动录入'],
+  '/inquiry/quotation-list':  ['业务提效', '报价管理'],
+  '/inquiry/transform':       ['业务提效', '询价线索池', 'AI 转化'],
+  '/inquiry/result':          ['业务提效', '询价线索池', '转化结果'],
+  '/inquiry/quotation':       ['业务提效', '报价管理', '编辑报价'],
+  '/inquiry/quotation-detail':['业务提效', '报价管理', '报价详情'],
+  '/product/list':            ['业务提效', '商品结构化', '商品库'],
+  '/product/new':             ['业务提效', '商品结构化', '新增商品'],
+  '/product/categories':      ['业务提效', '商品结构化', '品类字典'],
+  '/product':                 ['业务提效', '商品结构化', '商品详情'],
+  '/rules':                   ['业务提效', '规则归纳'],
+  '/cs/workspace':            ['业务提效', '客服工作台'],
+  '/mkt/overview':            ['营销提效', '营销概览'],
+  '/marketing/create':        ['营销提效', '内容生成'],
+  '/selling-point':           ['营销提效', '卖点提炼'],
+  '/conversion/dashboard':    ['营销提效', '转化增强'],
+  '/conversion/agents':       ['营销提效', '转化增强', 'Agent 配置'],
+  '/landing-page/preview':    ['营销提效', '转化增强', '落地页预览'],
+  '/sys/agent-orchestration': ['系统管理', 'Agent 编排'],
+  '/sys/model-config':        ['系统管理', 'AI 模型配置'],
+  '/sys/settings':            ['系统管理', '系统参数'],
+  '/sys/audit-log':           ['系统管理', '操作日志'],
+  '/sys/users':               ['系统管理', '用户与权限'],
+  '/sys/dashboard':           ['系统管理', '系统状态'],
+  '/sys/business-metrics':    ['系统管理', '业务指标'],
+  '/sys/ai-cost':             ['系统管理', 'AI 成本'],
+  '/sys/observability':       ['系统管理', '系统可观测性'],
+}
+
 function buildBreadcrumb(pathname: string): string[] {
-  function find(items: any[], ancestors: string[] = []): string[] | null {
-    for (const item of items) {
-      if (item.key === pathname) {
-        return [...ancestors, item.label]
-      }
-      if (item.children) {
-        const next = item.type === 'group' ? [...ancestors, item.label] : ancestors
-        const result = find(item.children, next)
-        if (result) return result
-      }
-    }
-    return null
-  }
-  return find(menuItems) || ['AI Ops Platform']
+  if (breadcrumbRouteMap[pathname]) return breadcrumbRouteMap[pathname]
+  const match = Object.keys(breadcrumbRouteMap)
+    .filter(prefix => prefix !== '/' && pathname.startsWith(prefix))
+    .sort((a, b) => b.length - a.length)[0]
+  if (match) return breadcrumbRouteMap[match]
+  return ['AI Ops Platform']
 }
 
 interface MainLayoutProps {
