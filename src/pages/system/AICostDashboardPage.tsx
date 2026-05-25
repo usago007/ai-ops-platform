@@ -4,7 +4,7 @@ import { ArrowUpOutlined, ThunderboltOutlined, DollarOutlined, ClockCircleOutlin
 import { Pie, Line } from '@ant-design/charts'
 import type { ColumnsType } from 'antd/es/table'
 import { getCallLogsSummary } from '../../mock/handlers'
-import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
 import styles from './AICostDashboardPage.module.css'
 
 interface ModuleCostRow {
@@ -45,7 +45,7 @@ const pieConfig = {
     type: 'outer',
     content: '{name} {percentage}',
     style: {
-      fill: '#a1a1aa',
+      fill: CHART_LABEL_COLOR,
       fontSize: 12,
     },
   },
@@ -53,7 +53,7 @@ const pieConfig = {
   legend: {
     position: 'right' as const,
     itemName: {
-      style: { fill: '#a1a1aa' },
+      style: { fill: CHART_LABEL_COLOR },
     },
   },
   color: [CHART_COLORS[1], STATUS_COLORS.success, STATUS_COLORS.warning, STATUS_COLORS.error],
@@ -94,14 +94,14 @@ const lineConfig = {
   color: [CHART_COLORS[1], STATUS_COLORS.success],
   legend: {
     itemName: {
-      style: { fill: '#a1a1aa' },
+      style: { fill: CHART_LABEL_COLOR },
     },
   },
   point: { size: 3, shape: 'circle' },
   xAxis: {
     label: {
       autoRotate: true,
-      style: { fill: '#a1a1aa' },
+      style: { fill: CHART_LABEL_COLOR },
       formatter: (val: string) => {
         const num = parseInt(val.split('/')[1], 10)
         if (num === 1 || num % 5 === 0) return val
@@ -111,7 +111,7 @@ const lineConfig = {
   },
   yAxis: {
     label: {
-      style: { fill: '#a1a1aa' },
+      style: { fill: CHART_LABEL_COLOR },
       formatter: (val: number) => {
         if (val >= 100000) return `${(val / 1000).toFixed(0)}K`
         return val.toString()
@@ -130,7 +130,7 @@ const costTableData: ModuleCostRow[] = [
   { key: 'quote', module: '询报价', calls: 5603, inputTokens: 2_240_000, outputTokens: 890_000, cost: 351.20, avgLatency: 2.1 },
   { key: 'marketing', module: '营销内容', calls: 3113, inputTokens: 1_550_000, outputTokens: 1_240_000, cost: 215.80, avgLatency: 3.4 },
   { key: 'selling', module: '卖点提炼', calls: 1868, inputTokens: 934_000, outputTokens: 468_000, cost: 98.50, avgLatency: 1.6 },
-  { key: 'cs', module: '客服问答', calls: 1866, inputTokens: 560_000, outputTokens: 280_000, cost: 115.00, avgLatency: 0.9 },
+  { key: 'cs', module: '客服问答', calls: 1866, inputTokens: 560_000, outputTokens: 280_000, cost: 114.83, avgLatency: 0.9 },
 ]
 
 const totalCalls = costTableData.reduce((s, r) => s + r.calls, 0)
@@ -258,7 +258,7 @@ export const AICostDashboardPage: React.FC = () => {
       {/* Summary Cards */}
       <Row gutter={[16, 16]}>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardChart1}`}>
             <Statistic
               title="总调用次数"
               value={displayTotalCalls}
@@ -269,7 +269,7 @@ export const AICostDashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardSuccess}`}>
             <Statistic
               title="总 Token 消耗"
               value={displayTotalTokens}
@@ -287,7 +287,7 @@ export const AICostDashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardWarning}`}>
             <Statistic
               title="月度费用估算"
               value={displayTotalCost}
@@ -299,7 +299,7 @@ export const AICostDashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardChart5}`}>
             <Statistic
               title="平均响应时间"
               value={displayAvgDuration / 1000}

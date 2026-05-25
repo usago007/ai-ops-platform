@@ -16,4 +16,4 @@ export const STATUS_COLORS = {
   info: '#1890ff',
 } as const
 
-export const CHART_LABEL_COLOR = '#aaa'
+export const CHART_LABEL_COLOR = '#a1a1aa'

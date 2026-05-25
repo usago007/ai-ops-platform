@@ -464,10 +464,10 @@ export const AgentOrchestrationPage: React.FC = () => {
 
   // Prompt 管理状态
   const [promptVersions, setPromptVersions] = useState<PromptVersion[]>([
-    { id: 'p-1', name: '询报价分类 Prompt', version: 'v3.2.1', content: '请分析以下询报价文本，提取品类、规格、数量等关键信息...', status: 'active', creator: '张三', updatedAt: '2026-04-18', usageCount: 1523, successRate: 94.5 },
-    { id: 'p-2', name: '商品属性提取 Prompt', version: 'v2.5.0', content: '从商品描述中提取标准化属性字段，包括尺寸、重量、材质...', status: 'active', creator: '李四', updatedAt: '2026-04-17', usageCount: 892, successRate: 91.2 },
-    { id: 'p-3', name: '营销文案生成 Prompt', version: 'v4.0.0', content: '根据商品特点和目标人群，生成具有吸引力的营销文案...', status: 'draft', creator: '王五', updatedAt: '2026-04-19', usageCount: 0, successRate: 0 },
-    { id: 'p-4', name: '客服话术推荐 Prompt', version: 'v2.1.3', content: '根据客户意图和历史对话，推荐合适的回复话术...', status: 'active', creator: '赵六', updatedAt: '2026-04-16', usageCount: 2341, successRate: 88.7 },
+    { id: 'p-1', name: '询报价分类 Prompt', version: 'v3.2.1', content: '请分析以下询报价文本，提取品类、规格、数量等关键信息...', status: 'active', creator: '陈明远', updatedAt: '2026-04-18', usageCount: 1523, successRate: 94.5 },
+    { id: 'p-2', name: '商品属性提取 Prompt', version: 'v2.5.0', content: '从商品描述中提取标准化属性字段，包括尺寸、重量、材质...', status: 'active', creator: '林晓峰', updatedAt: '2026-04-17', usageCount: 892, successRate: 91.2 },
+    { id: 'p-3', name: '营销文案生成 Prompt', version: 'v4.0.0', content: '根据商品特点和目标人群，生成具有吸引力的营销文案...', status: 'draft', creator: '周思琪', updatedAt: '2026-04-19', usageCount: 0, successRate: 0 },
+    { id: 'p-4', name: '客服话术推荐 Prompt', version: 'v2.1.3', content: '根据客户意图和历史对话，推荐合适的回复话术...', status: 'active', creator: '吴建国', updatedAt: '2026-04-16', usageCount: 2341, successRate: 88.7 },
     { id: 'p-5', name: '规则归纳 Prompt', version: 'v1.8.0', content: '从非结构化文档中提取 IF-THEN 规则性条款...', status: 'archived', creator: '系统', updatedAt: '2026-04-10', usageCount: 456, successRate: 85.3 },
   ])
 
@@ -502,10 +502,10 @@ export const AgentOrchestrationPage: React.FC = () => {
 
   // 架构概览 - 健康状态
   const [componentHealth, setComponentHealth] = useState<HealthStatus[]>([
-    { component: 'LLM 网关', status: 'healthy', lastCheck: '2026-04-21 10:32:15', metrics: { qps: 1250, successRate: 99.7, p95Latency: 1.2, errorRate: 0.3 } },
+    { component: 'LLM 网关', status: 'healthy', lastCheck: '2026-04-21 10:32:15', metrics: { qps: 1250, successRate: 97.3, p95Latency: 1.2, errorRate: 0.3 } },
     { component: '工作流引擎', status: 'degraded', lastCheck: '2026-04-21 10:32:12', metrics: { qps: 850, successRate: 96.5, p95Latency: 2.8, errorRate: 3.5 } },
-    { component: 'RAG 服务', status: 'healthy', lastCheck: '2026-04-21 10:32:18', metrics: { qps: 2100, successRate: 99.9, p95Latency: 0.45, errorRate: 0.1 } },
-    { component: 'Prompt 管理', status: 'healthy', lastCheck: '2026-04-21 10:32:10', metrics: { qps: 3200, successRate: 99.8, p95Latency: 0.12, errorRate: 0.2 } },
+    { component: 'RAG 服务', status: 'healthy', lastCheck: '2026-04-21 10:32:18', metrics: { qps: 2100, successRate: 94.8, p95Latency: 0.45, errorRate: 0.1 } },
+    { component: 'Prompt 管理', status: 'healthy', lastCheck: '2026-04-21 10:32:10', metrics: { qps: 3200, successRate: 96.1, p95Latency: 0.12, errorRate: 0.2 } },
   ])
 
   // 架构概览 - 业务关联映射
@@ -673,9 +673,9 @@ export const AgentOrchestrationPage: React.FC = () => {
 
   // Prompt管理 - 评测结果
   const [promptEvaluations] = useState<PromptEvaluation[]>([
-    { id: 'eval-1', promptId: 'p-1', promptName: '询报价分类 Prompt', evaluator: '张三', score: 92, comment: '分类准确率高，但个别冷门品类识别有待提升', evaluatedAt: '2026-04-20 15:30:00', type: 'manual' },
+    { id: 'eval-1', promptId: 'p-1', promptName: '询报价分类 Prompt', evaluator: '陈明远', score: 92, comment: '分类准确率高，但个别冷门品类识别有待提升', evaluatedAt: '2026-04-20 15:30:00', type: 'manual' },
     { id: 'eval-2', promptId: 'p-2', promptName: '商品属性提取 Prompt', evaluator: '系统', score: 88, comment: '字段提取完整率88%，材质字段偶有遗漏', evaluatedAt: '2026-04-20 12:00:00', type: 'auto' },
-    { id: 'eval-3', promptId: 'p-4', promptName: '客服话术推荐 Prompt', evaluator: '李四', score: 85, comment: '推荐话术合理，但缺少多轮对话上下文理解', evaluatedAt: '2026-04-19 10:15:00', type: 'manual' },
+    { id: 'eval-3', promptId: 'p-4', promptName: '客服话术推荐 Prompt', evaluator: '林晓峰', score: 85, comment: '推荐话术合理，但缺少多轮对话上下文理解', evaluatedAt: '2026-04-19 10:15:00', type: 'manual' },
     { id: 'eval-4', promptId: 'p-3', promptName: '营销文案生成 Prompt', evaluator: '系统', score: 0, comment: '尚未开始评测', evaluatedAt: '-', type: 'auto' },
   ])
 
@@ -904,7 +904,7 @@ export const AgentOrchestrationPage: React.FC = () => {
         lastCheck: new Date().toLocaleString(),
         metrics: {
           qps: Math.floor(h.metrics.qps * (0.9 + Math.random() * 0.2)),
-          successRate: Math.min(100, Math.max(95, h.metrics.successRate + (Math.random() - 0.5) * 0.5)),
+          successRate: Math.min(99.5, Math.max(92, h.metrics.successRate + (Math.random() - 0.5) * 0.5)),
           p95Latency: Math.max(0.1, h.metrics.p95Latency * (0.9 + Math.random() * 0.2)),
           errorRate: Math.max(0, h.metrics.errorRate + (Math.random() - 0.5) * 0.2),
         },

@@ -10,6 +10,7 @@ import {
   ThunderboltOutlined,
   TrophyOutlined,
   DollarOutlined,
+  InboxOutlined,
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { Line } from '@ant-design/charts'
@@ -18,7 +19,7 @@ import { ProcessFlow } from '../../components/ProcessFlow/ProcessFlow'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { mktService } from '../../services'
 import styles from './MktOverviewPage.module.css'
-import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
 
@@ -82,7 +83,7 @@ export const MktOverviewPage: React.FC = () => {
     yField: 'rate',
     seriesField: 'type',
     smooth: true,
-    color: ['#d4d4d8', CHART_COLORS[1]],
+    color: [CHART_LABEL_COLOR, CHART_COLORS[1]],
     point: { size: 5, shape: 'circle' },
     animation: { appear: { animation: 'fade-in', duration: 1000 } },
   } : {}
@@ -182,26 +183,34 @@ export const MktOverviewPage: React.FC = () => {
         <Col span={16}>
           <Card title="场景模板库" className={styles.card}
             extra={<Text type="secondary">点击模板直接使用并预填参数</Text>}>
-            <Row gutter={[16, 16]}>
-              {templates.map(tpl => (
-                <Col span={8} key={tpl.id}>
-                  <Card
-                    hoverable
-                    className={styles.templateCard}
-                    title={tpl.name}
-                    extra={<Tag color="blue">{tpl.scene}</Tag>}
-                    onClick={() => useTemplate(tpl)}
-                  >
-                    <p className={styles.templateDesc}>{tpl.description}</p>
-                    <Divider />
-                    <div className={styles.templateMeta}>
-                      <Tag>{tpl.style}</Tag>
-                      <span className={styles.expected}>预期 CTR: {tpl.expected_ctr}</span>
-                    </div>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+            {templates.length === 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
+                <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
+                <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
+                <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+              </div>
+            ) : (
+              <Row gutter={[16, 16]}>
+                {templates.map(tpl => (
+                  <Col span={8} key={tpl.id}>
+                    <Card
+                      hoverable
+                      className={styles.templateCard}
+                      title={tpl.name}
+                      extra={<Tag color="blue">{tpl.scene}</Tag>}
+                      onClick={() => useTemplate(tpl)}
+                    >
+                      <p className={styles.templateDesc}>{tpl.description}</p>
+                      <Divider />
+                      <div className={styles.templateMeta}>
+                        <Tag>{tpl.style}</Tag>
+                        <span className={styles.expected}>预期 CTR: {tpl.expected_ctr}</span>
+                      </div>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Card>
         </Col>
 
@@ -242,13 +251,21 @@ export const MktOverviewPage: React.FC = () => {
 
       <Card title="营销活动效果归因" className={styles.card} size="small"
         extra={<Text type="secondary">展示营销活动对询价和成单的贡献</Text>}>
-        <Table
-          columns={attributionColumns}
-          dataSource={attribution}
-          rowKey="name"
-          size="small"
-          pagination={{ pageSize: 5 }}
-        />
+        {attribution.length === 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
+            <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
+            <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
+            <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+          </div>
+        ) : (
+          <Table
+            columns={attributionColumns}
+            dataSource={attribution}
+            rowKey="name"
+            size="small"
+            pagination={{ pageSize: 5 }}
+          />
+        )}
       </Card>
     </div>
   )

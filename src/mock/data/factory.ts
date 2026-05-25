@@ -168,7 +168,7 @@ export const generateSellingPoints = () => ({
     '支持多种扩展模块', '全球联保，售后无忧', '兼容FX系列老程序',
     '体积小巧，安装便捷', '低功耗设计，节能环保',
   ],
-  ctr_comparison: { with_ai: 4.8, without_ai: 3.2, improvement: '+50%' },
+  ctr_comparison: { with_ai: 4.8, without_ai: 3.2, improvement: '+47.2%' },
 })
 
 export const generateFunnelData = () => ({
@@ -191,19 +191,19 @@ export const generateLandingPageConfig = (source = 'default') => {
     search: {
       title: 'PLC控制器 FX3U-64MT 价格/参数/现货',
       subtitle: '三菱正品 · 现货速发 · 技术支持',
-      main_image: 'https://via.placeholder.com/600x400/1890ff/ffffff?text=FX3U-64MT',
+      main_image: 'https://picsum.photos/seed/factory-product/600/400',
       cta: '立即询价',
     },
     ad: {
       title: '限时特惠！FX3U PLC 批量采购95折',
       subtitle: '工业级品质 · 25年验证 · 百万台信赖',
-      main_image: 'https://via.placeholder.com/600x400/ff6600/ffffff?text=限时特惠',
+      main_image: 'https://picsum.photos/seed/factory-promo/600/400',
       cta: '抢占优惠',
     },
     direct: {
       title: '三菱FX3U系列PLC控制器官方授权',
       subtitle: '正品保障 · 全国联保 · 专业技术支持',
-      main_image: 'https://via.placeholder.com/600x400/52c41a/ffffff?text=官方授权',
+      main_image: 'https://picsum.photos/seed/factory-official/600/400',
       cta: '了解详情',
     },
   }
@@ -220,8 +220,8 @@ export const generateTemplates = () => [
 ]
 
 export const generateMarketingSessions = () => [
-  { id: 'cs-mkt-1', customer: '张先生', product: 'PLC控制器 FX3U', campaign: '春季促销', status: 'active', intent: '价格咨询' },
-  { id: 'cs-mkt-2', customer: '李女士', product: '温度传感器 PT100', campaign: '新品推广', status: 'waiting', intent: '技术对比' },
+  { id: 'cs-mkt-1', customer: '陈先生', product: 'PLC控制器 FX3U', campaign: '春季促销', status: 'active', intent: '价格咨询' },
+  { id: 'cs-mkt-2', customer: '林女士', product: '温度传感器 PT100', campaign: '新品推广', status: 'waiting', intent: '技术对比' },
 ]
 
 export const generateMarketingRecommendations = () => [

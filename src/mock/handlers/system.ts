@@ -518,13 +518,13 @@ const systemSettings = {
 // 操作日志数据
 const generateAuditLogs = () => {
   const actions = [
-    { user: '张三', action: 'AI 归类手动修正', module: 'BIZ-001', result: 'success' },
-    { user: '李四', action: '商品属性批量确认', module: 'BIZ-002', result: 'success' },
+    { user: '陈明远', action: 'AI 归类手动修正', module: 'BIZ-001', result: 'success' },
+    { user: '林晓峰', action: '商品属性批量确认', module: 'BIZ-002', result: 'success' },
     { user: '系统', action: '规则冲突自动检测', module: 'BIZ-003', result: 'warning' },
-    { user: '王五', action: '营销内容生成', module: 'MKT-001', result: 'success' },
-    { user: '赵六', action: '客服话术采纳', module: 'BIZ-004', result: 'success' },
+    { user: '周思琪', action: '营销内容生成', module: 'MKT-001', result: 'success' },
+    { user: '吴建国', action: '客服话术采纳', module: 'BIZ-004', result: 'success' },
     { user: '系统', action: '模型自动降级', module: 'SYS-002', result: 'error' },
-    { user: '管理员', action: '系统参数修改', module: 'SYS-003', result: 'success' },
+    { user: '系统管理员', action: '系统参数修改', module: 'SYS-003', result: 'success' },
     { user: '系统', action: '定时任务执行', module: 'SYS-004', result: 'success' },
   ]
 
@@ -548,7 +548,7 @@ const generateAuditLogs = () => {
 const usersData = [
   {
     id: 'user-1',
-    name: '张三',
+    name: '陈明远',
     email: 'zhangsan@company.com',
     role: 'admin',
     status: 'active',
@@ -556,7 +556,7 @@ const usersData = [
   },
   {
     id: 'user-2',
-    name: '李四',
+    name: '林晓峰',
     email: 'lisi@company.com',
     role: 'operator',
     status: 'active',
@@ -564,7 +564,7 @@ const usersData = [
   },
   {
     id: 'user-3',
-    name: '王五',
+    name: '周思琪',
     email: 'wangwu@company.com',
     role: 'viewer',
     status: 'inactive',
@@ -575,7 +575,7 @@ const usersData = [
 const rolesData = [
   {
     id: 'admin',
-    name: '管理员',
+    name: '系统管理员',
     permissions: {
       inquiry: { create: true, read: true, update: true, delete: true },
       product: { create: true, read: true, update: true, delete: true },
@@ -611,7 +611,7 @@ const rolesData = [
 // 健康指标
 const healthMetrics = {
   apiLatency: { p95: 1200, p99: 2800 },
-  successRate: 99.2,
+  successRate: 97.6,
   qps: 45,
   activeAgents: 4,
   totalAgents: 5,
@@ -781,7 +781,7 @@ export const systemHandlers = [
     const pageSize = parseInt(url.searchParams.get('pageSize') || '10')
     const auditLogs = Array.from({ length: 30 }, (_, i) => {
       const types = ['login', 'permission_change', 'config_change', 'data_export']
-      const users = ['张三', '李四', '管理员', '系统']
+      const users = ['陈明远', '林晓峰', '系统管理员', '系统']
       const hoursAgo = Math.floor(i * 2)
       return {
         id: `audit-${i + 1}`,
@@ -790,7 +790,7 @@ export const systemHandlers = [
         type: types[i % types.length],
         description: [
           '用户登录成功 (IP: 192.168.1.100)',
-          '将李四角色从 operator 改为 viewer',
+          '将林晓峰角色从 operator 改为 viewer',
           '修改系统参数: aiTimeout 从 3000 改为 5000',
           '导出操作日志 CSV (50 条记录)',
           '用户登录失败 (IP: 10.0.0.5)',

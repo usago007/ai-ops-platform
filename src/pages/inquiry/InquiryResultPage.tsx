@@ -373,41 +373,41 @@ export const InquiryResultPage: React.FC = () => {
         <Form layout="vertical" className={styles.modalForm}>
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item label="品类">
+              <Form.Item label="品类" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input value={editForm.category} onChange={(e) => setEditForm({ ...editForm, category: e.target.value })} />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="规格型号">
+              <Form.Item label="规格型号" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input value={editForm.spec} onChange={(e) => setEditForm({ ...editForm, spec: e.target.value })} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item label="数量">
+              <Form.Item label="数量" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input type="number" value={editForm.quantity} onChange={(e) => setEditForm({ ...editForm, quantity: e.target.value })} />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="单位">
+              <Form.Item label="单位" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input value={editForm.unit} onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })} />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="交期要求">
+              <Form.Item label="交期要求" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input value={editForm.delivery} onChange={(e) => setEditForm({ ...editForm, delivery: e.target.value })} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={12}>
-              <Form.Item label="交货地区">
+              <Form.Item label="交货地区" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input value={editForm.region} onChange={(e) => setEditForm({ ...editForm, region: e.target.value })} />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="付款方式">
+              <Form.Item label="付款方式" rules={[{ required: true, message: '此字段为必填项' }]}>
                 <Input value={editForm.payment} onChange={(e) => setEditForm({ ...editForm, payment: e.target.value })} />
               </Form.Item>
             </Col>

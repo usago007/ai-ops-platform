@@ -52,7 +52,7 @@
   font-weight: 500;
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
-  transition: all var(--transition-normal);
+  transition: box-shadow var(--transition-normal), border-color var(--transition-normal), transform var(--transition-normal);
 }
 
 .modelTag:hover {
@@ -99,4 +99,20 @@
 
 .modelTagInner {
   margin-right: 4px;
+}
+
+.statCardChart1 {
+  border-left: 3px solid var(--chart-1);
+}
+
+.statCardSuccess {
+  border-left: 3px solid var(--success);
+}
+
+.statCardWarning {
+  border-left: 3px solid var(--warning);
+}
+
+.statCardChart5 {
+  border-left: 3px solid var(--chart-5);
 }

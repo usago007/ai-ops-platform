@@ -272,7 +272,7 @@ export const QuotationDetailPage: React.FC = () => {
         okButtonProps={{ danger: selectedResult === 'lost' }}
       >
         <Form layout="vertical" className={styles.modalForm}>
-          <Form.Item label={selectedResult === 'won' ? '成单原因' : '丢单原因'}>
+          <Form.Item label={selectedResult === 'won' ? '成单原因' : '丢单原因'} rules={[{ required: true, message: '请输入原因' }]}>
             <Input.TextArea
               rows={3}
               value={reason}

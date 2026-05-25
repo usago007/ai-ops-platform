@@ -61,10 +61,10 @@ export const rulesHandlers = [
     await delay(200)
     return successResponse({
       versions: [
-        { version: 'v1.3', date: '2025-04-10', author: '张三', change: '新增交期校验条件' },
-        { version: 'v1.2', date: '2025-03-15', author: '李四', change: '修改路由目标' },
-        { version: 'v1.1', date: '2025-02-20', author: '王五', change: '优化IF条件' },
-        { version: 'v1.0', date: '2025-01-01', author: '张三', change: '初始版本' },
+        { version: 'v1.3', date: '2025-04-10', author: '陈明远', change: '新增交期校验条件' },
+        { version: 'v1.2', date: '2025-03-15', author: '林晓峰', change: '修改路由目标' },
+        { version: 'v1.1', date: '2025-02-20', author: '周思琪', change: '优化IF条件' },
+        { version: 'v1.0', date: '2025-01-01', author: '陈明远', change: '初始版本' },
       ],
     })
   }),

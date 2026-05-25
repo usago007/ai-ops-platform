@@ -40,7 +40,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal), border-color var(--transition-normal);
 }
 
 .versionCard:hover {

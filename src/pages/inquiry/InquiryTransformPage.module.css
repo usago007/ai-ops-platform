@@ -94,3 +94,23 @@
 .doneAlert {
   border-radius: var(--radius-md);
 }
+
+.backButton {
+  padding: 0;
+}
+
+.titleMargin {
+  margin: 8px 0 4px;
+}
+
+.stageDuration {
+  margin-left: 8px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.dividerCompact {
+  margin: 8px 0;
+}

@@ -93,9 +93,9 @@ export const marketingHandlers = [
     await delay(300)
     return successResponse({
       materials: [
-        { id: 'img-1', name: 'FX3U产品主图', url: 'https://via.placeholder.com/400x300/1890ff/fff?text=FX3U', tag: '产品图' },
-        { id: 'img-2', name: '应用场景图', url: 'https://via.placeholder.com/400x300/52c41a/fff?text=应用', tag: '场景' },
-        { id: 'img-3', name: '技术参数图', url: 'https://via.placeholder.com/400x300/faad14/fff?text=参数', tag: '参数' },
+        { id: 'img-1', name: 'FX3U产品主图', url: 'https://picsum.photos/seed/marketing-1/400/300', tag: '产品图' },
+        { id: 'img-2', name: '应用场景图', url: 'https://picsum.photos/seed/marketing-2/400/300', tag: '场景' },
+        { id: 'img-3', name: '技术参数图', url: 'https://picsum.photos/seed/marketing-3/400/300', tag: '参数' },
       ],
     })
   }),

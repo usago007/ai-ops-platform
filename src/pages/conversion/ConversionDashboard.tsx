@@ -6,7 +6,7 @@ import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBa
 import styles from './ConversionDashboard.module.css'
 import { EmptyState } from '../../components/EmptyState'
 import { marketingService } from '../../services'
-import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
 
@@ -66,9 +66,9 @@ export const ConversionDashboard: React.FC = () => {
     },
     style: {
       fill: (d: any) => {
-        const colors = [CHART_COLORS[1], '#36cfc9', STATUS_COLORS.warning, STATUS_COLORS.success]
+        const colors = [CHART_COLORS[1], CHART_COLORS[2], STATUS_COLORS.warning, STATUS_COLORS.success]
         const idx = funnelData.stages.findIndex((s: any) => s.stage === d.stage)
-        return colors[idx] || '#d4d4d8'
+        return colors[idx] || CHART_LABEL_COLOR
       },
     },
     animation: {
@@ -93,7 +93,7 @@ export const ConversionDashboard: React.FC = () => {
     yField: 'conversion',
     seriesField: 'version',
     smooth: true,
-    color: ['#d4d4d8', STATUS_COLORS.success],
+    color: [CHART_LABEL_COLOR, STATUS_COLORS.success],
     point: { size: 5, shape: 'circle' },
     animation: { appear: { animation: 'fade-in', duration: 1000 } },
   }

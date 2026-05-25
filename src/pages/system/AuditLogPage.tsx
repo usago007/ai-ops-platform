@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Table, Button, Tag, DatePicker, Space, Spin, Statistic, Row, Col, Tabs, Input, Typography } from 'antd'
+import { Card, Table, Button, Tag, DatePicker, Space, Spin, Statistic, Row, Col, Tabs, Input, Typography, Empty } from 'antd'
 import { DownloadOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table'
 import { systemService } from '../../services'
@@ -186,22 +186,22 @@ export const AuditLogPage: React.FC = () => {
         <div>
           <Row gutter={16} className={styles.statsRow}>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--info)' }}>
                 <Statistic title="总日志数" value={total} />
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--success)' }}>
                 <Statistic title="成功率" value={95.2} precision={1} suffix="%" />
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--warning)' }}>
                 <Statistic title="平均耗时" value={856} suffix="ms" />
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--error)' }}>
                 <Statistic title="今日操作" value={128} />
               </Card>
             </Col>
@@ -220,18 +220,22 @@ export const AuditLogPage: React.FC = () => {
               </Space>
             }
           >
-            <Table<AuditLog>
-              dataSource={logs}
-              columns={columns}
-              rowKey="id"
-              loading={loading}
-              pagination={{
-                current: currentPage,
-                total,
-                pageSize: 10,
-                onChange: setCurrentPage,
-              }}
-            />
+            {logs.length === 0 ? (
+              <Empty description="暂无操作日志" />
+            ) : (
+              <Table<AuditLog>
+                dataSource={logs}
+                columns={columns}
+                rowKey="id"
+                loading={loading}
+                pagination={{
+                  current: currentPage,
+                  total,
+                  pageSize: 10,
+                  onChange: setCurrentPage,
+                }}
+              />
+            )}
           </Card>
         </div>
       ),
@@ -243,22 +247,22 @@ export const AuditLogPage: React.FC = () => {
         <div>
           <Row gutter={16} className={styles.statsRow}>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--info)' }}>
                 <Statistic title="总审计记录" value={auditTotal} />
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--success)' }}>
                 <Statistic title="登录事件" value={45} />
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--warning)' }}>
                 <Statistic title="权限变更" value={12} />
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card style={{ borderLeft: '3px solid var(--error)' }}>
                 <Statistic title="配置修改" value={38} />
               </Card>
             </Col>
@@ -281,18 +285,22 @@ export const AuditLogPage: React.FC = () => {
               </Space>
             }
           >
-            <Table<AuditTrailLog>
-              dataSource={auditLogs}
-              columns={auditColumns}
-              rowKey="id"
-              loading={auditLoading}
-              pagination={{
-                current: auditCurrentPage,
-                total: auditTotal,
-                pageSize: 10,
-                onChange: setAuditCurrentPage,
-              }}
-            />
+            {auditLogs.length === 0 ? (
+              <Empty description="暂无审计日志" />
+            ) : (
+              <Table<AuditTrailLog>
+                dataSource={auditLogs}
+                columns={auditColumns}
+                rowKey="id"
+                loading={auditLoading}
+                pagination={{
+                  current: auditCurrentPage,
+                  total: auditTotal,
+                  pageSize: 10,
+                  onChange: setAuditCurrentPage,
+                }}
+              />
+            )}
           </Card>
         </div>
       ),

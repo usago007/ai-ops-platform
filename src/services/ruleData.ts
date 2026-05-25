@@ -31,7 +31,7 @@ let rules: RuleRecord[] = generateRules().map((rule: any, index: number) => ({
   tags: ['工业自动化', '规则引擎'].slice(0, 1 + (index % 2)),
   status: rule.status,
   version: String(rule.version).replace('v', ''),
-  creator: ['张三', '李四', '王五'][index % 3],
+  creator: ['陈明远', '林晓峰', '周思琪'][index % 3],
   created_at: new Date(Date.now() - index * 86400000 * 3).toISOString().slice(0, 10),
   conflictWith: rule.conflictWith,
 }))
@@ -88,10 +88,10 @@ export const ruleDataStore = {
 
   getVersions: (id: string) => ({
     versions: [
-      { version: 'v1.3', date: '2025-04-10', author: '张三', change: '新增交期校验条件' },
-      { version: 'v1.2', date: '2025-03-15', author: '李四', change: '修改路由目标' },
-      { version: 'v1.1', date: '2025-02-20', author: '王五', change: '优化IF条件' },
-      { version: 'v1.0', date: '2025-01-01', author: '张三', change: '初始版本' },
+      { version: 'v1.3', date: '2025-04-10', author: '陈明远', change: '新增交期校验条件' },
+      { version: 'v1.2', date: '2025-03-15', author: '林晓峰', change: '修改路由目标' },
+      { version: 'v1.1', date: '2025-02-20', author: '周思琪', change: '优化IF条件' },
+      { version: 'v1.0', date: '2025-01-01', author: '陈明远', change: '初始版本' },
     ],
   }),
 

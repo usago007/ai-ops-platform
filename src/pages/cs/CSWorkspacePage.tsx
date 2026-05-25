@@ -94,21 +94,25 @@ export const CSWorkspacePage: React.FC = () => {
       <div className={styles.sessionList}>
         <h3 className={styles.sidebarTitle}>会话列表</h3>
         {loading ? <Spin /> : (
-          <List
-            dataSource={sessions}
-            renderItem={(s) => (
-              <List.Item className={`${styles.sessionItem} ${activeSession === s.id ? styles.active : ''}`}
-                onClick={() => selectSession(s.id)}>
-                <Badge count={s.unread} offset={[5, 5]}>
-                  <Avatar icon={<UserOutlined />} />
-                </Badge>
-                <div className={styles.sessionInfo}>
-                  <div className={styles.sessionName}>{s.customer}</div>
-                  <div className={styles.sessionLast}>{s.lastMessage}</div>
-                </div>
-              </List.Item>
-            )}
-          />
+          sessions.length === 0 ? (
+            <Empty description="暂无活跃会话" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          ) : (
+            <List
+              dataSource={sessions}
+              renderItem={(s) => (
+                <List.Item className={`${styles.sessionItem} ${activeSession === s.id ? styles.active : ''}`}
+                  onClick={() => selectSession(s.id)}>
+                  <Badge count={s.unread} offset={[5, 5]}>
+                    <Avatar icon={<UserOutlined />} />
+                  </Badge>
+                  <div className={styles.sessionInfo}>
+                    <div className={styles.sessionName}>{s.customer}</div>
+                    <div className={styles.sessionLast}>{s.lastMessage}</div>
+                  </div>
+                </List.Item>
+              )}
+            />
+          )
         )}
       </div>
 
@@ -164,14 +168,18 @@ export const CSWorkspacePage: React.FC = () => {
         <div className={styles.section}>
           <Text type="secondary" className={styles.sectionTitle}>{suggestionTitle}</Text>
           {suggestionsLoading ? <Spin size="small" /> : (
-            <Space direction="vertical" className={styles.fullWidth}>
-              {suggestions.map((s, i) => (
-                <Card key={i} size="small" className={styles.suggestionCard} hoverable onClick={() => useSuggestion(s)}>
-                  <div className={styles.suggestionText}>{s}</div>
-                  <div className={styles.suggestionHint}>点击使用</div>
-                </Card>
-              ))}
-            </Space>
+            suggestions.length === 0 ? (
+              <Empty description="暂无推荐话术" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            ) : (
+              <Space direction="vertical" className={styles.fullWidth}>
+                {suggestions.map((s, i) => (
+                  <Card key={i} size="small" className={styles.suggestionCard} hoverable onClick={() => useSuggestion(s)}>
+                    <div className={styles.suggestionText}>{s}</div>
+                    <div className={styles.suggestionHint}>点击使用</div>
+                  </Card>
+                ))}
+              </Space>
+            )
           )}
         </div>
         <div className={styles.section}>

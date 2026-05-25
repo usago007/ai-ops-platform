@@ -41,19 +41,19 @@ interface QuotationVersion {
 
 const leads: InquiryLead[] = [
   {
-    id: 'IQ-2024-0001', source: '官网表单', customer: '张三', company: '上海自动化科技有限公司',
+    id: 'IQ-2024-0001', source: '官网表单', customer: '陈明远', company: '上海自动化科技有限公司',
     contact: '138****1234', summary: '需要采购西门子PLC控制器S7-1200系列，CPU1214C DC/DC/DC 10台...',
     full_text: '需要采购西门子PLC控制器S7-1200系列，CPU1214C DC/DC/DC 10台，要求30天内交货到上海，请报价。',
     status: 'pending', priority: 'high', created_at: '2小时前',
   },
   {
-    id: 'IQ-2024-0002', source: '邮件', customer: '李四', company: '苏州精密机械有限公司',
+    id: 'IQ-2024-0002', source: '邮件', customer: '林晓峰', company: '苏州精密机械有限公司',
     contact: '139****5678', summary: 'V90伺服驱动器3AC 400V x3台，1FK7伺服电机配套使用...',
     full_text: '采购V90伺服驱动器3AC 400V 3台，配套1FK7伺服电机，要求45天交货，苏州工业园区。',
     status: 'processing', priority: 'high', created_at: '1小时前',
   },
   {
-    id: 'IQ-2024-0003', source: '系统API', customer: '王五', company: '深圳电子元器件公司',
+    id: 'IQ-2024-0003', source: '系统API', customer: '周思琪', company: '深圳电子元器件公司',
     contact: '137****9012', summary: 'STM32F103C8T6 x500, LM317T x200, 电解电容...',
     full_text: '批量采购：STM32F103C8T6 x500, LM317T x200, 100uF/25V电解电容 x1000, 10K 0805贴片电阻 x5000, IRLZ44N MOS管 x300。要求原装正品。',
     status: 'quoting', priority: 'medium', created_at: '3小时前',
@@ -69,7 +69,7 @@ const leads: InquiryLead[] = [
     },
   },
   {
-    id: 'IQ-2024-0004', source: '微信', customer: '赵六', company: '宁波模具制造有限公司',
+    id: 'IQ-2024-0004', source: '微信', customer: '吴建国', company: '宁波模具制造有限公司',
     contact: '136****3456', summary: '定制加工45号钢齿轮轴20件，图纸稍后提供...',
     full_text: '定制加工45号钢齿轮轴，模数3，齿数28，总长185mm，调质处理HRC28-32，20件，15天交货到宁波北仑。',
     status: 'anomaly', priority: 'low', created_at: '5小时前',

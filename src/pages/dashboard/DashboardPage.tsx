@@ -165,7 +165,7 @@ export const DashboardPage = () => {
 
       <Row gutter={[16, 16]} className={styles.statsRow}>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardChart1}`}>
             <Statistic
               title="今日处理任务"
               value={564}
@@ -177,7 +177,7 @@ export const DashboardPage = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardSuccess}`}>
             <Statistic
               title="平均置信度"
               value={95.2}
@@ -188,7 +188,7 @@ export const DashboardPage = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardChart5}`}>
             <Statistic
               title="节省人力工时"
               value={48.5}
@@ -199,7 +199,7 @@ export const DashboardPage = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card className={`${styles.statCard} ${styles.statCardWarning}`}>
             <Statistic
               title="待处理任务"
               value={23}

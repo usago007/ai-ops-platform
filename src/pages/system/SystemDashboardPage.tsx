@@ -3,7 +3,7 @@ import { Card, Row, Col, Statistic, Timeline, Spin, Tag } from 'antd'
 import { ArrowUpOutlined, ArrowDownOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Line } from '@ant-design/charts'
 import { systemService } from '../../services'
-import { CHART_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR } from '../../styles/chartColors'
 import styles from './SystemDashboardPage.module.css'
 
 interface HealthMetrics {
@@ -54,7 +54,7 @@ export const SystemDashboardPage: React.FC = () => {
     color: CHART_COLORS[1],
     point: { size: 3, shape: 'circle' },
     label: {
-      style: { fill: '#a1a1aa' },
+      style: { fill: CHART_LABEL_COLOR },
     },
     xAxis: {
       label: {
@@ -75,7 +75,7 @@ export const SystemDashboardPage: React.FC = () => {
       <Row gutter={[16, 16]}>
         {/* 健康指标卡片 */}
         <Col span={6}>
-          <Card>
+          <Card style={{ borderLeft: '3px solid var(--info)' }}>
             <Statistic
               title="API 成功率"
               value={health?.successRate}
@@ -87,7 +87,7 @@ export const SystemDashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card>
+          <Card style={{ borderLeft: '3px solid var(--success)' }}>
             <Statistic
               title="当前 QPS"
               value={health?.qps}
@@ -97,7 +97,7 @@ export const SystemDashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card>
+          <Card style={{ borderLeft: '3px solid var(--warning)' }}>
             <Statistic
               title="P95 延迟"
               value={health?.apiLatency.p95}
@@ -107,7 +107,7 @@ export const SystemDashboardPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card>
+          <Card style={{ borderLeft: '3px solid var(--chart-5)' }}>
             <Statistic
               title="在线 Agent"
               value={health?.activeAgents}

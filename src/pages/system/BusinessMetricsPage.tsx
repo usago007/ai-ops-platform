@@ -11,7 +11,7 @@ import {
   DollarOutlined,
 } from '@ant-design/icons'
 import { Column, Line } from '@ant-design/charts'
-import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
 import styles from './BusinessMetricsPage.module.css'
 
 interface MetricCardProps {
@@ -35,7 +35,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
   color,
   comparison,
 }) => (
-  <Card className={styles.metricCard}>
+  <Card className={styles.metricCard} style={color ? { borderLeft: `3px solid ${color}` } : undefined}>
     <div className={styles.metricContent}>
       <div className={styles.metricHeader}>
         <span className={styles.metricIcon}>{prefix}</span>
@@ -95,7 +95,7 @@ export const BusinessMetricsPage: React.FC = () => {
       xAxis: {
         label: {
           style: {
-            fill: '#a1a1aa',
+            fill: CHART_LABEL_COLOR,
             fontSize: 12,
           },
         },
@@ -103,7 +103,7 @@ export const BusinessMetricsPage: React.FC = () => {
       yAxis: {
         label: {
           style: {
-            fill: '#a1a1aa',
+            fill: CHART_LABEL_COLOR,
           },
         },
       },
@@ -147,7 +147,7 @@ export const BusinessMetricsPage: React.FC = () => {
       point: { size: 4, shape: 'circle' },
       label: {
         style: {
-          fill: '#a1a1aa',
+          fill: CHART_LABEL_COLOR,
         },
       },
       xAxis: {
@@ -155,14 +155,14 @@ export const BusinessMetricsPage: React.FC = () => {
           autoRotate: false,
           autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
           style: {
-            fill: '#a1a1aa',
+            fill: CHART_LABEL_COLOR,
           },
         },
       },
       yAxis: {
         label: {
           style: {
-            fill: '#a1a1aa',
+            fill: CHART_LABEL_COLOR,
           },
         },
       },
@@ -216,7 +216,7 @@ export const BusinessMetricsPage: React.FC = () => {
       xAxis: {
         label: {
           style: {
-            fill: '#a1a1aa',
+            fill: CHART_LABEL_COLOR,
             fontSize: 12,
           },
         },
@@ -224,7 +224,7 @@ export const BusinessMetricsPage: React.FC = () => {
       yAxis: {
         label: {
           style: {
-            fill: '#a1a1aa',
+            fill: CHART_LABEL_COLOR,
           },
         },
       },

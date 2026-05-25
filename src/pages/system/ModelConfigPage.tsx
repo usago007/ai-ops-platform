@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Table, Button, Modal, Form, Input, InputNumber, Switch, Tag, Spin, message, Select } from 'antd'
-import { EditOutlined, StopOutlined, ThunderboltOutlined, PlusOutlined } from '@ant-design/icons'
+import { EditOutlined, StopOutlined, ThunderboltOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons'
 import { modelService } from '../../services'
 import styles from './ModelConfigPage.module.css'
 
@@ -202,12 +202,20 @@ export const ModelConfigPage: React.FC = () => {
           </Button>
         }
       >
-        <Table
-          dataSource={models}
-          columns={columns}
-          rowKey="id"
-          pagination={false}
-        />
+        {models.length === 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
+            <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
+            <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无模型配置</p>
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => setCreateModalVisible(true)}>添加您的第一个模型</Button>
+          </div>
+        ) : (
+          <Table
+            dataSource={models}
+            columns={columns}
+            rowKey="id"
+            pagination={false}
+          />
+        )}
       </Card>
 
       <Modal
@@ -220,13 +228,13 @@ export const ModelConfigPage: React.FC = () => {
           <Form.Item label="模型名称" name="name">
             <Input disabled />
           </Form.Item>
-          <Form.Item label="Temperature" name="temperature">
+          <Form.Item label="Temperature" name="temperature" rules={[{ type: 'number', min: 0, max: 2, message: '温度范围 0-2' }]}>
             <InputNumber min={0} max={1} step={0.1} className={styles.fullWidth} />
           </Form.Item>
-          <Form.Item label="Top P" name="topP">
+          <Form.Item label="Top P" name="topP" rules={[{ type: 'number', min: 0, max: 1, message: 'Top P 范围 0-1' }]}>
             <InputNumber min={0} max={1} step={0.05} className={styles.fullWidth} />
           </Form.Item>
-          <Form.Item label="Max Tokens" name="maxTokens">
+          <Form.Item label="Max Tokens" name="maxTokens" rules={[{ type: 'number', min: 1, max: 128000, message: 'Max Tokens 范围 1-128000' }]}>
             <InputNumber min={256} max={8192} step={256} className={styles.fullWidth} />
           </Form.Item>
         </Form>

@@ -10,7 +10,7 @@
   gap: var(--spacing-md);
   position: relative;
   padding: var(--spacing-sm) 0;
-  transition: all var(--transition-slow);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
 }
 
 .status-done .label {
@@ -36,7 +36,7 @@
 
 .icon {
   font-size: var(--font-size-lg);
-  transition: all var(--transition-slow);
+  transition: color var(--transition-slow), opacity var(--transition-slow);
 }
 
 .status-done .icon {

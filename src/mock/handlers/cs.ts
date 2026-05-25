@@ -7,9 +7,9 @@ export const csHandlers = [
     await delay(300)
     return successResponse({
       sessions: [
-        { id: 'cs-1', customer: '张先生', company: '苏州智造科技', status: 'active', lastMessage: 'FX3U的交期确认了吗？', unread: 2, intent: '催单' },
-        { id: 'cs-2', customer: '李女士', company: '杭州自动化', status: 'active', lastMessage: '能提供技术参数表吗', unread: 0, intent: '技术咨询' },
-        { id: 'cs-3', customer: '王总', company: '深圳工业集团', status: 'waiting', lastMessage: '你们的价格太贵了', unread: 1, intent: '议价' },
+        { id: 'cs-1', customer: '陈先生', company: '苏州智造科技', status: 'active', lastMessage: 'FX3U的交期确认了吗？', unread: 2, intent: '催单' },
+        { id: 'cs-2', customer: '林女士', company: '杭州自动化', status: 'active', lastMessage: '能提供技术参数表吗', unread: 0, intent: '技术咨询' },
+        { id: 'cs-3', customer: '周总', company: '深圳工业集团', status: 'waiting', lastMessage: '你们的价格太贵了', unread: 1, intent: '议价' },
       ],
     })
   }),

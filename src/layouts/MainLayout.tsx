@@ -156,7 +156,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <Layout className={styles.layout}>
-      <Sider collapsible breakpoint="lg" className={styles.sider}>
+      <a href="#main-content" className={styles.skipLink}>Skip to content</a>
+      <Sider collapsible breakpoint="lg" className={styles.sider} role="navigation" aria-label="Main navigation">
         <div className={styles.logo}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z"/>
@@ -176,19 +177,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </Sider>
 
       <Layout className={styles.innerLayout}>
-        <Header className={styles.header}>
+        <Header className={styles.header} role="banner">
           <div className={styles.headerLeft}>
-            <Breadcrumb items={buildBreadcrumb(location.pathname).map(name => ({ title: name }))} />
+            <Breadcrumb items={buildBreadcrumb(location.pathname).map(name => ({ title: name }))} aria-label="Breadcrumb" />
           </div>
           <div className={styles.headerRight}>
             <Badge count={3} dot className={styles.badge}>
-              <BellOutlined className={styles.iconBtn} />
+              <BellOutlined className={styles.iconBtn} aria-label="Notifications" />
             </Badge>
-            <Avatar icon={<UserOutlined />} className={styles.avatar} />
+            <Avatar icon={<UserOutlined />} className={styles.avatar} aria-label="User menu" />
           </div>
         </Header>
 
-        <Content className={styles.content}>{children}</Content>
+        <Content className={styles.content} role="main" id="main-content">{children}</Content>
       </Layout>
     </Layout>
   )

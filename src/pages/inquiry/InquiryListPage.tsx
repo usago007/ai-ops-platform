@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Table, Button, Tag, Space, Input, Typography, Row, Col, Select, message, Checkbox, Divider } from 'antd'
+import { Card, Table, Button, Tag, Space, Input, Typography, Row, Col, Select, message, Checkbox, Divider, Empty } from 'antd'
 import {
   InboxOutlined,
   PlusOutlined,
@@ -276,15 +276,19 @@ export const InquiryListPage: React.FC = () => {
       </div>
 
       <Card className={styles.tableCard}>
-        <Table
-          columns={columns}
-          dataSource={filteredLeads}
-          rowKey="id"
-          rowSelection={rowSelection}
-          loading={loading}
-          pagination={{ pageSize: 10 }}
-          className={styles.table}
-        />
+        {!loading && filteredLeads.length === 0 ? (
+          <Empty description={leads.length === 0 ? '暂无线索数据' : '没有找到匹配的线索，请调整筛选条件'} />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={filteredLeads}
+            rowKey="id"
+            rowSelection={rowSelection}
+            loading={loading}
+            pagination={{ pageSize: 10 }}
+            className={styles.table}
+          />
+        )}
       </Card>
 
       <div className={styles.footer}>

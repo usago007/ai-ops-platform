@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Card, Row, Col, Statistic, Timeline, Tag } from 'antd'
 import { CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Column, Pie, Line } from '@ant-design/charts'
-import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
 import styles from './SystemObservabilityPage.module.css'
 
 interface LatencyBucket {
@@ -81,12 +81,12 @@ export const SystemObservabilityPage: React.FC = () => {
     xAxis: {
       label: {
         autoRotate: true,
-        style: { fill: '#a1a1aa' },
+        style: { fill: CHART_LABEL_COLOR },
       },
     },
     yAxis: {
       label: {
-        style: { fill: '#a1a1aa' },
+        style: { fill: CHART_LABEL_COLOR },
       },
     },
     tooltip: {
@@ -117,7 +117,7 @@ export const SystemObservabilityPage: React.FC = () => {
     legend: {
       position: 'right',
       itemName: {
-        style: { fill: '#a1a1aa' },
+        style: { fill: CHART_LABEL_COLOR },
       },
     },
     tooltip: {
@@ -126,7 +126,7 @@ export const SystemObservabilityPage: React.FC = () => {
         value: `${datum.count}%`,
       }),
     },
-    color: [STATUS_COLORS.error, STATUS_COLORS.warning, STATUS_COLORS.warning, CHART_COLORS[1], '#a1a1aa'],
+    color: [STATUS_COLORS.error, STATUS_COLORS.warning, STATUS_COLORS.warning, CHART_COLORS[1], CHART_LABEL_COLOR],
   }
 
   const volumeConfig = {
@@ -143,12 +143,12 @@ export const SystemObservabilityPage: React.FC = () => {
       label: {
         autoRotate: false,
         autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
-        style: { fill: '#a1a1aa' },
+        style: { fill: CHART_LABEL_COLOR },
       },
     },
     yAxis: {
       label: {
-        style: { fill: '#a1a1aa' },
+        style: { fill: CHART_LABEL_COLOR },
       },
     },
     tooltip: {

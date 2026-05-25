@@ -44,7 +44,7 @@
   background: var(--bg-tertiary) !important;
   border-color: var(--border-primary) !important;
   color: var(--text-primary) !important;
-  transition: all var(--transition-normal);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .textarea:focus {

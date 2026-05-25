@@ -6,7 +6,7 @@ import { Line } from '@ant-design/charts'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { marketingService } from '../../services'
 import styles from './SellingPointPage.module.css'
-import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
 
 const { Text, Title } = Typography
 
@@ -63,7 +63,7 @@ export const SellingPointPage: React.FC = () => {
     seriesField: 'category',
     smooth: true,
     animation: { appear: { animation: 'path-in', duration: 1000 } },
-    color: ['#d4d4d8', CHART_COLORS[1]],
+    color: [CHART_LABEL_COLOR, CHART_COLORS[1]],
     point: { size: 5, shape: 'circle' },
   }
 

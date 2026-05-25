@@ -28,6 +28,7 @@ import { AICostDashboardPage } from '@/pages/system/AICostDashboardPage'
 import { SystemObservabilityPage } from '@/pages/system/SystemObservabilityPage'
 import { BizOverviewPage } from '@/pages/biz/BizOverviewPage'
 import { MktOverviewPage } from '@/pages/mkt/MktOverviewPage'
+import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const routerConfig = [
   { path: '/', element: <Navigate to="/biz/overview" replace /> },
@@ -62,4 +63,5 @@ export const routerConfig = [
   { path: '/sys/business-metrics', element: <BusinessMetricsPage /> },
   { path: '/sys/ai-cost', element: <AICostDashboardPage /> },
   { path: '/sys/observability', element: <SystemObservabilityPage /> },
+  { path: '*', element: <NotFoundPage /> },
 ]

@@ -201,13 +201,21 @@ export const BizOverviewPage: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <Card title="线索来源转化分析" className={styles.card} size="small">
-            <Table
-              columns={sourceColumns}
-              dataSource={sources}
-              rowKey="name"
-              size="small"
-              pagination={false}
-            />
+            {sources.length === 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
+                <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
+                <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
+                <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+              </div>
+            ) : (
+              <Table
+                columns={sourceColumns}
+                dataSource={sources}
+                rowKey="name"
+                size="small"
+                pagination={false}
+              />
+            )}
           </Card>
         </Col>
         <Col span={12}>
@@ -225,13 +233,21 @@ export const BizOverviewPage: React.FC = () => {
 
       <Card title="沉淀知识库" className={styles.card} size="small"
         extra={<Text type="secondary">基于成单/丢单结果自动沉淀</Text>}>
-        <Table
-          columns={kbColumns}
-          dataSource={knowledgeBase}
-          rowKey="id"
-          size="small"
-          pagination={false}
-        />
+        {knowledgeBase.length === 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
+            <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
+            <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
+            <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+          </div>
+        ) : (
+          <Table
+            columns={kbColumns}
+            dataSource={knowledgeBase}
+            rowKey="id"
+            size="small"
+            pagination={false}
+          />
+        )}
       </Card>
 
       <Row gutter={[16, 16]}>
@@ -241,19 +257,27 @@ export const BizOverviewPage: React.FC = () => {
             className={styles.card}
             extra={<Text type="secondary">点击案例查看完整解析流程</Text>}
           >
-            <Row gutter={[16, 16]}>
-              {cases.map(c => (
-                <Col span={12} key={c.id}>
-                  <CaseCard
-                    title={c.title}
-                    description={c.description}
-                    difficulty={c.difficulty}
-                    previewData={c}
-                    onClick={() => setSelectedCase(c)}
-                  />
-                </Col>
-              ))}
-            </Row>
+            {cases.length === 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
+                <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
+                <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
+                <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+              </div>
+            ) : (
+              <Row gutter={[16, 16]}>
+                {cases.map(c => (
+                  <Col span={12} key={c.id}>
+                    <CaseCard
+                      title={c.title}
+                      description={c.description}
+                      difficulty={c.difficulty}
+                      previewData={c}
+                      onClick={() => setSelectedCase(c)}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Card>
         </Col>
 

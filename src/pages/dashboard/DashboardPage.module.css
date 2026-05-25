@@ -135,3 +135,19 @@
   border: 1px solid var(--border-secondary) !important;
   box-shadow: var(--shadow-card);
 }
+
+.statCardChart1 {
+  border-left: 3px solid var(--chart-1);
+}
+
+.statCardSuccess {
+  border-left: 3px solid var(--success);
+}
+
+.statCardChart5 {
+  border-left: 3px solid var(--chart-5);
+}
+
+.statCardWarning {
+  border-left: 3px solid var(--warning);
+}

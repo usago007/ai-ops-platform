@@ -209,11 +209,15 @@ export const ProductDetailPage: React.FC = () => {
         onOk={handleSaveAttr}
         onCancel={() => setEditModalVisible(false)}
       >
-        <Input.TextArea
-          rows={2}
-          value={attrValue}
-          onChange={(e) => setAttrValue(e.target.value)}
-        />
+        <Form layout="vertical">
+          <Form.Item label="属性值" rules={[{ required: true, message: '请输入备注内容' }]}>
+            <Input.TextArea
+              rows={2}
+              value={attrValue}
+              onChange={(e) => setAttrValue(e.target.value)}
+            />
+          </Form.Item>
+        </Form>
       </Modal>
     </div>
   )

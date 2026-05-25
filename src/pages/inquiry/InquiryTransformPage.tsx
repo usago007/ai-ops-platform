@@ -146,10 +146,10 @@ export const InquiryTransformPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBack} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBack} className={styles.backButton}>
           返回线索池
         </Button>
-        <Title level={3} style={{ margin: '8px 0 4px' }}>AI 转化执行</Title>
+        <Title level={3} className={styles.titleMargin}>AI 转化执行</Title>
         <Text type="secondary">正在处理 {tasks.length} 条线索</Text>
       </div>
 
@@ -167,7 +167,7 @@ export const InquiryTransformPage: React.FC = () => {
           {runningTask && (
             <Card className={styles.activeCard} title={
               <Space>
-                <LoadingOutlined style={{ color: '#1890ff' }} />
+                <LoadingOutlined style={{ color: 'var(--info)' }} />
                 <Text strong>正在处理: {runningTask.leadId} - {runningTask.customer}/{runningTask.company}</Text>
               </Space>
             }>
@@ -181,7 +181,7 @@ export const InquiryTransformPage: React.FC = () => {
                     </div>
                     <div className={styles.stageInfo}>
                       <Text strong>{STAGE_LABELS[stage.name]}</Text>
-                      {stage.duration && <Text type="secondary" style={{ marginLeft: 8 }}>{stage.duration}ms</Text>}
+                      {stage.duration && <Text type="secondary" className={styles.stageDuration}>{stage.duration}ms</Text>}
                     </div>
                   </div>
                 ))}
@@ -190,20 +190,20 @@ export const InquiryTransformPage: React.FC = () => {
           )}
 
           {allCompleted > 0 && (
-            <Card title={<Space><CheckCircleOutlined style={{ color: '#52c41a' }} /><Text strong>已完成 ({allCompleted}/{tasks.length})</Text></Space>} className={styles.completedCard}>
-              <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <Card title={<Space><CheckCircleOutlined style={{ color: 'var(--success)' }} /><Text strong>已完成 ({allCompleted}/{tasks.length})</Text></Space>} className={styles.completedCard}>
+              <Space direction="vertical" className={styles.fullWidth} size="middle">
                 {tasks.filter(t => t.status === 'done').map(task => (
                   <Card key={task.leadId} size="small" className={styles.resultCard}>
                     <div className={styles.resultHeader}>
                       <div>
                         <Text strong>{task.leadId}</Text>
-                        <Text type="secondary" style={{ marginLeft: 8 }}>{task.customer} - {task.company}</Text>
+                        <Text type="secondary" className={styles.stageDuration}>{task.customer} - {task.company}</Text>
                       </div>
                       <Button type="primary" size="small" icon={<EyeOutlined />} onClick={() => handleViewResult(task)}>
                         查看结果
                       </Button>
                     </div>
-                    <Divider style={{ margin: '8px 0' }} />
+                    <Divider className={styles.dividerCompact} />
                     <div className={styles.resultPreview}>
                       <Tag color="blue">{task.result?.category}</Tag>
                       <Tag>数量: {task.result?.quantity?.value} {task.result?.quantity?.unit}</Tag>
@@ -223,7 +223,7 @@ export const InquiryTransformPage: React.FC = () => {
                 renderItem={(task: TransformTask) => (
                   <List.Item>
                     <Space>
-                      <ClockCircleOutlined style={{ color: '#d9d9d9' }} />
+                      <ClockCircleOutlined style={{ color: 'var(--text-muted)' }} />
                       <Text>{task.leadId}</Text>
                       <Text type="secondary">{task.customer} - {task.company}</Text>
                     </Space>

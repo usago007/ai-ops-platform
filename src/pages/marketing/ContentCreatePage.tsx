@@ -85,7 +85,7 @@ export const ContentCreatePage: React.FC = () => {
       <div className={styles.sidebar}>
         <Card title="内容生成配置" size="small">
           <Form form={form} layout="vertical" size="small">
-            <Form.Item label="营销场景" name="scene">
+            <Form.Item label="营销场景" name="scene" rules={[{ required: true, message: '请选择营销场景' }]}>
               <Select options={[
                 { label: '节日促销', value: 'promotion' },
                 { label: '新品发布', value: 'launch' },
@@ -93,14 +93,14 @@ export const ContentCreatePage: React.FC = () => {
                 { label: '会员专属', value: 'vip' },
               ]} />
             </Form.Item>
-            <Form.Item label="文案风格" name="style">
+            <Form.Item label="文案风格" name="style" rules={[{ required: true, message: '请选择内容风格' }]}>
               <Select options={[
                 { label: '正式专业', value: 'professional' },
                 { label: '活泼亲和', value: 'friendly' },
                 { label: '紧迫感', value: 'urgent' },
               ]} />
             </Form.Item>
-            <Form.Item label="发布渠道" name="channel">
+            <Form.Item label="发布渠道" name="channel" rules={[{ required: true, message: '请选择发布渠道' }]}>
               <Select mode="multiple" options={[
                 { label: '落地页', value: 'landing' },
                 { label: '短信', value: 'sms' },
