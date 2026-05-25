@@ -109,3 +109,39 @@
   border: 1px solid var(--border-secondary) !important;
   background: var(--bg-secondary) !important;
 }
+
+.leadAlert {
+  margin-bottom: 16px;
+}
+
+.statInfo .ant-statistic-content-value {
+  color: var(--info);
+}
+
+.statSuccess .ant-statistic-content-value {
+  color: var(--success);
+}
+
+.statWarning .ant-statistic-content-value {
+  color: var(--warning);
+}
+
+.sampleCardSpacing {
+  margin-top: 16px;
+}
+
+.sampleHint {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.sampleLabelText {
+  font-size: 13px;
+}
+
+.sampleDescription {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}

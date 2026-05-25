@@ -6,6 +6,7 @@ import { Line } from '@ant-design/charts'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { marketingService } from '../../services'
 import styles from './SellingPointPage.module.css'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 
 const { Text, Title } = Typography
 
@@ -62,7 +63,7 @@ export const SellingPointPage: React.FC = () => {
     seriesField: 'category',
     smooth: true,
     animation: { appear: { animation: 'path-in', duration: 1000 } },
-    color: ['#d9d9d9', '#1890ff'],
+    color: ['#d4d4d8', CHART_COLORS[1]],
     point: { size: 5, shape: 'circle' },
   }
 
@@ -91,19 +92,19 @@ export const SellingPointPage: React.FC = () => {
 
       <Row gutter={[16, 16]}>
         <Col span={16}>
-          <Card title={<span><StarOutlined style={{ color: '#faad14' }} /> 核心卖点 (Top 3)</span>} className={styles.card}>
-            <Space direction="vertical" style={{ width: '100%' }} size="large">
+          <Card title={<span><StarOutlined className={styles.iconWarning} /> 核心卖点 (Top 3)</span>} className={styles.card}>
+            <Space direction="vertical" className={styles.fullWidth} size="large">
               {data.core.map((sp: any, i: number) => (
                 <Card key={i} size="small" className={styles.coreSellingCard}>
                   <div className={styles.coreRank}>#{i + 1}</div>
                   <div className={styles.coreText}>{sp.text}</div>
                   <Text type="secondary" className={styles.coreSupport}>{sp.support}</Text>
-                  <Space style={{ marginTop: 8 }}>
+                  <Space className={styles.marginTopSm}>
                     <Tag color="green"><ArrowUpOutlined /> CTR {sp.ctr_impact}</Tag>
                     {SELLING_POINT_SCENES[sp.text.slice(0, 3)] && (
                       <Space size={4}>
                         {SELLING_POINT_SCENES[sp.text.slice(0, 3)].map((scene: string, j: number) => (
-                          <Tag key={j} style={{ fontSize: 11 }}>{scene}</Tag>
+                          <Tag key={j} className={styles.smallTag}>{scene}</Tag>
                         ))}
                       </Space>
                     )}
@@ -112,7 +113,7 @@ export const SellingPointPage: React.FC = () => {
               ))}
             </Space>
 
-            <Button type="primary" icon={<RocketOutlined />} block style={{ marginTop: 16 }} onClick={handleGenerateContent}>
+            <Button type="primary" icon={<RocketOutlined />} block className={styles.marginTopMd} onClick={handleGenerateContent}>
               基于此卖点生成营销内容
             </Button>
           </Card>
@@ -128,11 +129,11 @@ export const SellingPointPage: React.FC = () => {
 
         <Col span={8}>
           <Card title="CTR 提升对比" className={styles.card}>
-            <Statistic title="AI卖点 CTR" value={data.ctr_comparison.with_ai} precision={1} suffix="%" valueStyle={{ color: '#1890ff' }} />
-            <Statistic title="无AI卖点 CTR" value={data.ctr_comparison.without_ai} precision={1} suffix="%" style={{ marginTop: 16 }} />
+            <Statistic title="AI卖点 CTR" value={data.ctr_comparison.with_ai} precision={1} suffix="%" className={styles.ctrStatValue} />
+            <Statistic title="无AI卖点 CTR" value={data.ctr_comparison.without_ai} precision={1} suffix="%" className={styles.marginTopMd} />
             <Divider />
-            <Title level={5} style={{ margin: '8px 0' }}>提升幅度</Title>
-            <Statistic value={50} precision={0} suffix="%" valueStyle={{ color: '#52c41a', fontSize: 36 }} prefix={<ArrowUpOutlined />} />
+            <Title level={5} className={styles.titleMargin}>提升幅度</Title>
+            <Statistic value={50} precision={0} suffix="%" className={styles.liftStatValue} prefix={<ArrowUpOutlined />} />
           </Card>
 
           <Card title="CTR 趋势对比" className={styles.card}>

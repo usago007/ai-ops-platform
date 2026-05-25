@@ -155,7 +155,7 @@ export const InquiryListPage: React.FC = () => {
       render: (_: string, record: any) => (
         <div>
           <div><Text strong>{record.customer}</Text></div>
-          <Text type="secondary" style={{ fontSize: 12 }}>{record.company}</Text>
+          <Text type="secondary" className={styles.companyText}>{record.company}</Text>
         </div>
       ),
     },
@@ -166,11 +166,11 @@ export const InquiryListPage: React.FC = () => {
       width: 400,
       render: (text: string, record: any) => (
         <div>
-          <Text style={{ fontSize: 13, display: 'block', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+          <Text className={styles.summaryText}>
             {text}
           </Text>
           {record.full_text && record.full_text !== text && (
-            <Text type="secondary" style={{ fontSize: 11, display: 'block', marginTop: 4 }}>
+            <Text type="secondary" className={styles.fullText}>
               原始文本: {record.full_text}
             </Text>
           )}
@@ -192,7 +192,7 @@ export const InquiryListPage: React.FC = () => {
       dataIndex: 'created_at',
       key: 'created_at',
       width: 80,
-      render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{t}</Text>,
+      render: (t: string) => <Text type="secondary" className={styles.timeText}>{t}</Text>,
     },
     {
       title: '操作',
@@ -231,7 +231,7 @@ export const InquiryListPage: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div>
-          <Title level={3} style={{ marginBottom: 4 }}>询价线索池</Title>
+          <Title level={3} className={styles.titleMargin}>询价线索池</Title>
           <Text type="secondary">管理所有渠道汇入的询价线索，选择线索进行AI智能转化</Text>
         </div>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate('/inquiry/manual-entry')}>
@@ -247,14 +247,14 @@ export const InquiryListPage: React.FC = () => {
               prefix={<SearchOutlined />}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              style={{ width: 280 }}
+              className={styles.searchInput}
               allowClear
             />
           </Space.Compact>
           <Select
             value={filterStatus}
             onChange={setFilterStatus}
-            style={{ width: 120 }}
+            className={styles.statusSelect}
             options={[
               { label: '全部', value: 'all' },
               { label: '待处理', value: 'pending' },

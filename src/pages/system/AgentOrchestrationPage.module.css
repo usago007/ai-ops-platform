@@ -66,12 +66,12 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
+  background: var(--brand-gradient);
+  color: var(--text-on-brand);
   border-radius: var(--radius-xl);
   font-size: 18px;
   font-weight: 600;
-  box-shadow: var(--shadow-lg), 0 0 24px rgba(99, 102, 241, 0.25);
+  box-shadow: var(--shadow-lg), 0 0 24px rgba(29, 78, 216, 0.2);
 }
 
 .hubIcon {
@@ -97,19 +97,19 @@
 }
 
 .llmGatewayCard {
-  border-top: 3px solid #1890ff !important;
+  border-top: 3px solid var(--chart-1) !important;
 }
 
 .workflowCard {
-  border-top: 3px solid #52c41a !important;
+  border-top: 3px solid var(--chart-3) !important;
 }
 
 .ragCard {
-  border-top: 3px solid #722ed1 !important;
+  border-top: 3px solid var(--chart-5) !important;
 }
 
 .promptCard {
-  border-top: 3px solid #fa8c16 !important;
+  border-top: 3px solid var(--warning) !important;
 }
 
 .componentIcon {
@@ -170,20 +170,20 @@
 }
 
 .masterCard {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  color: white;
+  background: var(--brand-gradient);
+  color: var(--text-on-brand);
   padding: 24px;
   border-radius: var(--radius-2xl);
   min-width: 350px;
   max-width: 500px;
   border: none !important;
-  box-shadow: var(--shadow-lg), 0 0 24px rgba(99, 102, 241, 0.25);
+  box-shadow: var(--shadow-lg), 0 0 24px rgba(29, 78, 216, 0.2);
   transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
 }
 
 .masterCard:hover {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-xl), 0 0 32px rgba(99, 102, 241, 0.35);
+  box-shadow: var(--shadow-xl), 0 0 32px rgba(29, 78, 216, 0.3);
 }
 
 .masterCard:active {
@@ -193,7 +193,7 @@
 .masterCard h3 {
   margin: 0 0 8px 0;
   font-size: 18px;
-  color: white;
+  color: var(--text-on-brand);
   font-weight: 600;
 }
 
@@ -372,6 +372,10 @@
   color: var(--text-primary) !important;
 }
 
+.ant-input-number {
+  width: 100%;
+}
+
 .ant-input:hover,
 .ant-input-password:hover,
 .ant-input-number:hover,
@@ -518,9 +522,13 @@
   box-shadow: var(--shadow-card-hover);
 }
 
+.flowNode:active {
+  transform: scale(0.98);
+}
+
 .flowNode.active {
   border-color: var(--color-primary);
-  background: linear-gradient(135deg, rgba(24, 144, 255, 0.1) 0%, rgba(24, 144, 255, 0.05) 100%);
+  background: var(--info-bg);
 }
 
 .flowNodeIcon {
@@ -532,6 +540,11 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
+}
+
+.flowNodeActive {
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, rgba(24, 144, 255, 0.1) 0%, rgba(24, 144, 255, 0.05) 100%);
 }
 
 .flowArrow {
@@ -890,13 +903,13 @@
 }
 
 .diffAdded {
-  background: rgba(82, 196, 26, 0.2);
-  color: #52c41a;
+  background: rgba(22, 163, 74, 0.2);
+  color: var(--success);
 }
 
 .diffRemoved {
-  background: rgba(245, 34, 45, 0.2);
-  color: #f5222d;
+  background: rgba(220, 38, 38, 0.2);
+  color: var(--error);
 }
 
 /* Canary Release */
@@ -981,9 +994,9 @@
 }
 
 .workflowNodeCard:hover {
-  border-color: #1890ff;
+  border-color: var(--chart-1);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
 }
 
 .workflowNodeCard:active {
@@ -991,14 +1004,14 @@
 }
 
 .workflowNodeSelected {
-  border-color: #1890ff;
-  background: #e6f7ff;
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+  border-color: var(--chart-1);
+  background: var(--info-bg);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
 }
 
 .topologyArrow {
   font-size: 24px;
-  color: #1890ff;
+  color: var(--chart-1);
   font-weight: 600;
 }
 
@@ -1008,5 +1021,353 @@
 
 .businessModuleNode:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+}
+
+.componentRow {
+  margin-top: 24px;
+}
+
+.gatewayIcon {
+  font-size: 32px;
+  color: var(--chart-1);
+}
+
+.workflowIcon {
+  font-size: 32px;
+  color: var(--success);
+}
+
+.ragIcon {
+  font-size: 32px;
+  color: var(--chart-5);
+}
+
+.promptIcon {
+  font-size: 32px;
+  color: var(--warning);
+}
+
+.flowBadge {
+  margin-top: 4px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.alertMessage {
+  margin-left: var(--spacing-sm, 8px);
+}
+
+.alertTime {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.healthMetricsRow {
+  margin-top: 12px;
+}
+
+.healthStatusFooter {
+  margin-top: 8px;
+}
+
+.healthCheckTime {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-left: var(--spacing-sm, 8px);
+}
+
+.topologySpace {
+  width: 100%;
+}
+
+.topologyRowInner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: opacity 0.3s ease;
+}
+
+.topologyRowDimmedInner {
+  opacity: 0.3;
+}
+
+.workflowNodeClickable {
+  cursor: pointer;
+}
+
+.workflowNodeContent {
+  text-align: center;
+}
+
+.workflowNodeIcon {
+  font-size: 24px;
+}
+
+.workflowNodeName {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.workflowNodeTypeTag {
+  margin-top: 4px;
+}
+
+.workflowNodeBadgeWrap {
+  margin-top: 4px;
+}
+
+.relatedModulesContainer {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.moduleMappingPill {
+  padding: 10px 16px;
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+  border: 1px solid var(--border-primary);
+}
+
+.moduleMappingId {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.moduleMappingName {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.noModulesText {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+.mappingIconCenter {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.mappingIconLarge {
+  font-size: 32px;
+}
+
+.mappingNameLarge {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 8px;
+}
+
+.mappingDetailRow {
+  font-size: 12px;
+}
+
+.authLabel {
+  margin-left: var(--spacing-sm, 8px);
+}
+
+.addRouteButton {
+  margin-top: 16px;
+}
+
+.formActions {
+  margin-top: 24px;
+  text-align: right;
+}
+
+.saveButton {
+  margin-left: var(--spacing-sm, 8px);
+}
+
+.monitoringValueInfo {
+  color: var(--chart-1);
+}
+
+.monitoringValueSuccess {
+  color: var(--success);
+}
+
+.monitoringValueWarning {
+  color: var(--warning);
+}
+
+.monitoringValueError {
+  color: var(--error);
+}
+
+.monitoringValueChart5 {
+  color: var(--chart-5);
+}
+
+.monitoringValueChart2 {
+  color: var(--chart-2);
+}
+
+.apiKeyCode {
+  font-family: monospace;
+  color: var(--text-primary);
+}
+
+.apiKeyLastUsed {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.methodTag {
+  min-width: 50px;
+}
+
+.modelTag {
+  min-width: 100px;
+}
+
+.unconfiguredText {
+  color: var(--text-tertiary);
+}
+
+.bizModuleTag {
+  cursor: pointer;
+}
+
+.templateCategoryTag {
+  margin-top: 12px;
+}
+
+.retrievalStatsColumn {
+  grid-template-columns: 1fr;
+}
+
+.abTestDateRange {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.abMetricsRow {
+  margin-top: 12px;
+}
+
+.canaryConfigRow {
+  margin-bottom: 16px;
+}
+
+.canaryConfigName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.canaryConfigTag {
+  margin-top: 4px;
+}
+
+.canaryConfigLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.canaryConfigLabelWithMargin {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.impactAlertContent {
+  margin-top: 8px;
+}
+
+.modalSubCard {
+  margin-bottom: 16px;
+}
+
+.modalRelatedModule {
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.modalRelatedModuleDetail {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.modalRouteTag {
+  margin-left: var(--spacing-sm, 8px);
+}
+
+.modalTagMargin {
+  margin-left: var(--spacing-sm, 8px);
+}
+
+.indexUpdateTime {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.formFooter {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.cancelButton {
+  margin-right: var(--spacing-sm, 8px);
+}
+
+.alertMargin {
+  margin-bottom: 16px;
+}
+
+.alertMarginTop {
+  margin-top: 16px;
+}
+
+.routeItemMargin {
+  margin-bottom: 4px;
+}
+
+.statValueSuccess {
+  color: var(--success);
+}
+
+.statValueChart1 {
+  color: var(--chart-1);
+}
+
+.statValueWarning {
+  color: var(--warning);
+}
+
+.statValueError {
+  color: var(--error);
+}
+
+.statValueChart5 {
+  color: var(--chart-5);
+}
+
+.statValueInfo {
+  color: var(--chart-1);
+}
+
+.statValueSuccessAlt {
+  color: var(--success);
+}
+
+.latencyCritical {
+  color: var(--error);
+}
+
+.latencyWarning {
+  color: var(--warning);
+}
+
+.latencyNormal {
+  color: var(--success);
 }

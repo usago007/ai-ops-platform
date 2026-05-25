@@ -122,7 +122,7 @@ export const CSWorkspacePage: React.FC = () => {
               </Tag>
             </Space>
             {activeSession && (
-              <Space wrap style={{ marginTop: 8 }}>
+              <Space wrap className={styles.marginTopSm}>
                 <Text strong>{sessions.find(s => s.id === activeSession)?.customer}</Text>
                 <Tag>{sessions.find(s => s.id === activeSession)?.company}</Tag>
               </Space>
@@ -164,7 +164,7 @@ export const CSWorkspacePage: React.FC = () => {
         <div className={styles.section}>
           <Text type="secondary" className={styles.sectionTitle}>{suggestionTitle}</Text>
           {suggestionsLoading ? <Spin size="small" /> : (
-            <Space direction="vertical" style={{ width: '100%' }}>
+            <Space direction="vertical" className={styles.fullWidth}>
               {suggestions.map((s, i) => (
                 <Card key={i} size="small" className={styles.suggestionCard} hoverable onClick={() => useSuggestion(s)}>
                   <div className={styles.suggestionText}>{s}</div>

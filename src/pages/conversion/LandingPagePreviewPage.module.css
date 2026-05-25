@@ -56,3 +56,6 @@
 .strategyList li {
   margin-bottom: 4px;
 }
+
+.sourceSelect { width: 160px; }
+.bannerCard :global(.ant-card-body) { padding: 0; }

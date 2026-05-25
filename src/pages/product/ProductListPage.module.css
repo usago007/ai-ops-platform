@@ -37,3 +37,22 @@
 .statCard:active {
   transform: translateY(0);
 }
+
+.overviewValueSuccess { color: var(--success); }
+.overviewValueWarning { color: var(--warning); }
+.overviewValueTertiary { color: var(--text-tertiary); }
+.overviewValueInfo { color: var(--info); }
+.sourceTag { font-size: 11px; }
+.skuText { font-size: 12px; }
+.pendingTag { font-size: 10px; margin: 0; }
+.inquiryLink { font-size: 11px; }
+.iconWarning { color: var(--warning); }
+.expandedRow { padding: 8px 16px; }
+.thinDivider { margin: 12px 0; }
+.sectionLabel { font-size: 12px; }
+.originalTextBlock { background: var(--bg-tertiary); padding: 12px; border-radius: 4px; margin-top: 8px; font-size: 13px; line-height: 1.6; }
+.attrTable { margin-top: 8px; }
+.confidenceHigh { color: var(--success); }
+.confidenceMedium { color: var(--warning); }
+.confidenceLow { color: var(--error); }
+.sectionDivider { margin: 16px 0; }

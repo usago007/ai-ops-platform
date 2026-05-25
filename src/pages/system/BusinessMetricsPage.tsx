@@ -11,6 +11,7 @@ import {
   DollarOutlined,
 } from '@ant-design/icons'
 import { Column, Line } from '@ant-design/charts'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 import styles from './BusinessMetricsPage.module.css'
 
 interface MetricCardProps {
@@ -80,21 +81,21 @@ export const BusinessMetricsPage: React.FC = () => {
       xField: 'metric',
       yField: 'value',
       seriesField: 'type',
-      color: ({ type }: { type: string }) => (type === '人工处理' ? '#ef4444' : '#10b981'),
+      color: ({ type }: { type: string }) => (type === '人工处理' ? STATUS_COLORS.error : STATUS_COLORS.success),
       columnStyle: {
         radius: [4, 4, 0, 0],
       },
       label: {
         position: 'top' as const,
         style: {
-          fill: '#e2e8f0',
+          fill: 'rgba(0,0,0,0.06)',
           fontSize: 11,
         },
       },
       xAxis: {
         label: {
           style: {
-            fill: '#94a3b8',
+            fill: '#a1a1aa',
             fontSize: 12,
           },
         },
@@ -102,7 +103,7 @@ export const BusinessMetricsPage: React.FC = () => {
       yAxis: {
         label: {
           style: {
-            fill: '#94a3b8',
+            fill: '#a1a1aa',
           },
         },
       },
@@ -110,7 +111,7 @@ export const BusinessMetricsPage: React.FC = () => {
         position: 'top-right' as const,
         itemName: {
           style: {
-            fill: '#e2e8f0',
+            fill: 'rgba(0,0,0,0.06)',
           },
         },
       },
@@ -142,11 +143,11 @@ export const BusinessMetricsPage: React.FC = () => {
       xField: 'month',
       yField: 'cumulative',
       smooth: true,
-      color: '#6366f1',
+      color: CHART_COLORS[1],
       point: { size: 4, shape: 'circle' },
       label: {
         style: {
-          fill: '#94a3b8',
+          fill: '#a1a1aa',
         },
       },
       xAxis: {
@@ -154,14 +155,14 @@ export const BusinessMetricsPage: React.FC = () => {
           autoRotate: false,
           autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
           style: {
-            fill: '#94a3b8',
+            fill: '#a1a1aa',
           },
         },
       },
       yAxis: {
         label: {
           style: {
-            fill: '#94a3b8',
+            fill: '#a1a1aa',
           },
         },
       },
@@ -169,7 +170,7 @@ export const BusinessMetricsPage: React.FC = () => {
         lineWidth: 3,
       },
       areaStyle: {
-        fill: 'l(270) 0:rgba(99, 102, 241, 0.3) 1:rgba(99, 102, 241, 0)',
+        fill: 'l(270) 0:rgba(29, 78, 216, 0.3) 1:rgba(29, 78, 216, 0)',
       },
       tooltip: {
         formatter: (datum: { month: string; savings: number; cumulative: number }) => ({
@@ -201,21 +202,21 @@ export const BusinessMetricsPage: React.FC = () => {
       yField: 'value',
       seriesField: 'type',
       isGroup: true,
-      color: ({ type }: { type: string }) => (type === '引入前' ? '#f59e0b' : '#10b981'),
+      color: ({ type }: { type: string }) => (type === '引入前' ? STATUS_COLORS.warning : STATUS_COLORS.success),
       columnStyle: {
         radius: [4, 4, 0, 0],
       },
       label: {
         position: 'top' as const,
         style: {
-          fill: '#e2e8f0',
+          fill: 'rgba(0,0,0,0.06)',
           fontSize: 11,
         },
       },
       xAxis: {
         label: {
           style: {
-            fill: '#94a3b8',
+            fill: '#a1a1aa',
             fontSize: 12,
           },
         },
@@ -223,7 +224,7 @@ export const BusinessMetricsPage: React.FC = () => {
       yAxis: {
         label: {
           style: {
-            fill: '#94a3b8',
+            fill: '#a1a1aa',
           },
         },
       },
@@ -231,7 +232,7 @@ export const BusinessMetricsPage: React.FC = () => {
         position: 'top-right' as const,
         itemName: {
           style: {
-            fill: '#e2e8f0',
+            fill: 'rgba(0,0,0,0.06)',
           },
         },
       },
@@ -262,7 +263,7 @@ export const BusinessMetricsPage: React.FC = () => {
             prefix={<RocketOutlined />}
             trend="up"
             trendLabel="效率提升"
-            color="#10b981"
+            color={CHART_COLORS[1]}
             comparison="人工 45min → AI 12min"
           />
         </Col>
@@ -274,7 +275,7 @@ export const BusinessMetricsPage: React.FC = () => {
             prefix={<ClockCircleOutlined />}
             trend="down"
             trendLabel="响应时间缩短"
-            color="#3b82f6"
+            color={CHART_COLORS[2]}
             comparison="人工 4h → AI 30min"
           />
         </Col>
@@ -286,7 +287,7 @@ export const BusinessMetricsPage: React.FC = () => {
             prefix={<TeamOutlined />}
             trend="down"
             trendLabel="工作量减少"
-            color="#8b5cf6"
+            color={CHART_COLORS[3]}
             comparison="释放 12 人/月产能"
           />
         </Col>
@@ -297,7 +298,7 @@ export const BusinessMetricsPage: React.FC = () => {
             prefix={<ThunderboltOutlined />}
             trend="up"
             trendLabel="环比增长 18%"
-            color="#f59e0b"
+            color={CHART_COLORS[4]}
             comparison="日均处理 82 笔"
           />
         </Col>
@@ -309,14 +310,14 @@ export const BusinessMetricsPage: React.FC = () => {
             prefix={<HeartOutlined />}
             trend="up"
             trendLabel="持续提升"
-            color="#ec4899"
+            color={CHART_COLORS[5]}
             comparison="NPS 得分 +42"
           />
         </Col>
       </Row>
 
       {/* Comparison & ROI Charts */}
-      <Row gutter={16} style={{ marginTop: 24 }}>
+      <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card title="人工 vs AI 处理对比" className={styles.chartCard}>
             <div className={styles.chartContainer}>
@@ -334,18 +335,18 @@ export const BusinessMetricsPage: React.FC = () => {
       </Row>
 
       {/* Cost-Benefit & Cost Savings */}
-      <Row gutter={16} style={{ marginTop: 24 }}>
+      <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={8}>
           <Card title="成本效益分析" className={styles.costBenefitCard}>
             <div className={styles.costBenefitContent}>
               <div className={styles.costItem}>
                 <div className={styles.costLabel}>AI 月度成本</div>
-                <div className={styles.costValue} style={{ color: '#ef4444' }}>$780</div>
+                <div className={`${styles.costValue} ${styles.costValueError}`}>$780</div>
               </div>
               <div className={styles.costDivider} />
               <div className={styles.costItem}>
                 <div className={styles.costLabel}>人工成本节省</div>
-                <div className={styles.costValue} style={{ color: '#10b981' }}>$12,000</div>
+                <div className={`${styles.costValue} ${styles.costValueSuccess}`}>$12,000</div>
               </div>
               <div className={styles.costDivider} />
               <div className={styles.costItem}>

@@ -26,6 +26,10 @@
   color: var(--primary-color);
 }
 
+.stepTitle:active {
+  color: var(--brand-primary);
+}
+
 .stepDesc {
   font-size: var(--font-size-sm);
   color: var(--text-tertiary);

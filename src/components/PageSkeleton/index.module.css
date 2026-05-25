@@ -1,0 +1,15 @@
+.dashboardLayout { display: flex; flex-direction: column; gap: 20px; }
+.dashboardMetrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.metricSkeleton { height: 100px; border-radius: var(--radius-2xl); }
+.chartSkeleton { height: 300px; border-radius: var(--radius-2xl); }
+.listLayout { display: flex; flex-direction: column; gap: 12px; }
+.listTitle { height: 40px; width: 200px; border-radius: var(--radius-md); }
+.listItem { height: 56px; border-radius: var(--radius-lg); }
+.detailLayout { display: flex; flex-direction: column; gap: 16px; }
+.detailTitle { height: 32px; width: 60%; border-radius: var(--radius-md); }
+.detailHero { height: 200px; border-radius: var(--radius-2xl); }
+.detailGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.detailCard { height: 150px; border-radius: var(--radius-2xl); }
+.formLayout { display: flex; flex-direction: column; gap: 16px; }
+.formTitle { height: 32px; width: 40%; border-radius: var(--radius-md); }
+.formItem { height: 44px; border-radius: var(--radius-md); }

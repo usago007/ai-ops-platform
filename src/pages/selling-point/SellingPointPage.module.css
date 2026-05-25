@@ -55,7 +55,7 @@
   line-height: 24px;
   text-align: center;
   background: var(--warning);
-  color: #fff;
+  color: var(--text-on-brand);
   border-radius: 50%;
   font-size: var(--font-size-xs);
   font-weight: bold;
@@ -98,5 +98,20 @@
 .secondaryTag:hover {
   transform: scale(1.05);
   border-color: var(--brand-primary);
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--info-bg);
 }
+
+.secondaryTag:active {
+  transform: scale(0.98);
+}
+
+.iconWarning { color: var(--warning); }
+.fullWidth { width: 100%; }
+.marginTopSm { margin-top: 8px; }
+.smallTag { font-size: 11px; }
+.marginTopMd { margin-top: 16px; }
+.ctrValue { color: var(--info); }
+.titleMargin { margin: 8px 0; }
+.liftValue { color: var(--success); font-size: 36px; }
+.ctrStatValue :global(.ant-statistic-content-value) { color: var(--info); }
+.liftStatValue :global(.ant-statistic-content-value) { color: var(--success); font-size: 36px; }

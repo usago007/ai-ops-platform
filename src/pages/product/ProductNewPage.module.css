@@ -20,3 +20,8 @@
   margin-bottom: 12px;
   line-height: 1.6;
 }
+
+.noPadding { padding: 0; }
+.titleMargin { margin: 8px 0; }
+.alertMargin { margin-bottom: 24px; }
+.smallFont { font-size: 12px; }

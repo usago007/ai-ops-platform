@@ -67,3 +67,49 @@
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-xs);
 }
+
+.summaryCard {
+  margin-top: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.backButton {
+  padding: 0;
+}
+
+.titleMargin {
+  margin: 8px 0;
+}
+
+.timeText {
+  font-size: 12px;
+}
+
+.dividerCompact {
+  margin: 12px 0;
+}
+
+.hintText {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.wonButton {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.totalAmount {
+  font-size: 18px;
+  color: var(--info);
+}
+
+.modalForm {
+  margin-top: 16px;
+}

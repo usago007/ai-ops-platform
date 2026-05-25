@@ -38,7 +38,7 @@ export const CaseCard: React.FC<CaseCardProps> = ({
       >
         <p className={styles.description}>{description}</p>
         <div className={styles.preview}>
-          <Text type="secondary" style={{ fontSize: 12 }}>点击查看详情 →</Text>
+          <Text type="secondary" className={styles.previewHint}>点击查看详情 →</Text>
         </div>
       </Card>
     </>

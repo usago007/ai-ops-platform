@@ -3,6 +3,7 @@ import { Card, Row, Col, Statistic, Timeline, Spin, Tag } from 'antd'
 import { ArrowUpOutlined, ArrowDownOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Line } from '@ant-design/charts'
 import { systemService } from '../../services'
+import { CHART_COLORS } from '../../styles/chartColors'
 import styles from './SystemDashboardPage.module.css'
 
 interface HealthMetrics {
@@ -50,10 +51,10 @@ export const SystemDashboardPage: React.FC = () => {
     xField: 'time',
     yField: 'latency',
     smooth: true,
-    color: '#1890ff',
+    color: CHART_COLORS[1],
     point: { size: 3, shape: 'circle' },
     label: {
-      style: { fill: '#aaa' },
+      style: { fill: '#a1a1aa' },
     },
     xAxis: {
       label: {
@@ -69,7 +70,7 @@ export const SystemDashboardPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 style={{ marginBottom: 16 }}>系统仪表盘</h2>
+      <h2 className={styles.pageTitle}>系统仪表盘</h2>
 
       <Row gutter={[16, 16]}>
         {/* 健康指标卡片 */}
@@ -80,7 +81,7 @@ export const SystemDashboardPage: React.FC = () => {
               value={health?.successRate}
               precision={1}
               suffix="%"
-              valueStyle={{ color: '#3f8600' }}
+              valueStyle={{ color: 'var(--success)' }}
               prefix={<CheckCircleOutlined />}
             />
           </Card>
@@ -117,7 +118,7 @@ export const SystemDashboardPage: React.FC = () => {
         </Col>
       </Row>
 
-      <Row gutter={16} style={{ marginTop: 16 }}>
+      <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card title="API 延迟趋势 (24h)">
             <div className={styles.chartContainer}>
@@ -178,7 +179,7 @@ export const SystemDashboardPage: React.FC = () => {
         </Col>
       </Row>
 
-      <Card style={{ marginTop: 16 }}>
+      <Card className={styles.cardMarginTop}>
         <Row>
           <Col span={8}>
             <Statistic title="系统可用率" value={99.5} precision={1} suffix="%" />

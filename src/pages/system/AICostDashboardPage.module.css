@@ -76,3 +76,27 @@
 .totalRow {
   font-weight: 700;
 }
+
+.pageTitle {
+  margin-bottom: var(--spacing-lg);
+}
+
+.costHighlight {
+  color: var(--warning);
+}
+
+.rowMarginTop {
+  margin-top: var(--spacing-lg);
+}
+
+.cardMarginTop {
+  margin-top: var(--spacing-lg);
+}
+
+.modelDistributionContent {
+  padding: 8px 0;
+}
+
+.modelTagInner {
+  margin-right: 4px;
+}

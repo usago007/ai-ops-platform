@@ -46,3 +46,8 @@
   margin-bottom: var(--spacing-sm);
   color: var(--text-primary);
 }
+
+.addUserActions {
+  margin-bottom: var(--spacing-lg);
+  text-align: right;
+}

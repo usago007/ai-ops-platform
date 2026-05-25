@@ -104,6 +104,29 @@
   display: inline-flex;
   align-items: center;
   gap: 2px;
+  color: var(--success);
+}
+
+.statsRow {
+  margin-bottom: 24px;
+}
+
+.quickAccessRow {
+  margin-bottom: 24px;
+}
+
+.quickCard :global(.ant-card-body) {
+  padding: 16px 20px;
+}
+
+.quickCardInner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.quickCardContent {
+  flex: 1;
 }
 
 .tableCard {

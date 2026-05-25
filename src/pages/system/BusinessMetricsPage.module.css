@@ -180,5 +180,17 @@
 .roiValue {
   font-size: var(--font-size-4xl);
   font-weight: 700;
-  color: #fff;
+  color: var(--text-on-brand);
+}
+
+.rowMarginTop {
+  margin-top: var(--spacing-xl);
+}
+
+.costValueError {
+  color: var(--error);
+}
+
+.costValueSuccess {
+  color: var(--success);
 }

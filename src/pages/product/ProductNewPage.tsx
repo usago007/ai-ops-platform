@@ -110,10 +110,10 @@ export const ProductNewPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/product/list')} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/product/list')} className={styles.noPadding}>
           返回商品库
         </Button>
-        <Title level={3} style={{ margin: '8px 0' }}>新增商品</Title>
+        <Title level={3} className={styles.titleMargin}>新增商品</Title>
       </div>
 
       <Alert
@@ -121,7 +121,7 @@ export const ProductNewPage: React.FC = () => {
         description="输入商品描述文本，AI 将自动提取品类、品牌、型号等字段，也可手动填写"
         type="info"
         showIcon
-        style={{ marginBottom: 24 }}
+        className={styles.alertMargin}
       />
 
       <Row gutter={24}>
@@ -215,7 +215,7 @@ export const ProductNewPage: React.FC = () => {
               <li><Text strong>价格</Text>：参考单价（可选）</li>
             </ul>
             <Divider />
-            <Text type="secondary" style={{ fontSize: 12 }}>
+            <Text type="secondary" className={styles.smallFont}>
               提示：使用 AI 自动提取可以快速填充大部分字段
             </Text>
           </Card>

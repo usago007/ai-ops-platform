@@ -208,3 +208,42 @@
   align-items: center;
   gap: var(--spacing-xs);
 }
+
+.backButton {
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.confidenceBadgeDynamic {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-glass-light);
+}
+
+.gaugeValue {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.gaugeScaleDot {
+  font-size: var(--font-size-xs);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.categoryTag {
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+.riskIcon {
+  font-size: 48px;
+}
+
+.modalForm {
+  margin-top: 16px;
+}

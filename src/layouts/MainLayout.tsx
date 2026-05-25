@@ -168,7 +168,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu
           mode="inline"
           selectedKeys={[selectedKey]}
-          defaultOpenKeys={['business', 'marketing', 'system']}
+          defaultOpenKeys={['business']}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
           className={styles.menu}

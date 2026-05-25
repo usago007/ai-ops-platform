@@ -51,3 +51,14 @@
   padding: var(--spacing-md) 0;
   border-top: 1px solid var(--border-primary);
 }
+
+.noPadding { padding: 0; }
+.editIcon { font-size: 10px; color: var(--text-tertiary); }
+.confidenceHigh { color: var(--success); }
+.confidenceMedium { color: var(--warning); }
+.confidenceLow { color: var(--error); }
+.titleMargin { margin: 8px 0; }
+.alertMargin { margin-bottom: 24px; }
+.cardMarginBottom { margin-bottom: 16px; }
+.metaRow { margin-top: 8px; }
+.smallFont { font-size: 12px; }

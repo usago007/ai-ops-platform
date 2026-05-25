@@ -37,16 +37,17 @@
   --info: #2563eb;
   --info-bg: rgba(37, 99, 235, 0.08);
 
-  /* Colors - Extended (for hardcoded color migration) */
-  --color-purple: #7c3aed;
-  --color-purple-bg: rgba(124, 58, 237, 0.08);
-  --color-orange: #ea580c;
-  --color-orange-bg: rgba(234, 88, 12, 0.08);
-  --color-teal: #0d9488;
-  --color-teal-bg: rgba(13, 148, 136, 0.08);
-  --color-cyan: #0891b2;
-  --color-indigo: #4f46e5;
-  --color-indigo-bg: rgba(79, 70, 229, 0.08);
+  /* Colors - Chart (Unified brand-blue family + alert red) */
+  --chart-1: #1d4ed8;
+  --chart-2: #3b82f6;
+  --chart-3: #60a5fa;
+  --chart-4: #93c5fd;
+  --chart-5: #1e40af;
+  --chart-6: #dc2626;
+
+  /* Colors - Text variants */
+  --text-inverse: #ffffff;
+  --text-on-brand: #ffffff;
 
   /* Shadows (Tinted to background hue) */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
@@ -94,6 +95,13 @@
   --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Z-Index Scale */
+  --z-base: 1;
+  --z-header: 10;
+  --z-overlay: 50;
+  --z-modal: 100;
+  --z-toast: 1000;
 
   /* Glass Effect */
   --glass-blur: blur(12px);

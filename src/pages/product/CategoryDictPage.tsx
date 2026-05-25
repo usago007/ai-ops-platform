@@ -4,6 +4,7 @@ import { ArrowLeftOutlined, PlusOutlined, EditOutlined, DeleteOutlined, Appstore
 import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './CategoryDictPage.module.css'
+import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
 
@@ -62,14 +63,14 @@ export const CategoryDictPage: React.FC = () => {
 
   const level1Columns = [
     { title: '一级品类', dataIndex: 'name', key: 'name', width: 160,
-      render: (text: string) => <Text strong style={{ color: '#1890ff' }}>{text}</Text>,
+      render: (text: string) => <Text strong className={styles.categoryName}>{text}</Text>,
     },
     {
       title: '二级品类', key: 'level2',
       render: (_: any, record: any) => (
         <Space wrap>
           {(record.children || []).map((ch: any) => (
-            <Tag key={ch.id} color="blue">{ch.name} {ch.brand && <span style={{ color: '#999' }}>({ch.brand})</span>}</Tag>
+            <Tag key={ch.id} color="blue">{ch.name} {ch.brand && <span className={styles.brandHint}>({ch.brand})</span>}</Tag>
           ))}
         </Space>
       ),
@@ -106,11 +107,11 @@ export const CategoryDictPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/product/list')} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/product/list')} className={styles.noPadding}>
           返回商品库
         </Button>
         <div className={styles.headerContent}>
-          <Title level={3} style={{ margin: '8px 0' }}>品类字典管理</Title>
+          <Title level={3} className={styles.titleMargin}>品类字典管理</Title>
           <Text type="secondary">管理标准品类层级：一级品类 → 二级品类 → 品牌 → 常见型号</Text>
         </div>
         <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
@@ -159,7 +160,7 @@ export const CategoryDictPage: React.FC = () => {
         onOk={() => form.submit()}
         onCancel={() => setModalVisible(false)}
       >
-        <Form form={form} layout="vertical" onFinish={handleSubmit} style={{ marginTop: 16 }}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit} className={styles.formMarginTop}>
           <Form.Item label="一级品类" name="level1" rules={[{ required: true }]}>
             <Select
               placeholder="选择一级品类"

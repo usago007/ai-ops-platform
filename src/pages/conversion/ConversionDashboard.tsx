@@ -6,6 +6,7 @@ import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBa
 import styles from './ConversionDashboard.module.css'
 import { EmptyState } from '../../components/EmptyState'
 import { marketingService } from '../../services'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
 
@@ -60,14 +61,14 @@ export const ConversionDashboard: React.FC = () => {
     yField: 'count',
     legend: false,
     label: {
-      style: { fill: '#fff', fontSize: 14 },
+      style: { fill: '#ffffff', fontSize: 14 },
       content: ({ stage, count }: any) => `${stage}\n${count.toLocaleString()}`,
     },
     style: {
       fill: (d: any) => {
-        const colors = ['#1890ff', '#36cfc9', '#faad14', '#52c41a']
+        const colors = [CHART_COLORS[1], '#36cfc9', STATUS_COLORS.warning, STATUS_COLORS.success]
         const idx = funnelData.stages.findIndex((s: any) => s.stage === d.stage)
-        return colors[idx] || '#d9d9d9'
+        return colors[idx] || '#d4d4d8'
       },
     },
     animation: {
@@ -92,7 +93,7 @@ export const ConversionDashboard: React.FC = () => {
     yField: 'conversion',
     seriesField: 'version',
     smooth: true,
-    color: ['#d9d9d9', '#52c41a'],
+    color: ['#d4d4d8', STATUS_COLORS.success],
     point: { size: 5, shape: 'circle' },
     animation: { appear: { animation: 'fade-in', duration: 1000 } },
   }
@@ -144,7 +145,7 @@ export const ConversionDashboard: React.FC = () => {
                   value={funnelData.ab_test?.version_a.conversion}
                   precision={1}
                   suffix="%"
-                  valueStyle={{ color: '#999' }}
+                  className={styles.versionAStat}
                 />
               </Col>
               <Col span={12}>
@@ -153,9 +154,9 @@ export const ConversionDashboard: React.FC = () => {
                   value={funnelData.ab_test?.version_b.conversion}
                   precision={1}
                   suffix="%"
-                  valueStyle={{ color: '#52c41a' }}
+                  className={styles.versionBStat}
                 />
-                <Tag color="green" style={{ marginTop: 8 }}>
+                <Tag color="green" className={styles.tagMarginTop}>
                   <ArrowUpOutlined /> 胜出
                 </Tag>
               </Col>
@@ -170,7 +171,7 @@ export const ConversionDashboard: React.FC = () => {
         <Row gutter={[16, 16]}>
           <Col span={8}>
             <div className={styles.attrItem}>
-              <div className={styles.attrIcon}><BulbOutlined style={{ color: '#1890ff' }} /></div>
+              <div className={styles.attrIcon}><BulbOutlined className={styles.attrIconInfo} /></div>
               <Text strong className={styles.attrLabel}>点击率提升</Text>
               <div className={styles.attrValue}>+42%</div>
               <Text type="secondary" className={styles.attrNote}>AI 优化文案</Text>
@@ -178,7 +179,7 @@ export const ConversionDashboard: React.FC = () => {
           </Col>
           <Col span={8}>
             <div className={styles.attrItem}>
-              <div className={styles.attrIcon}><BulbOutlined style={{ color: '#52c41a' }} /></div>
+              <div className={styles.attrIcon}><BulbOutlined className={styles.attrIconSuccess} /></div>
               <Text strong className={styles.attrLabel}>加购率提升</Text>
               <div className={styles.attrValue}>+18%</div>
               <Text type="secondary" className={styles.attrNote}>AI 优化卖点</Text>
@@ -186,7 +187,7 @@ export const ConversionDashboard: React.FC = () => {
           </Col>
           <Col span={8}>
             <div className={styles.attrItem}>
-              <div className={styles.attrIcon}><BulbOutlined style={{ color: '#722ed1' }} /></div>
+              <div className={styles.attrIcon}><BulbOutlined className={styles.attrIconChart5} /></div>
               <Text strong className={styles.attrLabel}>成交率提升</Text>
               <div className={styles.attrValue}>+12%</div>
               <Text type="secondary" className={styles.attrNote}>AI 优化落地页</Text>
@@ -203,14 +204,13 @@ export const ConversionDashboard: React.FC = () => {
           
           const stageCard = (
             <Col span={6} key={stage.name}>
-              <Card className={styles.statCard}>
+               <Card className={`${styles.statCard} ${styles.statValueLg}`}>
                 <Statistic
                   title={stage.name}
                   value={stage.count}
                   precision={0}
                   groupSeparator=","
-                  valueStyle={{ fontSize: 28 }}
-                />
+                 />
                 <Divider />
                 <Space>
                   <Tag>转化率 {stage.rate}%</Tag>

@@ -45,3 +45,15 @@
 .timelineContainer {
   padding: var(--spacing-md) 0;
 }
+
+.pageTitle {
+  margin-bottom: var(--spacing-lg);
+}
+
+.rowMarginTop {
+  margin-top: var(--spacing-lg);
+}
+
+.cardMarginTop {
+  margin-top: var(--spacing-lg);
+}

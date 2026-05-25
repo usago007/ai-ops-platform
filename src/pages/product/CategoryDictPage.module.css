@@ -12,3 +12,9 @@
 .headerContent {
   flex: 1;
 }
+
+.categoryName { color: var(--info); }
+.brandHint { color: var(--text-tertiary); }
+.noPadding { padding: 0; }
+.titleMargin { margin: 8px 0; }
+.formMarginTop { margin-top: 16px; }

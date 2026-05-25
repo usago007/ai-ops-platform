@@ -94,7 +94,7 @@ export const LandingPagePreviewPage: React.FC = () => {
             <span>流量来源：</span>
           </Col>
           <Col>
-            <Select value={source} onChange={handleSourceChange} style={{ width: 160 }}>
+            <Select value={source} onChange={handleSourceChange} className={styles.sourceSelect}>
               {sourceOptions.map(opt => (
                 <Option key={opt.value} value={opt.value}>{opt.label}</Option>
               ))}
@@ -112,7 +112,7 @@ export const LandingPagePreviewPage: React.FC = () => {
       </Card>
 
       {/* Banner */}
-      <Card className={styles.previewCard} bodyStyle={{ padding: 0 }}>
+      <Card className={`${styles.previewCard} ${styles.bannerCard}`}>
         <Image src={config.banner} alt="Banner" className={styles.banner} preview={false} />
       </Card>
 

@@ -6,3 +6,9 @@
 .conflictGrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); margin: var(--spacing-md) 0; }
 .conflictGrid code { background: var(--bg-tertiary); border: 1px solid var(--border-primary); padding: var(--spacing-sm); display: block; border-radius: var(--radius-sm); font-size: var(--font-size-xs); color: var(--text-primary); }
 .conflictDesc { color: var(--text-secondary); margin: var(--spacing-md) 0; }
+
+.searchInput { width: 200px; }
+.formMarginTop { margin-top: 16px; }
+.fullWidth { width: 100%; }
+.codeBlock { background: var(--bg-tertiary); padding: 12px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.descriptionBlock { font-size: 13px; line-height: 1.6; }

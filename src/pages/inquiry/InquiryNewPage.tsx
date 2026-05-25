@@ -151,12 +151,7 @@ export const InquiryNewPage: React.FC = () => {
           type="info"
           showIcon
           closable
-          style={{ marginBottom: 16 }}
-          action={
-            <Button size="small" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')}>
-              返回线索池
-            </Button>
-          }
+          className={styles.leadAlert}
         />
       )}
 
@@ -246,15 +241,15 @@ export const InquiryNewPage: React.FC = () => {
 
         <Col span={8}>
           <Card title="处理统计" className={styles.statsCard} size="small">
-            <Statistic title="今日已处理" value={23} suffix="条" valueStyle={{ color: '#1890ff' }} />
+            <Statistic title="今日已处理" value={23} suffix="条" className={styles.statInfo} />
             <Divider />
-            <Statistic title="平均解析耗时" value={1200} suffix="ms" valueStyle={{ color: '#52c41a' }} />
+            <Statistic title="平均解析耗时" value={1200} suffix="ms" className={styles.statSuccess} />
             <Divider />
-            <Statistic title="归类准确率" value={94.2} suffix="%" valueStyle={{ color: '#faad14' }} precision={1} />
+            <Statistic title="归类准确率" value={94.2} suffix="%" precision={1} className={styles.statWarning} />
           </Card>
 
-          <Card title="快捷示例" className={styles.sampleCard} size="small" style={{ marginTop: 16 }}>
-            <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 8 }}>
+          <Card title="快捷示例" className={`${styles.sampleCard} ${styles.sampleCardSpacing}`} size="small">
+            <Text type="secondary" className={styles.sampleHint}>
               点击快速填充询价文本体验
             </Text>
             <Collapse
@@ -265,12 +260,12 @@ export const InquiryNewPage: React.FC = () => {
                 label: (
                   <Space>
                     <Tag color={sample.color}>{sample.difficulty}</Tag>
-                    <Text style={{ fontSize: 13 }}>{sample.label}</Text>
+                    <Text className={styles.sampleLabelText}>{sample.label}</Text>
                   </Space>
                 ),
                 children: (
                   <div>
-                    <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 8 }}>{sample.text}</p>
+                    <p className={styles.sampleDescription}>{sample.text}</p>
                     <Button size="small" type="primary" onClick={() => {
                       setText(sample.text)
                       message.info('已填充示例文本，点击 AI 解析体验')

@@ -76,7 +76,7 @@
 
 .violation {
   background: rgba(239, 68, 68, 0.2);
-  text-decoration: wavy underline #ef4444;
+  text-decoration: wavy underline var(--error);
   cursor: help;
   padding: 0 var(--spacing-xs);
   border-radius: var(--radius-sm);
@@ -105,3 +105,6 @@
   font-weight: 500;
   color: var(--text-primary);
 }
+
+.fullWidth { width: 100%; }
+.emptyIcon { font-size: 48px; color: var(--text-muted); }

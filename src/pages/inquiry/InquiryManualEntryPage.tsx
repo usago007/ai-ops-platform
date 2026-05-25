@@ -41,10 +41,10 @@ export const InquiryManualEntryPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} className={styles.backButton}>
           返回线索池
         </Button>
-        <Title level={3} style={{ margin: '8px 0 4px' }}>手动录入询价</Title>
+        <Title level={3} className={styles.titleMargin}>手动录入询价</Title>
         <Text type="secondary">粘贴或输入询价文本，AI 将自动解析并归类</Text>
       </div>
 

@@ -221,13 +221,13 @@ export const ModelConfigPage: React.FC = () => {
             <Input disabled />
           </Form.Item>
           <Form.Item label="Temperature" name="temperature">
-            <InputNumber min={0} max={1} step={0.1} style={{ width: '100%' }} />
+            <InputNumber min={0} max={1} step={0.1} className={styles.fullWidth} />
           </Form.Item>
           <Form.Item label="Top P" name="topP">
-            <InputNumber min={0} max={1} step={0.05} style={{ width: '100%' }} />
+            <InputNumber min={0} max={1} step={0.05} className={styles.fullWidth} />
           </Form.Item>
           <Form.Item label="Max Tokens" name="maxTokens">
-            <InputNumber min={256} max={8192} step={256} style={{ width: '100%' }} />
+            <InputNumber min={256} max={8192} step={256} className={styles.fullWidth} />
           </Form.Item>
         </Form>
       </Modal>
@@ -259,13 +259,13 @@ export const ModelConfigPage: React.FC = () => {
             <Input placeholder="例如：https://api.openai.com/v1" />
           </Form.Item>
           <Form.Item label="Temperature" name="temperature" initialValue={0.7}>
-            <InputNumber min={0} max={1} step={0.1} style={{ width: '100%' }} />
+            <InputNumber min={0} max={1} step={0.1} className={styles.fullWidth} />
           </Form.Item>
           <Form.Item label="Top P" name="topP" initialValue={0.9}>
-            <InputNumber min={0} max={1} step={0.05} style={{ width: '100%' }} />
+            <InputNumber min={0} max={1} step={0.05} className={styles.fullWidth} />
           </Form.Item>
           <Form.Item label="Max Tokens" name="maxTokens" initialValue={2048}>
-            <InputNumber min={256} max={8192} step={256} style={{ width: '100%' }} />
+            <InputNumber min={256} max={8192} step={256} className={styles.fullWidth} />
           </Form.Item>
         </Form>
       </Modal>

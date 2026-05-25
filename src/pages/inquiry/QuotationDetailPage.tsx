@@ -119,7 +119,7 @@ export const QuotationDetailPage: React.FC = () => {
             <Tag color={TIMELINE_EVENT_CONFIG[fu.type]?.color || 'gray'}>
               {TIMELINE_EVENT_CONFIG[fu.type]?.label || fu.type}
             </Tag>
-            <Text type="secondary" style={{ fontSize: 12 }}>{fu.created_at}</Text>
+            <Text type="secondary" className={styles.timeText}>{fu.created_at}</Text>
           </div>
           <Text>{fu.content}</Text>
         </div>
@@ -133,7 +133,7 @@ export const QuotationDetailPage: React.FC = () => {
             <Tag color="orange">
               {v.version === 1 ? '首次报价' : `第${v.version}次修改报价`}
             </Tag>
-            <Text type="secondary" style={{ fontSize: 12 }}>{v.created_at}</Text>
+            <Text type="secondary" className={styles.timeText}>{v.created_at}</Text>
           </div>
           <Text>总金额: ¥{v.total?.toLocaleString()} | 交期: {v.delivery} | 付款: {v.payment}</Text>
         </div>
@@ -144,11 +144,11 @@ export const QuotationDetailPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/quotation-list')} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/quotation-list')} className={styles.backButton}>
           返回报价列表
         </Button>
         <div className={styles.headerContent}>
-          <Title level={3} style={{ margin: '8px 0' }}>报价详情</Title>
+          <Title level={3} className={styles.titleMargin}>报价详情</Title>
           <Space size="middle">
             {lead && <Tag color={RESULT_CONFIG[lead.status]?.color}>{RESULT_CONFIG[lead.status]?.label}</Tag>}
             {quotationHistory.length > 0 && (
@@ -187,7 +187,7 @@ export const QuotationDetailPage: React.FC = () => {
                 <Descriptions.Item label="付款方式">{lead.quotation.payment}</Descriptions.Item>
                 <Descriptions.Item label="报价有效期">{lead.quotation.validUntil}</Descriptions.Item>
               </Descriptions>
-              <Divider style={{ margin: '12px 0' }} />
+              <Divider className={styles.dividerCompact} />
               <Table
                 columns={quotationColumns}
                 dataSource={lead.quotation.products || []}
@@ -225,16 +225,16 @@ export const QuotationDetailPage: React.FC = () => {
           </Card>
 
           <Card title={<Space><Text strong>成单/丢单标记</Text></Space>} size="small" className={styles.markResultCard}>
-            <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 12 }}>
+            <Text type="secondary" className={styles.hintText}>
               根据最终结果更新线索状态
             </Text>
-            <Space direction="vertical" style={{ width: '100%' }}>
+            <Space direction="vertical" className={styles.fullWidth}>
               <Button
                 type="primary"
                 icon={<TrophyOutlined />}
                 block
                 onClick={() => { setSelectedResult('won'); setResultModalVisible(true) }}
-                style={{ background: '#52c41a', borderColor: '#52c41a' }}
+                className={styles.wonButton}
               >
                 标记为成单
               </Button>
@@ -253,7 +253,7 @@ export const QuotationDetailPage: React.FC = () => {
             <Card title={<Space><Text strong>报价摘要</Text></Space>} size="small" className={styles.summaryCard}>
               <Descriptions column={1} size="small">
                 <Descriptions.Item label="产品数量">{lead.quotation.products?.length || 0} 项</Descriptions.Item>
-                <Descriptions.Item label="报价总金额"><Text strong style={{ fontSize: 18, color: '#1890ff' }}>¥{totalAmount.toLocaleString()}</Text></Descriptions.Item>
+                <Descriptions.Item label="报价总金额"><Text strong className={styles.totalAmount}>¥{totalAmount.toLocaleString()}</Text></Descriptions.Item>
                 <Descriptions.Item label="报价次数">{quotationHistory.length || 1}</Descriptions.Item>
               </Descriptions>
             </Card>
@@ -271,7 +271,7 @@ export const QuotationDetailPage: React.FC = () => {
         cancelText="取消"
         okButtonProps={{ danger: selectedResult === 'lost' }}
       >
-        <Form layout="vertical" style={{ marginTop: 16 }}>
+        <Form layout="vertical" className={styles.modalForm}>
           <Form.Item label={selectedResult === 'won' ? '成单原因' : '丢单原因'}>
             <Input.TextArea
               rows={3}

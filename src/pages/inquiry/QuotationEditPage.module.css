@@ -34,3 +34,25 @@
 .productRow {
   margin-bottom: var(--spacing-sm);
 }
+
+.backButton {
+  padding: 0;
+}
+
+.titleMargin {
+  margin: 8px 0 4px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.deleteButton {
+  margin-top: 24px;
+}
+
+.hintText {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
+}

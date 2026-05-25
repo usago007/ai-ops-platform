@@ -113,7 +113,7 @@ export const BizOverviewPage: React.FC = () => {
     {
       title: '知识标题', dataIndex: 'title', key: 'title',
       render: (text: string, record: any) => (
-        <Button type="link" style={{ padding: 0 }} onClick={() => setSelectedKB(record)}>{text}</Button>
+        <Button type="link" className={styles.kbLinkButton} onClick={() => setSelectedKB(record)}>{text}</Button>
       ),
     },
     { title: '品类', dataIndex: 'category', key: 'category', width: 120 },
@@ -259,7 +259,7 @@ export const BizOverviewPage: React.FC = () => {
 
         <Col span={8}>
           <Card title="快捷入口" className={styles.card}>
-            <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <Space direction="vertical" className={styles.quickLinks} size="middle">
               <Button type="primary" icon={<InboxOutlined />} block size="large" onClick={() => navigate('/inquiry/list')}>
                 查看询价线索池
               </Button>
@@ -329,7 +329,7 @@ export const BizOverviewPage: React.FC = () => {
         {selectedKB && (
           <div>
             <Paragraph type="secondary">{selectedKB.summary}</Paragraph>
-            <Space wrap style={{ marginBottom: 16 }}>
+            <Space wrap className={styles.kbModalTags}>
               <Tag color={KB_TYPE_CONFIG[selectedKB.type]?.color}>{KB_TYPE_CONFIG[selectedKB.type]?.label}</Tag>
               {selectedKB.outcome === 'won' ? (
                 <Tag color="green" icon={<TrophyOutlined />}>成单 ¥{selectedKB.amount?.toLocaleString()}</Tag>

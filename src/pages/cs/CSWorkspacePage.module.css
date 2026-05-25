@@ -174,11 +174,15 @@
 }
 
 .sessionItem:hover {
-  background: rgba(99, 102, 241, 0.1);
+  background: var(--info-bg);
+}
+
+.sessionItem:active {
+  background: rgba(29, 78, 216, 0.12);
 }
 
 .sessionItem.active {
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(29, 78, 216, 0.15);
   border-left: 2px solid var(--brand-primary);
 }
 
@@ -217,7 +221,11 @@
 .suggestionCard:hover {
   border-color: var(--brand-primary);
   box-shadow: var(--shadow-sm);
-  background: rgba(24, 144, 255, 0.08);
+  background: var(--info-bg);
+}
+
+.suggestionCard:active {
+  transform: scale(0.98);
 }
 
 .suggestionText {
@@ -231,3 +239,6 @@
   font-size: 11px;
   color: var(--brand-primary);
 }
+
+.marginTopSm { margin-top: 8px; }
+.fullWidth { width: 100%; }

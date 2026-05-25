@@ -65,10 +65,10 @@ export const QuotationEditPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/quotation-list')} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/quotation-list')} className={styles.backButton}>
           返回报价列表
         </Button>
-        <Title level={3} style={{ margin: '8px 0 4px' }}>报价单编辑</Title>
+        <Title level={3} className={styles.titleMargin}>报价单编辑</Title>
       </div>
 
       <Row gutter={16}>
@@ -99,7 +99,7 @@ export const QuotationEditPage: React.FC = () => {
                         </Col>
                         <Col span={4}>
                           <Form.Item {...restField} name={[name, 'quantity']} label="数量" rules={[{ required: true }]}>
-                            <InputNumber style={{ width: '100%' }} min={1} />
+                            <InputNumber className={styles.fullWidth} min={1} />
                           </Form.Item>
                         </Col>
                         <Col span={5}>
@@ -109,11 +109,11 @@ export const QuotationEditPage: React.FC = () => {
                         </Col>
                         <Col span={5}>
                           <Form.Item {...restField} name={[name, 'unitPrice']} label="单价(元)" rules={[{ required: true }]}>
-                            <InputNumber style={{ width: '100%' }} min={0} precision={2} />
+                            <InputNumber className={styles.fullWidth} min={0} precision={2} />
                           </Form.Item>
                         </Col>
                         <Col span={2}>
-                          <Button type="link" danger onClick={() => remove(name)} style={{ marginTop: 24 }}>删除</Button>
+                           <Button type="link" danger onClick={() => remove(name)} className={styles.deleteButton}>删除</Button>
                         </Col>
                       </Row>
                     ))}
@@ -160,7 +160,7 @@ export const QuotationEditPage: React.FC = () => {
 
         <Col span={8}>
           <Card title={<Space><CheckCircleOutlined /><Text strong>历史相似报价</Text></Space>} size="small" className={styles.similarCard}>
-            <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 8 }}>
+            <Text type="secondary" className={styles.hintText}>
               参考以下历史报价制定报价策略
             </Text>
             <Table

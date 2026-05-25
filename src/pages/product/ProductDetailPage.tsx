@@ -4,6 +4,7 @@ import { CheckOutlined, CloseOutlined, EditOutlined, ScanOutlined, ArrowLeftOutl
 import { useParams, useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './ProductDetailPage.module.css'
+import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Text, Title } = Typography
 
@@ -96,13 +97,13 @@ export const ProductDetailPage: React.FC = () => {
     {
       title: '属性值', dataIndex: 'value', key: 'value',
       render: (v: string, record: any) => (
-        <Button type="link" size="small" style={{ padding: 0 }} onClick={() => handleEditAttr(record)}>
-          {v} <EditOutlined style={{ fontSize: 10, color: '#999' }} />
+        <Button type="link" size="small" className={styles.noPadding} onClick={() => handleEditAttr(record)}>
+          {v} <EditOutlined className={styles.editIcon} />
         </Button>
       ),
     },
     { title: '置信度', dataIndex: 'confidence', key: 'confidence', width: 100,
-      render: (c: number) => <span style={{ color: c > 0.9 ? '#52c41a' : c > 0.8 ? '#faad14' : '#ff4d4f' }}>
+      render: (c: number) => <span className={c > 0.9 ? styles.confidenceHigh : c > 0.8 ? styles.confidenceMedium : styles.confidenceLow}>
         {(c * 100).toFixed(0)}%
       </span>
     },
@@ -123,11 +124,11 @@ export const ProductDetailPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/product/list')} style={{ padding: 0 }}>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/product/list')} className={styles.noPadding}>
           返回商品库
         </Button>
         <div className={styles.headerContent}>
-          <Title level={3} style={{ margin: '8px 0' }}>
+          <Title level={3} className={styles.titleMargin}>
             {isPending ? '待结构化商品' : '商品详情'}
           </Title>
           <Space size="middle">
@@ -144,17 +145,17 @@ export const ProductDetailPage: React.FC = () => {
           description="请审核AI提取的商品信息，确认无误后点击「确认保存」将其加入标准商品库"
           type="warning"
           showIcon
-          style={{ marginBottom: 24 }}
+          className={styles.alertMargin}
         />
       )}
 
       {product.source_inquiry && (
-        <Card title={<Space><LinkOutlined /><Text strong>关联询价线索</Text></Space>} size="small" style={{ marginBottom: 16 }}>
+        <Card title={<Space><LinkOutlined /><Text strong>关联询价线索</Text></Space>} size="small" className={styles.cardMarginBottom}>
           <Button type="link" onClick={() => navigate(`/inquiry/result?leadId=${product.source_inquiry}`)}>
             查看原始询价 {product.source_inquiry}
           </Button>
-          <div style={{ marginTop: 8 }}>
-            <Text type="secondary" style={{ fontSize: 12 }}>原始文本：</Text>
+          <div className={styles.metaRow}>
+            <Text type="secondary" className={styles.smallFont}>原始文本：</Text>
             <Text type="secondary">{product.original_text}</Text>
           </div>
         </Card>
@@ -178,7 +179,7 @@ export const ProductDetailPage: React.FC = () => {
 
         <Card title="属性提取结果" size="small" className={styles.rightCard}
           extra={
-            <Text type="secondary" style={{ fontSize: 12 }}>点击属性值可编辑</Text>
+            <Text type="secondary" className={styles.smallFont}>点击属性值可编辑</Text>
           }
         >
           <Table

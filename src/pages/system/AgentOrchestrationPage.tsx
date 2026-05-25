@@ -43,6 +43,7 @@ import {
 import { Pie, Line, Column } from '@ant-design/charts'
 import styles from './AgentOrchestrationPage.module.css'
 import { systemService } from '../../services'
+import { CHART_COLORS, CHART_PALETTE, STATUS_COLORS, CHART_LABEL_COLOR } from '../../styles/chartColors'
 
 const { TabPane } = Tabs
 const { TextArea } = Input
@@ -1016,7 +1017,7 @@ export const AgentOrchestrationPage: React.FC = () => {
           </div>
 
           {/* 四大核心组件 */}
-          <Row gutter={[24, 24]} style={{ marginTop: 24 }}>
+          <Row gutter={[24, 24]} className={styles.componentRow}>
             <Col span={6}>
               <Card
                 className={`${styles.archComponentCard} ${styles.llmGatewayCard}`}
@@ -1024,7 +1025,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 onClick={() => setActiveTab('llm-gateway')}
               >
                 <div className={styles.componentIcon}>
-                  <GatewayOutlined style={{ fontSize: 32, color: '#1890ff' }} />
+                  <GatewayOutlined className={styles.gatewayIcon} />
                 </div>
                 <h3 className={styles.componentTitle}>LLM 网关</h3>
                 <div className={styles.componentFeatures}>
@@ -1033,7 +1034,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Tag icon={<FilterOutlined />} color="purple">路由</Tag>
                 </div>
                 <div className={styles.componentStats}>
-                  <Statistic title="请求/分钟" value={llmGatewayConfig.rateLimit} valueStyle={{ color: '#1890ff' }} />
+                  <Statistic title="请求/分钟" value={llmGatewayConfig.rateLimit} valueStyle={{ color: 'var(--chart-1)' }} />
                   <Statistic title="超时(ms)" value={llmGatewayConfig.timeout} />
                 </div>
                 <Button type="primary" block icon={<SettingOutlined />} onClick={(e) => { e.stopPropagation(); setActiveTab('llm-gateway') }}>
@@ -1049,7 +1050,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 onClick={() => setActiveTab('workflow-engine')}
               >
                 <div className={styles.componentIcon}>
-                  <ApiOutlined style={{ fontSize: 32, color: '#52c41a' }} />
+                  <ApiOutlined className={styles.workflowIcon} />
                 </div>
                 <h3 className={styles.componentTitle}>工作流引擎</h3>
                 <div className={styles.componentFeatures}>
@@ -1058,7 +1059,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Tag color="orange">n8n</Tag>
                 </div>
                 <div className={styles.componentStats}>
-                  <Statistic title="运行中流程" value={workflowEngines.filter(e => e.status === 'running').length} valueStyle={{ color: '#52c41a' }} />
+                  <Statistic title="运行中流程" value={workflowEngines.filter(e => e.status === 'running').length} valueStyle={{ color: 'var(--success)' }} />
                   <Statistic title="总流程数" value={workflowEngines.length} />
                 </div>
                 <Button type="primary" block icon={<SettingOutlined />} onClick={(e) => { e.stopPropagation(); setActiveTab('workflow-engine') }}>
@@ -1074,7 +1075,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 onClick={() => setActiveTab('rag-service')}
               >
                 <div className={styles.componentIcon}>
-                  <DatabaseOutlined style={{ fontSize: 32, color: '#722ed1' }} />
+                  <DatabaseOutlined className={styles.ragIcon} />
                 </div>
                 <h3 className={styles.componentTitle}>RAG 服务</h3>
                 <div className={styles.componentFeatures}>
@@ -1083,7 +1084,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Tag icon={<ThunderboltOutlined />} color="volcano">增强</Tag>
                 </div>
                 <div className={styles.componentStats}>
-                  <Statistic title="文档数" value={ragService.documentCount} valueStyle={{ color: '#722ed1' }} />
+                  <Statistic title="文档数" value={ragService.documentCount} valueStyle={{ color: 'var(--chart-5)' }} />
                   <Statistic title="索引数" value={ragService.indexCount} />
                 </div>
                 <Button type="primary" block icon={<SettingOutlined />} onClick={(e) => { e.stopPropagation(); setActiveTab('rag-service') }}>
@@ -1099,7 +1100,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 onClick={() => setActiveTab('prompt-management')}
               >
                 <div className={styles.componentIcon}>
-                  <FileTextOutlined style={{ fontSize: 32, color: '#fa8c16' }} />
+                  <FileTextOutlined className={styles.promptIcon} />
                 </div>
                 <h3 className={styles.componentTitle}>Prompt 管理</h3>
                 <div className={styles.componentFeatures}>
@@ -1108,7 +1109,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Tag color="red">灰度</Tag>
                 </div>
                 <div className={styles.componentStats}>
-                  <Statistic title="活跃版本" value={promptVersions.filter(p => p.status === 'active').length} valueStyle={{ color: '#fa8c16' }} />
+                  <Statistic title="活跃版本" value={promptVersions.filter(p => p.status === 'active').length} valueStyle={{ color: 'var(--warning)' }} />
                   <Statistic title="总版本数" value={promptVersions.length} />
                 </div>
                 <Button type="primary" block icon={<SettingOutlined />} onClick={(e) => { e.stopPropagation(); setActiveTab('prompt-management') }}>
@@ -1139,25 +1140,25 @@ export const AgentOrchestrationPage: React.FC = () => {
             <div className={`${styles.flowNode} ${styles.flowNodeActive}`}>
               <div className={styles.flowNodeIcon}>🔒</div>
               <div className={styles.flowNodeLabel}>LLM 网关</div>
-              <Badge status="success" text="健康" style={{ marginTop: 4 }} />
+              <Badge status="success" text="健康" className={styles.flowBadge} />
             </div>
             <div className={styles.flowArrow}>→</div>
             <div className={styles.flowNode}>
               <div className={styles.flowNodeIcon}>🔀</div>
               <div className={styles.flowNodeLabel}>工作流引擎</div>
-              <Badge status="warning" text="降级" style={{ marginTop: 4 }} />
+              <Badge status="warning" text="降级" className={styles.flowBadge} />
             </div>
             <div className={styles.flowArrow}>→</div>
             <div className={styles.flowNode}>
               <div className={styles.flowNodeIcon}>📚</div>
               <div className={styles.flowNodeLabel}>RAG 服务</div>
-              <Badge status="success" text="健康" style={{ marginTop: 4 }} />
+              <Badge status="success" text="健康" className={styles.flowBadge} />
             </div>
             <div className={styles.flowArrow}>→</div>
             <div className={styles.flowNode}>
               <div className={styles.flowNodeIcon}>📝</div>
               <div className={styles.flowNodeLabel}>Prompt 管理</div>
-              <Badge status="success" text="健康" style={{ marginTop: 4 }} />
+              <Badge status="success" text="健康" className={styles.flowBadge} />
             </div>
             <div className={styles.flowArrow}>→</div>
             <div className={styles.flowNode}>
@@ -1175,14 +1176,14 @@ export const AgentOrchestrationPage: React.FC = () => {
             items={activeAlerts.map(alert => ({
               color: alert.level === 'error' ? 'red' : 'orange',
               children: (
-                <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                <Space direction="vertical" size="small" className={styles.fullWidth}>
                   <div>
                     <Tag color={alert.level === 'error' ? 'error' : 'warning'}>
                       {alert.level === 'error' ? '错误' : '警告'}
                     </Tag>
-                    <span style={{ marginLeft: 8 }}>{alert.message}</span>
+                    <span className={styles.alertMessage}>{alert.message}</span>
                   </div>
-                  <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{alert.time}</span>
+                  <span className={styles.alertTime}>{alert.time}</span>
                 </Space>
               ),
             }))}
@@ -1208,11 +1209,11 @@ export const AgentOrchestrationPage: React.FC = () => {
                   {comp.status === 'healthy' ? '✅' : comp.status === 'degraded' ? '⚠️' : '❌'}
                 </div>
                 <div className={styles.healthTitle}>{comp.component}</div>
-                <div className={styles.metricValue} style={{ color: comp.status === 'healthy' ? '#52c41a' : comp.status === 'degraded' ? '#faad14' : '#f5222d' }}>
+                <div className={`${styles.metricValue} ${comp.status === 'healthy' ? styles.statValueSuccess : comp.status === 'degraded' ? styles.statValueWarning : styles.statValueError}`}>
                   {comp.metrics.successRate}%
                 </div>
                 <div className={styles.metricLabel}>成功率</div>
-                <Row gutter={[8, 8]} style={{ marginTop: 12 }}>
+                <Row gutter={[8, 8]} className={styles.healthMetricsRow}>
                   <Col span={12}>
                     <Statistic title="QPS" value={comp.metrics.qps} valueStyle={{ fontSize: 16, color: 'var(--text-primary)' }} />
                   </Col>
@@ -1220,11 +1221,11 @@ export const AgentOrchestrationPage: React.FC = () => {
                     <Statistic title="P95延迟" value={comp.metrics.p95Latency} suffix="s" valueStyle={{ fontSize: 16, color: 'var(--text-primary)' }} />
                   </Col>
                 </Row>
-                <div className={styles.healthStatus} style={{ marginTop: 8 }}>
+                <div className={styles.healthStatusFooter}>
                   <Tag color={comp.status === 'healthy' ? 'success' : comp.status === 'degraded' ? 'warning' : 'error'}>
                     {comp.status === 'healthy' ? '健康' : comp.status === 'degraded' ? '降级' : '异常'}
                   </Tag>
-                  <span style={{ fontSize: 11, color: 'var(--text-secondary)', marginLeft: 8 }}>
+                  <span className={styles.healthCheckTime}>
                     最后检查: {comp.lastCheck}
                   </span>
                 </div>
@@ -1248,7 +1249,7 @@ export const AgentOrchestrationPage: React.FC = () => {
         } 
         className={styles.card}
       >
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        <Space direction="vertical" size="large" className={styles.topologySpace}>
           {workflowEngines.map(engine => {
             const relatedModules = businessMappings.filter(m => m.workflowId === engine.id)
             const isSelected = selectedWorkflowId === engine.id
@@ -1256,30 +1257,22 @@ export const AgentOrchestrationPage: React.FC = () => {
             return (
               <div 
                 key={engine.id} 
-                className={`${styles.topologyRow} ${isDimmed ? styles.topologyRowDimmed : ''}`}
-                style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 24,
-                  opacity: isDimmed ? 0.3 : 1,
-                  transition: 'opacity 0.3s ease'
-                }}
+                className={`${styles.topologyRow} ${isDimmed ? styles.topologyRowDimmed : ''} ${styles.topologyRowInner} ${isDimmed ? styles.topologyRowDimmedInner : ''}`}
               >
                 <div 
-                  className={`${styles.workflowNodeCard} ${isSelected ? styles.workflowNodeSelected : ''}`}
+                  className={`${styles.workflowNodeCard} ${isSelected ? styles.workflowNodeSelected : ''} ${styles.workflowNodeClickable}`}
                   onClick={() => setSelectedWorkflowId(isSelected ? null : engine.id)}
-                  style={{ cursor: 'pointer' }}
                 >
-                  <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: 24 }}>{workflowEngineIcons[engine.type]}</span>
-                    <div style={{ fontSize: 13, fontWeight: 600, marginTop: 4 }}>{engine.name}</div>
+                  <div className={styles.workflowNodeContent}>
+                    <span className={styles.workflowNodeIcon}>{workflowEngineIcons[engine.type]}</span>
+                    <div className={styles.workflowNodeName}>{engine.name}</div>
                     <Tag 
                       color={engine.type === 'dify' ? 'blue' : engine.type === 'coze' ? 'green' : engine.type === 'n8n' ? 'orange' : 'default'}
-                      style={{ marginTop: 4 }}
+                      className={styles.workflowNodeTypeTag}
                     >
                       {engine.type.toUpperCase()}
                     </Tag>
-                    <div style={{ marginTop: 4 }}>
+                    <div className={styles.workflowNodeBadgeWrap}>
                       <Badge 
                         status={engine.status === 'running' ? 'success' : engine.status === 'stopped' ? 'default' : 'error'} 
                         text={engine.status === 'running' ? '运行中' : engine.status === 'stopped' ? '已停止' : '异常'} 
@@ -1290,23 +1283,23 @@ export const AgentOrchestrationPage: React.FC = () => {
 
                 <div className={styles.topologyArrow}>→</div>
 
-                <div style={{ flex: 1, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                <div className={styles.relatedModulesContainer}>
                   {relatedModules.length > 0 ? (
                     relatedModules.map(mapping => (
                       <Tooltip key={mapping.moduleId} title={`路由: ${mapping.routePath}${mapping.promptId ? '\nPrompt: ' + (promptVersions.find(p => p.id === mapping.promptId)?.name || '-') : ''}${mapping.ragIndexId ? '\nRAG: ' + ragIndices.find(i => i.id === mapping.ragIndexId)?.name || '-' : ''}`}>
                         <div className={styles.businessModuleNode}>
-                          <div style={{ padding: '10px 16px', background: '#fafafa', borderRadius: 6, border: '1px solid #f0f0f0' }}>
+                          <div className={styles.moduleMappingPill}>
                             <Space>
                               <span>{mapping.icon}</span>
-                              <span style={{ fontSize: 13, fontWeight: 500 }}>{mapping.moduleId}</span>
-                              <span style={{ fontSize: 12, color: '#666' }}>{mapping.moduleName}</span>
+                              <span className={styles.moduleMappingId}>{mapping.moduleId}</span>
+                              <span className={styles.moduleMappingName}>{mapping.moduleName}</span>
                             </Space>
                           </div>
                         </div>
                       </Tooltip>
                     ))
                   ) : (
-                    <span style={{ color: '#999', fontSize: 12 }}>暂无关联业务模块</span>
+                    <span className={styles.noModulesText}>暂无关联业务模块</span>
                   )}
                 </div>
               </div>
@@ -1321,25 +1314,25 @@ export const AgentOrchestrationPage: React.FC = () => {
           {businessMappings.map(mapping => (
             <Col span={6} key={mapping.moduleId}>
               <Card className={styles.businessMappingCard} hoverable>
-                <div style={{ textAlign: 'center', marginBottom: 12 }}>
-                  <span style={{ fontSize: 32 }}>{mapping.icon}</span>
-                  <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)', marginTop: 8 }}>{mapping.moduleName}</div>
+                <div className={styles.mappingIconCenter}>
+                  <span className={styles.mappingIconLarge}>{mapping.icon}</span>
+                  <div className={styles.mappingNameLarge}>{mapping.moduleName}</div>
                 </div>
-                <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                <Space direction="vertical" size="small" className={styles.fullWidth}>
                   {mapping.workflowId && (
-                    <div style={{ fontSize: 12 }}>
+                    <div className={styles.mappingDetailRow}>
                       <Tag color="green">工作流</Tag>
                       <span>{workflowEngines.find(w => w.id === mapping.workflowId)?.name}</span>
                     </div>
                   )}
                   {mapping.promptId && (
-                    <div style={{ fontSize: 12 }}>
+                    <div className={styles.mappingDetailRow}>
                       <Tag color="orange">Prompt</Tag>
                       <span>{promptVersions.find(p => p.id === mapping.promptId)?.name}</span>
                     </div>
                   )}
                   {mapping.ragIndexId && (
-                    <div style={{ fontSize: 12 }}>
+                    <div className={styles.mappingDetailRow}>
                       <Tag color="purple">RAG索引</Tag>
                       <span>{mapping.ragIndexId}</span>
                     </div>
@@ -1364,13 +1357,13 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Input.Password defaultValue={llmGatewayConfig.apiKey} />
                 </Form.Item>
                 <Form.Item label="限流阈值 (请求/分钟)">
-                  <InputNumber min={100} max={10000} style={{ width: '100%' }} defaultValue={llmGatewayConfig.rateLimit} />
+                  <InputNumber min={100} max={10000} defaultValue={llmGatewayConfig.rateLimit} />
                 </Form.Item>
                 <Form.Item label="最大 Token 数">
-                  <InputNumber min={1024} max={32768} style={{ width: '100%' }} defaultValue={llmGatewayConfig.maxTokens} />
+                  <InputNumber min={1024} max={32768} defaultValue={llmGatewayConfig.maxTokens} />
                 </Form.Item>
                 <Form.Item label="超时时间 (ms)">
-                  <InputNumber min={5000} max={120000} style={{ width: '100%' }} defaultValue={llmGatewayConfig.timeout} />
+                  <InputNumber min={5000} max={120000} defaultValue={llmGatewayConfig.timeout} />
                 </Form.Item>
                 <Form.Item label="备用模型">
                   <Select defaultValue={llmGatewayConfig.fallbackModel}>
@@ -1380,7 +1373,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                   </Select>
                 </Form.Item>
                 <Form.Item label="重试次数">
-                  <InputNumber min={0} max={10} style={{ width: '100%' }} defaultValue={llmGatewayConfig.retryCount} />
+                  <InputNumber min={0} max={10} defaultValue={llmGatewayConfig.retryCount} />
                 </Form.Item>
               </Form>
             </Card>
@@ -1391,7 +1384,7 @@ export const AgentOrchestrationPage: React.FC = () => {
               <Form layout="vertical">
                 <Form.Item label="鉴权开关">
                   <Switch defaultChecked={llmGatewayConfig.authEnabled} />
-                  <span style={{ marginLeft: 8 }}>
+                  <span className={styles.authLabel}>
                     {llmGatewayConfig.authEnabled ? '已启用' : '已禁用'}
                   </span>
                 </Form.Item>
@@ -1428,7 +1421,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                     </List.Item>
                   )}
                 />
-                <Button type="dashed" block icon={<PlusOutlined />} style={{ marginTop: 16 }} onClick={handleAddRouteRule}>
+                <Button type="dashed" block icon={<PlusOutlined />} className={styles.addRouteButton} onClick={handleAddRouteRule}>
                   添加路由规则
                 </Button>
               </Form>
@@ -1436,9 +1429,9 @@ export const AgentOrchestrationPage: React.FC = () => {
           </Col>
         </Row>
 
-        <div style={{ marginTop: 24, textAlign: 'right' }}>
+        <div className={styles.formActions}>
           <Button icon={<ReloadOutlined />} onClick={() => message.info('配置已重置')}>重置</Button>
-          <Button type="primary" icon={<CheckOutlined />} style={{ marginLeft: 8 }} onClick={() => message.success('LLM 网关配置已保存')}>
+          <Button type="primary" icon={<CheckOutlined />} className={styles.saveButton} onClick={() => message.success('LLM 网关配置已保存')}>
             保存配置
           </Button>
         </div>
@@ -1449,27 +1442,27 @@ export const AgentOrchestrationPage: React.FC = () => {
         <div className={styles.monitoringPanel}>
           <div className={styles.monitoringGrid}>
             <div className={styles.monitoringItem}>
-              <div className={styles.monitoringValue} style={{ color: '#1890ff' }}>1,250</div>
+              <div className={`${styles.monitoringValue} ${styles.monitoringValueInfo}`}>1,250</div>
               <div className={styles.monitoringLabel}>QPS (请求/秒)</div>
             </div>
             <div className={styles.monitoringItem}>
-              <div className={styles.monitoringValue} style={{ color: '#52c41a' }}>99.7%</div>
+              <div className={`${styles.monitoringValue} ${styles.monitoringValueSuccess}`}>99.7%</div>
               <div className={styles.monitoringLabel}>成功率</div>
             </div>
             <div className={styles.monitoringItem}>
-              <div className={styles.monitoringValue} style={{ color: '#faad14' }}>1.2s</div>
+              <div className={`${styles.monitoringValue} ${styles.monitoringValueWarning}`}>1.2s</div>
               <div className={styles.monitoringLabel}>P95 延迟</div>
             </div>
             <div className={styles.monitoringItem}>
-              <div className={styles.monitoringValue} style={{ color: '#f5222d' }}>0.3%</div>
+              <div className={`${styles.monitoringValue} ${styles.monitoringValueError}`}>0.3%</div>
               <div className={styles.monitoringLabel}>错误率</div>
             </div>
             <div className={styles.monitoringItem}>
-              <div className={styles.monitoringValue} style={{ color: '#722ed1' }}>780</div>
+              <div className={`${styles.monitoringValue} ${styles.monitoringValueChart5}`}>780</div>
               <div className={styles.monitoringLabel}>限流剩余</div>
             </div>
             <div className={styles.monitoringItem}>
-              <div className={styles.monitoringValue} style={{ color: '#13c2c2' }}>101.5K</div>
+              <div className={`${styles.monitoringValue} ${styles.monitoringValueChart2}`}>101.5K</div>
               <div className={styles.monitoringLabel}>Token/分钟</div>
             </div>
           </div>
@@ -1489,7 +1482,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 innerRadius={0.6}
                 label={{ type: 'outer', content: '{name} {percentage}%' }}
                 interactions={[{ type: 'element-active' }]}
-                color={['#1890ff', '#52c41a', '#faad14', '#722ed1', '#8c8c8c']}
+                color={[CHART_COLORS[1], CHART_COLORS[3], CHART_COLORS[4], CHART_COLORS[5], CHART_COLORS[6]]}
               />
             </div>
           </Card>
@@ -1519,14 +1512,14 @@ export const AgentOrchestrationPage: React.FC = () => {
           <div className={styles.apiKeyItem} key={key.id}>
             <div className={styles.apiKeyStatus}>
               <Badge status={key.status === 'active' ? 'success' : key.status === 'disabled' ? 'default' : 'error'} />
-              <code style={{ fontFamily: 'monospace', color: 'var(--text-primary)' }}>{key.key}</code>
+              <code className={styles.apiKeyCode}>{key.key}</code>
               <Tag color={key.rotationPolicy === 'auto' ? 'green' : 'orange'}>
                 {key.rotationPolicy === 'auto' ? '自动轮换' : '手动'}
               </Tag>
             </div>
             <Space>
               <Statistic title="使用次数" value={key.usageCount} valueStyle={{ fontSize: 14 }} />
-              <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>最后使用: {key.lastUsed}</span>
+              <span className={styles.apiKeyLastUsed}>最后使用: {key.lastUsed}</span>
               <Button type="link" size="small" onClick={() => handleToggleApiKey(key.id)}>
                 {key.status === 'active' ? '禁用' : '启用'}
               </Button>
@@ -1544,13 +1537,13 @@ export const AgentOrchestrationPage: React.FC = () => {
           {requestLogs.map(log => (
             <div className={styles.requestLogItem} key={log.id}>
               <span className={styles.requestLogTime}>{log.timestamp}</span>
-              <Tag color={log.method === 'POST' ? 'blue' : 'cyan'} style={{ minWidth: 50 }}>{log.method}</Tag>
+              <Tag color={log.method === 'POST' ? 'blue' : 'cyan'} className={styles.methodTag}>{log.method}</Tag>
               <span className={styles.requestLogEndpoint}>{log.endpoint}</span>
-              <Tag color="purple" style={{ minWidth: 100 }}>{log.model}</Tag>
+              <Tag color="purple" className={styles.modelTag}>{log.model}</Tag>
               <Tag color={log.status === 'success' ? 'success' : 'error'}>
                 {log.status === 'success' ? '成功' : '失败'}
               </Tag>
-              <span className={styles.requestLogLatency} style={{ color: log.latency > 3000 ? '#f5222d' : log.latency > 1000 ? '#faad14' : '#52c41a' }}>
+              <span className={`${styles.requestLogLatency} ${log.latency > 3000 ? styles.latencyCritical : log.latency > 1000 ? styles.latencyWarning : styles.latencyNormal}`}>
                 {log.latency >= 1000 ? `${(log.latency / 1000).toFixed(1)}s` : `${log.latency}ms`}
               </span>
             </div>
@@ -1610,7 +1603,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                   : record.type === 'coze' ? record.cozeWorkflowId
                   : record.type === 'n8n' ? record.n8nWorkflowId
                   : record.customRequestBodyTemplate?.split(':')[0] || '-'
-                return externalId ? <Tag color="purple">{externalId}</Tag> : <span style={{ color: '#999' }}>未配置</span>
+                return externalId ? <Tag color="purple">{externalId}</Tag> : <span className={styles.unconfiguredText}>未配置</span>
               },
             },
             {
@@ -1634,10 +1627,10 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Space wrap>
                     {modules.map(m => (
                       <Tooltip key={m.moduleId} title={`${m.moduleName} (${m.routePath})`}>
-                        <Tag color="blue" style={{ cursor: 'pointer' }}>{m.icon} {m.moduleId}</Tag>
+                        <Tag color="blue" className={styles.bizModuleTag}>{m.icon} {m.moduleId}</Tag>
                       </Tooltip>
                     ))}
-                    {modules.length === 0 && <span style={{ color: '#999' }}>无</span>}
+                    {modules.length === 0 && <span className={styles.unconfiguredText}>无</span>}
                   </Space>
                 )
               },
@@ -1676,19 +1669,19 @@ export const AgentOrchestrationPage: React.FC = () => {
       <Card className={styles.card}>
         <div className={styles.executionStatsRow}>
           <div className={styles.executionStatCard}>
-            <div className={styles.executionStatValue} style={{ color: '#52c41a' }}>75%</div>
+            <div className={`${styles.executionStatValue} ${styles.statValueSuccess}`}>75%</div>
             <div className={styles.executionStatLabel}>今日成功率</div>
           </div>
           <div className={styles.executionStatCard}>
-            <div className={styles.executionStatValue} style={{ color: '#1890ff' }}>156</div>
+            <div className={`${styles.executionStatValue} ${styles.statValueChart1}`}>156</div>
             <div className={styles.executionStatLabel}>今日执行次数</div>
           </div>
           <div className={styles.executionStatCard}>
-            <div className={styles.executionStatValue} style={{ color: '#faad14' }}>42s</div>
+            <div className={`${styles.executionStatValue} ${styles.statValueWarning}`}>42s</div>
             <div className={styles.executionStatLabel}>平均耗时</div>
           </div>
           <div className={styles.executionStatCard}>
-            <div className={styles.executionStatValue} style={{ color: '#722ed1' }}>8</div>
+            <div className={`${styles.executionStatValue} ${styles.statValueChart5}`}>8</div>
             <div className={styles.executionStatLabel}>运行中工作流</div>
           </div>
         </div>
@@ -1703,7 +1696,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 <div className={styles.templateIcon}>{template.icon}</div>
                 <div className={styles.templateName}>{template.name}</div>
                 <div className={styles.templateDesc}>{template.description}</div>
-                <Tag color="blue" style={{ marginTop: 12 }}>{template.category}</Tag>
+                <Tag color="blue" className={styles.templateCategoryTag}>{template.category}</Tag>
               </div>
             </Col>
           ))}
@@ -1787,13 +1780,13 @@ export const AgentOrchestrationPage: React.FC = () => {
                   </Select>
                 </Form.Item>
                 <Form.Item label="Chunk 大小">
-                  <InputNumber min={128} max={2048} style={{ width: '100%' }} defaultValue={ragService.chunkSize} />
+                  <InputNumber min={128} max={2048} defaultValue={ragService.chunkSize} />
                 </Form.Item>
                 <Form.Item label="重叠大小">
-                  <InputNumber min={0} max={512} style={{ width: '100%' }} defaultValue={ragService.overlap} />
+                  <InputNumber min={0} max={512} defaultValue={ragService.overlap} />
                 </Form.Item>
                 <Form.Item label="Top K">
-                  <InputNumber min={1} max={100} style={{ width: '100%' }} defaultValue={ragService.topK} />
+                  <InputNumber min={1} max={100} defaultValue={ragService.topK} />
                 </Form.Item>
               </Form>
             </Card>
@@ -1813,16 +1806,16 @@ export const AgentOrchestrationPage: React.FC = () => {
                   <Slider min={0} max={1} step={0.01} defaultValue={0.75} />
                 </Form.Item>
                 <Form.Item label="重排数量">
-                  <InputNumber min={1} max={50} style={{ width: '100%' }} defaultValue={10} />
+                  <InputNumber min={1} max={50} defaultValue={10} />
                 </Form.Item>
               </Form>
             </Card>
           </Col>
         </Row>
 
-        <div style={{ marginTop: 24, textAlign: 'right' }}>
+        <div className={styles.formActions}>
           <Button icon={<ReloadOutlined />} onClick={() => message.info('RAG 配置已重置')}>重置</Button>
-          <Button type="primary" icon={<CheckOutlined />} style={{ marginLeft: 8 }} onClick={() => message.success('RAG 服务配置已保存')}>
+          <Button type="primary" icon={<CheckOutlined />} className={styles.saveButton} onClick={() => message.success('RAG 服务配置已保存')}>
             保存配置
           </Button>
         </div>
@@ -1835,14 +1828,14 @@ export const AgentOrchestrationPage: React.FC = () => {
             <div className={styles.indexHeader}>
               <div>
                 <span className={styles.indexName}>{index.name}</span>
-                <Tag color={index.status === 'active' ? 'success' : index.status === 'building' ? 'processing' : 'error'} style={{ marginLeft: 8 }}>
+                <Tag color={index.status === 'active' ? 'success' : index.status === 'building' ? 'processing' : 'error'} className={styles.modalTagMargin}>
                   {index.status === 'active' ? '就绪' : index.status === 'building' ? '构建中' : '异常'}
                 </Tag>
               </div>
               <Space>
                 <Tag color="blue">{index.businessModule}</Tag>
                 <Tag>{index.embeddingModel}</Tag>
-                <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>更新于: {index.lastUpdated}</span>
+                <span className={styles.indexUpdateTime}>更新于: {index.lastUpdated}</span>
               </Space>
             </div>
             <div className={styles.indexStats}>
@@ -1863,19 +1856,19 @@ export const AgentOrchestrationPage: React.FC = () => {
       <Row gutter={16}>
         <Col span={8}>
           <Card title="检索效果指标" className={`${styles.card} ${styles.evaluationCard}`}>
-            <div className={styles.executionStatsRow} style={{ gridTemplateColumns: '1fr' }}>
+            <div className={`${styles.executionStatsRow} ${styles.retrievalStatsColumn}`}>
               <div className={styles.executionStatCard}>
-                <div className={styles.executionStatValue} style={{ color: '#52c41a' }}>{retrievalMetrics.accuracy}%</div>
+                <div className={`${styles.executionStatValue} ${styles.statValueSuccess}`}>{retrievalMetrics.accuracy}%</div>
                 <div className={styles.executionStatLabel}>准确率 (Accuracy)</div>
-                <Progress percent={Math.round(retrievalMetrics.accuracy)} strokeColor="#52c41a" showInfo={false} />
+                <Progress percent={Math.round(retrievalMetrics.accuracy)} strokeColor={STATUS_COLORS.success} showInfo={false} />
               </div>
               <div className={styles.executionStatCard}>
-                <div className={styles.executionStatValue} style={{ color: '#1890ff' }}>{retrievalMetrics.recall}%</div>
+                <div className={`${styles.executionStatValue} ${styles.statValueChart1}`}>{retrievalMetrics.recall}%</div>
                 <div className={styles.executionStatLabel}>召回率 (Recall)</div>
-                <Progress percent={Math.round(retrievalMetrics.recall)} strokeColor="#1890ff" showInfo={false} />
+                <Progress percent={Math.round(retrievalMetrics.recall)} strokeColor={CHART_COLORS[1]} showInfo={false} />
               </div>
               <div className={styles.executionStatCard}>
-                <div className={styles.executionStatValue} style={{ color: '#faad14' }}>{retrievalMetrics.avgLatency}ms</div>
+                <div className={`${styles.executionStatValue} ${styles.statValueWarning}`}>{retrievalMetrics.avgLatency}ms</div>
                 <div className={styles.executionStatLabel}>平均检索延迟</div>
               </div>
             </div>
@@ -1893,10 +1886,10 @@ export const AgentOrchestrationPage: React.FC = () => {
                 yField="value"
                 seriesField="metric"
                 smooth
-                color={['#52c41a', '#1890ff']}
+                color={[STATUS_COLORS.success, CHART_COLORS[1]]}
                 point={{ size: 3, shape: 'circle' }}
-                yAxis={{ label: { style: { fill: '#aaa' } } }}
-                xAxis={{ label: { style: { fill: '#aaa' } } }}
+                yAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
+                xAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
               />
             </div>
           </Card>
@@ -2016,25 +2009,25 @@ export const AgentOrchestrationPage: React.FC = () => {
             <div className={styles.abTestHeader}>
               <div>
                 <span className={styles.abTestName}>{test.name}</span>
-                <Tag color={test.status === 'running' ? 'processing' : test.status === 'paused' ? 'warning' : 'default'} style={{ marginLeft: 8 }}>
+                <Tag color={test.status === 'running' ? 'processing' : test.status === 'paused' ? 'warning' : 'default'} className={styles.modalTagMargin}>
                   {test.status === 'running' ? '运行中' : test.status === 'paused' ? '已暂停' : '已完成'}
                 </Tag>
               </div>
               <Space>
-                <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{test.startDate} ~ {test.endDate || '进行中'}</span>
+                <span className={styles.abTestDateRange}>{test.startDate} ~ {test.endDate || '进行中'}</span>
               </Space>
             </div>
             <div className={styles.abTestVariants}>
               {test.variants.map((variant, idx) => (
                 <div className={styles.abVariant} key={variant.promptId}>
-                  <div className={styles.abVariantName} style={{ color: idx === 0 ? '#1890ff' : '#52c41a' }}>
+                  <div className={`${styles.abVariantName} ${idx === 0 ? styles.statValueChart1 : styles.statValueSuccess}`}>
                     {idx === 0 ? 'A' : 'B'}: {variant.promptName}
                   </div>
-                  <div className={styles.abVariantTraffic} style={{ color: idx === 0 ? '#1890ff' : '#52c41a' }}>
+                  <div className={`${styles.abVariantTraffic} ${idx === 0 ? styles.statValueChart1 : styles.statValueSuccess}`}>
                     {variant.trafficPercent}%
                   </div>
                   <div className={styles.abVariantMetrics}>流量分配</div>
-                  <Row gutter={[8, 8]} style={{ marginTop: 12 }}>
+                  <Row gutter={[8, 8]} className={styles.abMetricsRow}>
                     <Col span={8}>
                       <Statistic title="转化率" value={variant.metrics.conversionRate} suffix="%" valueStyle={{ fontSize: 14, color: 'var(--text-primary)' }} />
                     </Col>
@@ -2077,9 +2070,9 @@ export const AgentOrchestrationPage: React.FC = () => {
                 data={promptUsageStats}
                 xField="time"
                 yField="calls"
-                color="#1890ff"
-                xAxis={{ label: { style: { fill: '#aaa' } } }}
-                yAxis={{ label: { style: { fill: '#aaa' } } }}
+                color={CHART_COLORS[1]}
+                xAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
+                yAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
               />
             </div>
           </Card>
@@ -2092,10 +2085,10 @@ export const AgentOrchestrationPage: React.FC = () => {
                 xField="time"
                 yField="successRate"
                 smooth
-                color="#52c41a"
+                color={STATUS_COLORS.success}
                 point={{ size: 3, shape: 'circle' }}
-                xAxis={{ label: { style: { fill: '#aaa' } } }}
-                yAxis={{ label: { style: { fill: '#aaa' } } }}
+                xAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
+                yAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
               />
             </div>
           </Card>
@@ -2106,22 +2099,22 @@ export const AgentOrchestrationPage: React.FC = () => {
       <Card title="灰度发布" className={`${styles.card} ${styles.canaryConfigCard}`}>
         {canaryConfigs.length > 0 ? (
           canaryConfigs.map(config => (
-            <div key={config.promptId} style={{ marginBottom: 16 }}>
+            <div key={config.promptId} className={styles.canaryConfigRow}>
               <Row gutter={16} align="middle">
                 <Col span={6}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{config.promptName}</div>
-                  <Tag color="processing" style={{ marginTop: 4 }}>灰度中</Tag>
+                  <div className={styles.canaryConfigName}>{config.promptName}</div>
+                  <Tag color="processing" className={styles.canaryConfigTag}>灰度中</Tag>
                 </Col>
                 <Col span={4}>
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>当前版本</div>
+                  <div className={styles.canaryConfigLabel}>当前版本</div>
                   <Tag>{config.currentVersion}</Tag>
                 </Col>
                 <Col span={4}>
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>灰度版本</div>
+                  <div className={styles.canaryConfigLabel}>灰度版本</div>
                   <Tag color="blue">{config.canaryVersion}</Tag>
                 </Col>
                 <Col span={6}>
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 4 }}>灰度比例: {config.canaryPercent}%</div>
+                  <div className={styles.canaryConfigLabelWithMargin}>灰度比例: {config.canaryPercent}%</div>
                   <Slider value={config.canaryPercent} onChange={(v) => {
                     setCanaryConfigs(prev => prev.map(c => c.promptId === config.promptId ? { ...c, canaryPercent: v } : c))
                   }} min={0} max={100} />
@@ -2152,7 +2145,7 @@ export const AgentOrchestrationPage: React.FC = () => {
             { title: 'Prompt 名称', dataIndex: 'promptName', key: 'promptName', render: (text: string) => <Tag color="orange">{text}</Tag> },
             { title: '评测者', dataIndex: 'evaluator', key: 'evaluator' },
             { title: '类型', dataIndex: 'type', key: 'type', render: (t: string) => <Tag color={t === 'manual' ? 'blue' : 'green'}>{t === 'manual' ? '人工' : '自动'}</Tag> },
-            { title: '评分', dataIndex: 'score', key: 'score', render: (v: number) => v > 0 ? <Progress percent={v} size="small" strokeColor={v >= 90 ? '#52c41a' : v >= 80 ? '#faad14' : '#f5222d'} /> : '-' },
+            { title: '评分', dataIndex: 'score', key: 'score', render: (v: number) => v > 0 ? <Progress percent={v} size="small" strokeColor={v >= 90 ? STATUS_COLORS.success : v >= 80 ? STATUS_COLORS.warning : STATUS_COLORS.error} /> : '-' },
             { title: '评测意见', dataIndex: 'comment', key: 'comment', ellipsis: true },
             { title: '评测时间', dataIndex: 'evaluatedAt', key: 'evaluatedAt', width: 180 },
           ]}
@@ -2166,7 +2159,7 @@ export const AgentOrchestrationPage: React.FC = () => {
           description="在上面的 Prompt 列表中勾选两个版本，然后点击对比按钮查看差异"
           type="info"
           showIcon
-          style={{ marginBottom: 16 }}
+          className={styles.alertMargin}
         />
         <Space>
           {promptVersions.filter(p => p.status !== 'archived').slice(0, 3).map((p, idx) => (
@@ -2241,7 +2234,7 @@ export const AgentOrchestrationPage: React.FC = () => {
             </Descriptions.Item>
             <Descriptions.Item label="页面映射" span={2}>
               {selectedAgent.routeMapping?.map((route, idx) => (
-                <div key={idx} style={{ marginBottom: 4 }}>
+                <div key={idx} className={styles.routeItemMargin}>
                   <a href={route.path}>{route.label}</a> <code>{route.path}</code>
                 </div>
               ))}
@@ -2264,7 +2257,7 @@ export const AgentOrchestrationPage: React.FC = () => {
               message={`负责 Agent: ${selectedWorkflow.agent}`}
               type="info"
               showIcon
-              style={{ marginBottom: 16 }}
+              className={styles.alertMargin}
             />
             <Table
               dataSource={selectedWorkflow.nodes}
@@ -2401,7 +2394,7 @@ export const AgentOrchestrationPage: React.FC = () => {
             <Alert
               message="参数变更影响范围"
               description={
-                <div style={{ marginTop: 8 }}>
+                <div className={styles.impactAlertContent}>
                   <div>影响业务模块：{getWorkflowImpactInfo(selectedEngineForConfig.id).moduleNames.join('、') || '无'}</div>
                   <div>每日调用量：~{getWorkflowImpactInfo(selectedEngineForConfig.id).dailyCalls * 50} 次</div>
                   <div>当前成功率：{getWorkflowImpactInfo(selectedEngineForConfig.id).successRate}</div>
@@ -2410,23 +2403,23 @@ export const AgentOrchestrationPage: React.FC = () => {
               type="warning"
               icon={<WarningOutlined />}
               showIcon
-              style={{ marginBottom: 16 }}
+              className={styles.alertMargin}
             />
           )}
 
-          <Card title="关联业务模块" size="small" style={{ marginBottom: 16 }}>
-            <Space direction="vertical" size="small" style={{ width: '100%' }}>
+          <Card title="关联业务模块" size="small" className={styles.modalSubCard}>
+            <Space direction="vertical" size="small" className={styles.fullWidth}>
               {selectedEngineForConfig && businessMappings
                 .filter(m => m.workflowId === selectedEngineForConfig.id)
                 .map(mapping => (
-                  <div key={mapping.moduleId} style={{ padding: '8px 12px', background: '#fafafa', borderRadius: 4 }}>
+                  <div key={mapping.moduleId} className={styles.modalRelatedModule}>
                     <Space>
                       <span>{mapping.icon}</span>
                       <strong>{mapping.moduleId}</strong>
                       <span>{mapping.moduleName}</span>
-                      <Tag color="blue" style={{ marginLeft: 8 }}>{mapping.routePath}</Tag>
+                      <Tag color="blue" className={styles.modalRouteTag}>{mapping.routePath}</Tag>
                     </Space>
-                    <div style={{ marginTop: 4, fontSize: 12, color: '#888' }}>
+                    <div className={styles.modalRelatedModuleDetail}>
                       使用 Prompt: {promptVersions.find(p => p.id === mapping.promptId)?.name || '-'} | 
                       RAG 索引: {mapping.ragIndexId || '-'}
                     </div>
@@ -2677,29 +2670,29 @@ export const AgentOrchestrationPage: React.FC = () => {
             </Col>
             <Col span={6}>
               <Form.Item label="连接超时(秒)" name="connectTimeout">
-                <InputNumber min={1} max={60} style={{ width: '100%' }} />
+                <InputNumber min={1} max={60} />
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item label="请求超时(秒)" name="requestTimeout">
-                <InputNumber min={1} max={300} style={{ width: '100%' }} />
+                <InputNumber min={1} max={300} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item label="最大并发数" name="maxConcurrency">
-                <InputNumber min={1} max={100} style={{ width: '100%' }} />
+                <InputNumber min={1} max={100} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="重试次数" name="retryCount">
-                <InputNumber min={0} max={10} style={{ width: '100%' }} />
+                <InputNumber min={0} max={10} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="重试间隔(秒)" name="retryInterval">
-                <InputNumber min={1} max={30} style={{ width: '100%' }} />
+                <InputNumber min={1} max={30} />
               </Form.Item>
             </Col>
           </Row>
@@ -2728,7 +2721,7 @@ export const AgentOrchestrationPage: React.FC = () => {
             </Col>
             <Col span={8}>
               <Form.Item label="最大执行时间(秒)" name="maxExecutionTime">
-                <InputNumber min={1} max={600} style={{ width: '100%' }} />
+                <InputNumber min={1} max={600} />
               </Form.Item>
             </Col>
           </Row>
@@ -2870,29 +2863,29 @@ export const AgentOrchestrationPage: React.FC = () => {
             </Col>
             <Col span={6}>
               <Form.Item label="连接超时(秒)" name="connectTimeout" initialValue={10}>
-                <InputNumber min={1} max={60} style={{ width: '100%' }} />
+                <InputNumber min={1} max={60} />
               </Form.Item>
             </Col>
             <Col span={6}>
               <Form.Item label="请求超时(秒)" name="requestTimeout" initialValue={60}>
-                <InputNumber min={1} max={300} style={{ width: '100%' }} />
+                <InputNumber min={1} max={300} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item label="最大并发数" name="maxConcurrency" initialValue={10}>
-                <InputNumber min={1} max={100} style={{ width: '100%' }} />
+                <InputNumber min={1} max={100} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="重试次数" name="retryCount" initialValue={3}>
-                <InputNumber min={0} max={10} style={{ width: '100%' }} />
+                <InputNumber min={0} max={10} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="重试间隔(秒)" name="retryInterval" initialValue={2}>
-                <InputNumber min={1} max={30} style={{ width: '100%' }} />
+                <InputNumber min={1} max={30} />
               </Form.Item>
             </Col>
           </Row>
@@ -2921,7 +2914,7 @@ export const AgentOrchestrationPage: React.FC = () => {
             </Col>
             <Col span={8}>
               <Form.Item label="最大执行时间(秒)" name="maxExecutionTime" initialValue={120}>
-                <InputNumber min={1} max={600} style={{ width: '100%' }} />
+                <InputNumber min={1} max={600} />
               </Form.Item>
             </Col>
           </Row>
@@ -2981,8 +2974,8 @@ export const AgentOrchestrationPage: React.FC = () => {
             </Col>
           </Row>
 
-          <div style={{ textAlign: 'right', marginTop: 16 }}>
-            <Button onClick={() => setWfCreateModalVisible(false)} style={{ marginRight: 8 }}>取消</Button>
+          <div className={styles.formFooter}>
+            <Button onClick={() => setWfCreateModalVisible(false)} className={styles.cancelButton}>取消</Button>
             <Button type="primary" htmlType="submit">创建工作流</Button>
           </div>
         </Form>
@@ -3062,7 +3055,7 @@ export const AgentOrchestrationPage: React.FC = () => {
           description="绿色背景表示新增内容，红色背景表示删除内容。实际diff功能需要后端支持。"
           type="info"
           showIcon
-          style={{ marginTop: 16 }}
+          className={styles.alertMarginTop}
         />
       </Modal>
     </div>

@@ -194,7 +194,7 @@ export const UserManagementPage: React.FC = () => {
               label: '用户列表',
               children: (
                 <>
-                  <div style={{ marginBottom: 16, textAlign: 'right' }}>
+                  <div className={styles.addUserActions}>
                     <Button type="primary" icon={<PlusOutlined />} onClick={() => setUserModalVisible(true)}>
                       添加用户
                     </Button>

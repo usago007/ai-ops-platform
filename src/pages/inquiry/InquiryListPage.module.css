@@ -34,3 +34,36 @@
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-secondary);
 }
+
+.titleMargin {
+  margin-bottom: 4px;
+}
+
+.companyText {
+  font-size: 12px;
+}
+
+.summaryText {
+  font-size: 13px;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.fullText {
+  font-size: 11px;
+  display: block;
+  margin-top: 4px;
+}
+
+.timeText {
+  font-size: 12px;
+}
+
+.searchInput {
+  width: 280px;
+}
+
+.statusSelect {
+  width: 120px;
+}

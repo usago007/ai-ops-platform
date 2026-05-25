@@ -118,7 +118,7 @@ export const ContentCreatePage: React.FC = () => {
 
         {materials.length > 0 && (
           <Card title="素材推荐" size="small" className={styles.materialCard}>
-            <Space direction="vertical" style={{ width: '100%' }}>
+            <Space direction="vertical" className={styles.fullWidth}>
               {materials.map(m => (
                 <div key={m.id} className={styles.materialItem}>
                   <Image src={m.url} width={60} height={45} preview={false} />
@@ -136,7 +136,7 @@ export const ContentCreatePage: React.FC = () => {
       <div className={styles.main}>
         {!result ? (
           <div className={styles.empty}>
-            <RocketOutlined style={{ fontSize: 48, color: '#d9d9d9' }} />
+            <RocketOutlined className={styles.emptyIcon} />
             <p>配置左侧参数，点击"AI 生成内容"</p>
           </div>
         ) : (

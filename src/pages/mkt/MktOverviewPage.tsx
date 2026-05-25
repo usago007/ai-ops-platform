@@ -18,6 +18,7 @@ import { ProcessFlow } from '../../components/ProcessFlow/ProcessFlow'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { mktService } from '../../services'
 import styles from './MktOverviewPage.module.css'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
 
@@ -81,7 +82,7 @@ export const MktOverviewPage: React.FC = () => {
     yField: 'rate',
     seriesField: 'type',
     smooth: true,
-    color: ['#d9d9d9', '#1890ff'],
+    color: ['#d4d4d8', CHART_COLORS[1]],
     point: { size: 5, shape: 'circle' },
     animation: { appear: { animation: 'fade-in', duration: 1000 } },
   } : {}
@@ -95,7 +96,7 @@ export const MktOverviewPage: React.FC = () => {
     { title: 'AI辅助', dataIndex: 'ai_assisted', key: 'ai_assisted', width: 80, render: (v: boolean) => v ? <Tag color="blue">是</Tag> : <Tag>否</Tag> },
     {
       title: '成单金额', dataIndex: 'amount', key: 'amount', width: 120,
-      render: (v: number) => v ? <Text strong style={{ color: '#52c41a' }}>¥{v.toLocaleString()}</Text> : '-',
+      render: (v: number) => v ? <Text strong className={styles.amountSuccess}>¥{v.toLocaleString()}</Text> : '-',
     },
   ]
 
@@ -222,7 +223,7 @@ export const MktOverviewPage: React.FC = () => {
                 <Tag color="purple" className={styles.attrValue}>+12%</Tag>
                 <Text type="secondary" className={styles.attrNote}>AI 优化落地页</Text>
               </div>
-              <Divider style={{ margin: '16px 0' }} />
+              <Divider className={styles.dividerMargin} />
               <div className={styles.attrItem}>
                 <Text strong>营销贡献成单</Text>
                 <Tag color="green" className={styles.attrValue} icon={<TrophyOutlined />}>89 单</Tag>

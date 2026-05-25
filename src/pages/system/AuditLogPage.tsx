@@ -184,7 +184,7 @@ export const AuditLogPage: React.FC = () => {
       label: '操作日志',
       children: (
         <div>
-          <Row gutter={16} style={{ marginBottom: 16 }}>
+          <Row gutter={16} className={styles.statsRow}>
             <Col span={6}>
               <Card>
                 <Statistic title="总日志数" value={total} />
@@ -241,7 +241,7 @@ export const AuditLogPage: React.FC = () => {
       label: '审计日志',
       children: (
         <div>
-          <Row gutter={16} style={{ marginBottom: 16 }}>
+          <Row gutter={16} className={styles.statsRow}>
             <Col span={6}>
               <Card>
                 <Statistic title="总审计记录" value={auditTotal} />
@@ -272,7 +272,7 @@ export const AuditLogPage: React.FC = () => {
                   placeholder="按用户/模块/关键词搜索"
                   allowClear
                   onSearch={(value) => setAuditSearch(value)}
-                  style={{ width: 260 }}
+                  className={styles.searchInput}
                   enterButton={<SearchOutlined />}
                 />
                 <Button icon={<ReloadOutlined />} onClick={fetchAuditLogs}>

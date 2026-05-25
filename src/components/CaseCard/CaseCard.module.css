@@ -27,3 +27,5 @@
   padding-top: var(--spacing-xs);
   border-top: 1px dashed var(--border-primary);
 }
+
+.previewHint { font-size: 12px; }

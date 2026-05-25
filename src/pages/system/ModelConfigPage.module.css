@@ -23,3 +23,7 @@
 .configCard:hover {
   box-shadow: var(--shadow-md);
 }
+
+.fullWidth {
+  width: 100%;
+}

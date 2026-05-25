@@ -32,3 +32,33 @@
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-secondary);
 }
+
+.companyText {
+  font-size: 12px;
+}
+
+.summaryText {
+  font-size: 13px;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.timeText {
+  font-size: 12px;
+}
+
+.backButton {
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+.titleNoMargin {
+  margin: 0;
+}
+
+.searchInput {
+  width: 280px;
+}

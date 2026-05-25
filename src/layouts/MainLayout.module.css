@@ -17,10 +17,14 @@
 }
 
 .sider :global(.ant-layout-sider-children) {
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.sider :global(.ant-menu) {
+.sider :global(.ant-layout-sider-children) :global(.ant-menu) {
+  flex: 1;
+  overflow-y: auto;
   border-right: none;
 }
 
@@ -41,8 +45,9 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   background: var(--brand-gradient);
-  color: #fff;
+  color: var(--text-on-brand);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
 }
 
 .logo svg {
@@ -59,7 +64,7 @@
   height: 56px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--border-primary);
-  z-index: 100;
+  z-index: var(--z-header);
 }
 
 .headerLeft {
@@ -110,6 +115,15 @@
 
 .badge {
   cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.badge:hover {
+  opacity: 0.8;
+}
+
+.badge:active {
+  opacity: 0.6;
 }
 
 .avatar {
@@ -121,6 +135,10 @@
 
 .avatar:hover {
   box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.avatar:active {
+  transform: scale(0.95);
 }
 
 .content {

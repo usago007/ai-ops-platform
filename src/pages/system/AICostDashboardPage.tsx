@@ -4,6 +4,7 @@ import { ArrowUpOutlined, ThunderboltOutlined, DollarOutlined, ClockCircleOutlin
 import { Pie, Line } from '@ant-design/charts'
 import type { ColumnsType } from 'antd/es/table'
 import { getCallLogsSummary } from '../../mock/handlers'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 import styles from './AICostDashboardPage.module.css'
 
 interface ModuleCostRow {
@@ -44,7 +45,7 @@ const pieConfig = {
     type: 'outer',
     content: '{name} {percentage}',
     style: {
-      fill: '#aaa',
+      fill: '#a1a1aa',
       fontSize: 12,
     },
   },
@@ -52,13 +53,13 @@ const pieConfig = {
   legend: {
     position: 'right' as const,
     itemName: {
-      style: { fill: '#aaa' },
+      style: { fill: '#a1a1aa' },
     },
   },
-  color: ['#1890ff', '#52c41a', '#faad14', '#f5222d'],
+  color: [CHART_COLORS[1], STATUS_COLORS.success, STATUS_COLORS.warning, STATUS_COLORS.error],
 }
 
-const modelColors = ['#1890ff', '#52c41a', '#faad14', '#722ed1'] as const
+const modelColors = [CHART_COLORS[1], STATUS_COLORS.success, STATUS_COLORS.warning, CHART_COLORS[5]] as const
 
 const modelDistribution = [
   { model: 'GPT-4', percentage: 40 },
@@ -90,17 +91,17 @@ const lineConfig = {
   yField: 'tokens',
   seriesField: 'type',
   smooth: true,
-  color: ['#1890ff', '#52c41a'],
+  color: [CHART_COLORS[1], STATUS_COLORS.success],
   legend: {
     itemName: {
-      style: { fill: '#aaa' },
+      style: { fill: '#a1a1aa' },
     },
   },
   point: { size: 3, shape: 'circle' },
   xAxis: {
     label: {
       autoRotate: true,
-      style: { fill: '#aaa' },
+      style: { fill: '#a1a1aa' },
       formatter: (val: string) => {
         const num = parseInt(val.split('/')[1], 10)
         if (num === 1 || num % 5 === 0) return val
@@ -110,7 +111,7 @@ const lineConfig = {
   },
   yAxis: {
     label: {
-      style: { fill: '#aaa' },
+      style: { fill: '#a1a1aa' },
       formatter: (val: number) => {
         if (val >= 100000) return `${(val / 1000).toFixed(0)}K`
         return val.toString()
@@ -196,7 +197,7 @@ const columns: ColumnsType<ModuleCostRow> = [
     sorter: (a, b) => a.cost - b.cost,
     render: (val: number, record: ModuleCostRow) =>
       record.key === 'total' ? (
-        <strong style={{ color: '#faad14' }}>${val.toFixed(2)}</strong>
+        <strong className={styles.costHighlight}>${val.toFixed(2)}</strong>
       ) : (
         `$${val.toFixed(2)}`
       ),
@@ -208,7 +209,7 @@ const columns: ColumnsType<ModuleCostRow> = [
     width: 120,
     sorter: (a, b) => a.avgLatency - b.avgLatency,
     render: (val: number) => {
-      const color = val > 2 ? '#f5222d' : val > 1 ? '#faad14' : '#52c41a'
+      const color = val > 2 ? 'var(--error)' : val > 1 ? 'var(--warning)' : 'var(--success)'
       return (
         <span style={{ color }}>
           {val}s
@@ -252,7 +253,7 @@ export const AICostDashboardPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 style={{ marginBottom: 16 }}>AI 调用成本与性能面板</h2>
+      <h2 className={styles.pageTitle}>AI 调用成本与性能面板</h2>
 
       {/* Summary Cards */}
       <Row gutter={[16, 16]}>
@@ -261,7 +262,7 @@ export const AICostDashboardPage: React.FC = () => {
             <Statistic
               title="总调用次数"
               value={displayTotalCalls}
-              valueStyle={{ color: '#1890ff' }}
+              valueStyle={{ color: 'var(--chart-1)' }}
               prefix={<ArrowUpOutlined />}
               suffix="次"
             />
@@ -273,7 +274,7 @@ export const AICostDashboardPage: React.FC = () => {
               title="总 Token 消耗"
               value={displayTotalTokens}
               precision={0}
-              valueStyle={{ color: '#52c41a' }}
+              valueStyle={{ color: 'var(--success)' }}
               prefix={<ThunderboltOutlined />}
               suffix=" tokens"
               formatter={(val) => {
@@ -291,7 +292,7 @@ export const AICostDashboardPage: React.FC = () => {
               title="月度费用估算"
               value={displayTotalCost}
               precision={2}
-              valueStyle={{ color: '#faad14' }}
+              valueStyle={{ color: 'var(--warning)' }}
               prefix={<DollarOutlined />}
               suffix=" USD"
             />
@@ -303,7 +304,7 @@ export const AICostDashboardPage: React.FC = () => {
               title="平均响应时间"
               value={displayAvgDuration / 1000}
               precision={1}
-              valueStyle={{ color: '#722ed1' }}
+              valueStyle={{ color: 'var(--chart-5)' }}
               prefix={<ClockCircleOutlined />}
               suffix="s"
             />
@@ -312,7 +313,7 @@ export const AICostDashboardPage: React.FC = () => {
       </Row>
 
       {/* Charts Row: Pie + Line */}
-      <Row gutter={16} style={{ marginTop: 16 }}>
+      <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card className={styles.chartCard} title="模块调用分布">
             <div className={styles.chartContainer}>
@@ -330,11 +331,11 @@ export const AICostDashboardPage: React.FC = () => {
       </Row>
 
       {/* Model Distribution */}
-      <Card className={styles.chartCard} style={{ marginTop: 16 }} title="模型分布">
-        <div style={{ padding: '8px 0' }}>
+      <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="模型分布">
+        <div className={styles.modelDistributionContent}>
           {modelDistribution.map((m, i) => (
             <span key={m.model} className={styles.modelTag}>
-              <Tag color={modelColors[i]} style={{ marginRight: 4 }}>{m.model}</Tag>
+              <Tag color={modelColors[i]} className={styles.modelTagInner}>{m.model}</Tag>
               <span className={styles.modelPercentage}>{m.percentage}%</span>
             </span>
           ))}
@@ -342,7 +343,7 @@ export const AICostDashboardPage: React.FC = () => {
       </Card>
 
       {/* Cost Breakdown Table */}
-      <Card className={styles.chartCard} style={{ marginTop: 16 }} title="费用明细">
+      <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="费用明细">
         <Table<ModuleCostRow>
           dataSource={costTableData}
           columns={columns}

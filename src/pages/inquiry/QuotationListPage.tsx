@@ -61,7 +61,7 @@ export const QuotationListPage: React.FC = () => {
       render: (_: string, record: any) => (
         <div>
           <div><Text strong>{record.customer}</Text></div>
-          <Text type="secondary" style={{ fontSize: 12 }}>{record.company}</Text>
+          <Text type="secondary" className={styles.companyText}>{record.company}</Text>
         </div>
       ),
     },
@@ -70,7 +70,7 @@ export const QuotationListPage: React.FC = () => {
       dataIndex: 'summary',
       key: 'summary',
       render: (text: string) => (
-        <Text style={{ fontSize: 13, maxWidth: 320, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' }}>
+        <Text className={styles.summaryText}>
           {text}
         </Text>
       ),
@@ -86,7 +86,7 @@ export const QuotationListPage: React.FC = () => {
       dataIndex: 'created_at',
       key: 'created_at',
       width: 80,
-      render: (t: string) => <Text type="secondary" style={{ fontSize: 12 }}>{t}</Text>,
+      render: (t: string) => <Text type="secondary" className={styles.timeText}>{t}</Text>,
     },
     {
       title: '操作',
@@ -104,10 +104,10 @@ export const QuotationListPage: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div>
-          <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} style={{ padding: 0, marginBottom: 4 }}>
+          <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} className={styles.backButton}>
             返回线索池
           </Button>
-          <Title level={3} style={{ margin: 0 }}>报价管理</Title>
+          <Title level={3} className={styles.titleNoMargin}>报价管理</Title>
           <Text type="secondary">管理已确认归类的询价，填写报价并发送给客户</Text>
         </div>
       </div>
@@ -118,7 +118,7 @@ export const QuotationListPage: React.FC = () => {
           prefix={<SearchOutlined />}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          style={{ width: 280 }}
+          className={styles.searchInput}
           allowClear
         />
       </div>

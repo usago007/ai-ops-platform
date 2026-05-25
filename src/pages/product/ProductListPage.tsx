@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './ProductListPage.module.css'
 import { EmptyState } from '../../components/EmptyState'
+import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Text } = Typography
 
@@ -47,9 +48,9 @@ export const ProductListPage: React.FC = () => {
   }
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return '#52c41a'
-    if (score >= 60) return '#faad14'
-    return '#ff4d4f'
+    if (score >= 80) return STATUS_COLORS.success
+    if (score >= 60) return STATUS_COLORS.warning
+    return STATUS_COLORS.error
   }
 
   const getSourceTag = (source?: string) => {
@@ -60,16 +61,16 @@ export const ProductListPage: React.FC = () => {
       manual: { color: 'blue', label: '手动录入' },
     }
     const config = map[source || 'text'] || map.text
-    return <Tag color={config.color} style={{ fontSize: 11 }}>{config.label}</Tag>
+    return <Tag color={config.color} className={styles.sourceTag}>{config.label}</Tag>
   }
 
   const columns = [
     { title: 'SKU', dataIndex: 'id', key: 'id', width: 140,
       render: (text: string, record: any) => (
-        record.source_inquiry ? (
+          record.source_inquiry ? (
           <Space>
-            <Text style={{ fontSize: 12 }}>{text}</Text>
-            <Tag color="orange" style={{ fontSize: 10, margin: 0 }}>待结构化</Tag>
+            <Text className={styles.skuText}>{text}</Text>
+            <Tag color="orange" className={styles.pendingTag}>待结构化</Tag>
           </Space>
         ) : text
       ),
@@ -80,7 +81,7 @@ export const ProductListPage: React.FC = () => {
           <Text strong>{text}</Text>
           {record.source_inquiry && (
             <div>
-              <a style={{ fontSize: 11 }} onClick={() => navigate(`/inquiry/result?leadId=${record.source_inquiry}`)}>
+              <a className={styles.inquiryLink} onClick={() => navigate(`/inquiry/result?leadId=${record.source_inquiry}`)}>
                 来自询价 {record.source_inquiry}（点击查看原始询价）
               </a>
             </div>
@@ -173,7 +174,7 @@ export const ProductListPage: React.FC = () => {
           <Card size="small" className={styles.overviewCard}>
             <div className={styles.overviewItem}>
               <Text type="secondary">已结构化</Text>
-              <div className={styles.overviewValue} style={{ color: '#52c41a' }}>{standardItems.length}</div>
+              <div className={`${styles.overviewValue} ${styles.overviewValueSuccess}`}>{standardItems.length}</div>
             </div>
           </Card>
         </Col>
@@ -181,7 +182,7 @@ export const ProductListPage: React.FC = () => {
           <Card size="small" className={styles.overviewCard}>
             <div className={styles.overviewItem}>
               <Text type="secondary">待结构化</Text>
-              <div className={styles.overviewValue} style={{ color: pendingItems.length > 0 ? '#faad14' : '#999' }}>
+              <div className={`${styles.overviewValue} ${pendingItems.length > 0 ? styles.overviewValueWarning : styles.overviewValueTertiary}`}>
                 {pendingItems.length}
               </div>
             </div>
@@ -191,7 +192,7 @@ export const ProductListPage: React.FC = () => {
           <Card size="small" className={styles.overviewCard}>
             <div className={styles.overviewItem}>
               <Text type="secondary">AI提取准确率</Text>
-              <div className={styles.overviewValue} style={{ color: '#1890ff' }}>87.3%</div>
+              <div className={`${styles.overviewValue} ${styles.overviewValueInfo}`}>87.3%</div>
             </div>
           </Card>
         </Col>
@@ -199,7 +200,7 @@ export const ProductListPage: React.FC = () => {
 
       {pendingItems.length > 0 && (
         <Card
-          title={<Space><InboxOutlined style={{ color: '#faad14' }} /><Text strong>待结构化商品（来自询价解析）</Text></Space>}
+          title={<Space><InboxOutlined className={styles.iconWarning} /><Text strong>待结构化商品（来自询价解析）</Text></Space>}
           size="small"
           className={styles.pendingCard}
           extra={<Text type="secondary">确认归类后自动进入此列表，点击展开查看完整参数</Text>}
@@ -212,7 +213,7 @@ export const ProductListPage: React.FC = () => {
             pagination={false}
             expandable={{
               expandedRowRender: (record: any) => (
-                <div style={{ padding: '8px 16px' }}>
+                <div className={styles.expandedRow}>
                   <Descriptions column={3} size="small" bordered>
                     <Descriptions.Item label="SKU">{record.id}</Descriptions.Item>
                     <Descriptions.Item label="品类">{record.category}</Descriptions.Item>
@@ -228,24 +229,24 @@ export const ProductListPage: React.FC = () => {
                       <Tag color="orange">{record.status}</Tag>
                     </Descriptions.Item>
                   </Descriptions>
-                  <Divider style={{ margin: '12px 0' }} />
-                  <Text strong style={{ fontSize: 12 }}>原始询价文本：</Text>
-                  <div style={{ background: '#fafafa', padding: 12, borderRadius: 4, marginTop: 8, fontSize: 13, lineHeight: 1.6 }}>
+                  <Divider className={styles.thinDivider} />
+                  <Text strong className={styles.sectionLabel}>原始询价文本：</Text>
+                  <div className={styles.originalTextBlock}>
                     {record.original_text || '无原始文本信息'}
                   </div>
-                  <Divider style={{ margin: '12px 0' }} />
-                  <Text strong style={{ fontSize: 12 }}>提取属性明细：</Text>
+                  <Divider className={styles.thinDivider} />
+                  <Text strong className={styles.sectionLabel}>提取属性明细：</Text>
                   <Table
                     dataSource={record.attributes || []}
                     rowKey="name"
                     size="small"
                     pagination={false}
-                    style={{ marginTop: 8 }}
+                    className={styles.attrTable}
                     columns={[
                       { title: '属性名', dataIndex: 'name', key: 'name', width: 120 },
                       { title: '属性值', dataIndex: 'value', key: 'value' },
                       { title: '置信度', dataIndex: 'confidence', key: 'confidence', width: 100,
-                        render: (c: number) => <span style={{ color: c > 0.9 ? '#52c41a' : c > 0.8 ? '#faad14' : '#ff4d4f' }}>{(c * 100).toFixed(0)}%</span>
+                        render: (c: number) => <span className={c > 0.9 ? styles.confidenceHigh : c > 0.8 ? styles.confidenceMedium : styles.confidenceLow}>{(c * 100).toFixed(0)}%</span>
                       },
                       { title: '来源', dataIndex: 'source', key: 'source', width: 100, render: getSourceTag },
                       { title: '状态', dataIndex: 'status', key: 'status', width: 100, render: getStatusTag },
@@ -256,7 +257,7 @@ export const ProductListPage: React.FC = () => {
               rowExpandable: () => true,
             }}
           />
-          <Divider style={{ margin: '16px 0' }} />
+          <Divider className={styles.sectionDivider} />
         </Card>
       )}
 

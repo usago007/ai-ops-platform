@@ -36,3 +36,11 @@
   color: var(--text-secondary);
   line-height: 2;
 }
+
+.backButton {
+  padding: 0;
+}
+
+.titleMargin {
+  margin: 8px 0 4px;
+}

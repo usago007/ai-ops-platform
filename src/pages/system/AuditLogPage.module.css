@@ -33,3 +33,11 @@
   height: 300px;
   margin-top: var(--spacing-md);
 }
+
+.statsRow {
+  margin-bottom: var(--spacing-lg);
+}
+
+.searchInput {
+  width: 260px;
+}

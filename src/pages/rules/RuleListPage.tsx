@@ -167,7 +167,7 @@ export const RuleListPage: React.FC = () => {
       <div className={styles.header}>
         <h2 className={styles.title}>业务规则智能归纳</h2>
         <Space>
-          <Input.Search placeholder="搜索规则..." style={{ width: 200 }} />
+          <Input.Search placeholder="搜索规则..." className={styles.searchInput} />
           <Button type="primary" icon={<PlusOutlined />} onClick={() => { createForm.resetFields(); setCreateModalVisible(true) }}>
             新建规则
           </Button>
@@ -206,7 +206,7 @@ export const RuleListPage: React.FC = () => {
         cancelText="取消"
         width={700}
       >
-        <Form form={createForm} layout="vertical" onFinish={handleCreateRule} style={{ marginTop: 16 }}>
+        <Form form={createForm} layout="vertical" onFinish={handleCreateRule} className={styles.formMarginTop}>
           <Form.Item label="规则名称" name="name" rules={[{ required: true, message: '请输入规则名称' }]}>
             <Input placeholder="如：高价值订单优先处理规则" />
           </Form.Item>
@@ -220,7 +220,7 @@ export const RuleListPage: React.FC = () => {
             <TextArea rows={3} placeholder="如：标记为高优先级，分配给高级客服" />
           </Form.Item>
           <Form.Item label="优先级" name="priority" initialValue={50}>
-            <InputNumber min={0} max={100} style={{ width: '100%' }} />
+            <InputNumber min={0} max={100} className={styles.fullWidth} />
           </Form.Item>
           <Form.Item label="适用品类标签" name="tags">
             <Input placeholder="多个标签用逗号分隔，如：PLC,变频器,传感器" />
@@ -241,7 +241,7 @@ export const RuleListPage: React.FC = () => {
         cancelText="取消"
         width={700}
       >
-        <Form form={editForm} layout="vertical" onFinish={handleEditRule} style={{ marginTop: 16 }}>
+        <Form form={editForm} layout="vertical" onFinish={handleEditRule} className={styles.formMarginTop}>
           <Form.Item label="规则名称" name="name" rules={[{ required: true, message: '请输入规则名称' }]}>
             <Input />
           </Form.Item>
@@ -255,7 +255,7 @@ export const RuleListPage: React.FC = () => {
             <TextArea rows={3} />
           </Form.Item>
           <Form.Item label="优先级" name="priority">
-            <InputNumber min={0} max={100} style={{ width: '100%' }} />
+            <InputNumber min={0} max={100} className={styles.fullWidth} />
           </Form.Item>
           <Form.Item label="适用品类标签" name="tags">
             <Input placeholder="多个标签用逗号分隔" />
@@ -305,17 +305,17 @@ export const RuleListPage: React.FC = () => {
               <Descriptions.Item label="创建时间">{selectedRule.created_at || '-'}</Descriptions.Item>
             </Descriptions>
             <Divider>触发条件（IF）</Divider>
-            <div style={{ background: '#fafafa', padding: 12, borderRadius: 4, fontFamily: 'monospace', fontSize: 13 }}>
+            <div className={styles.codeBlock}>
               {selectedRule.condition}
             </div>
             <Divider>执行动作（THEN）</Divider>
-            <div style={{ background: '#fafafa', padding: 12, borderRadius: 4, fontFamily: 'monospace', fontSize: 13 }}>
+            <div className={styles.codeBlock}>
               {selectedRule.action}
             </div>
             {selectedRule.description && (
               <>
                 <Divider>规则描述</Divider>
-                <div style={{ fontSize: 13, lineHeight: 1.6 }}>{selectedRule.description}</div>
+                <div className={styles.descriptionBlock}>{selectedRule.description}</div>
               </>
             )}
           </div>

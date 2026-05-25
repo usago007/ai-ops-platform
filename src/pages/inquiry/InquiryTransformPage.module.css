@@ -41,13 +41,13 @@
 }
 
 .stage.processing {
-  background: #e6f7ff;
-  border-left: 3px solid #1890ff;
+  background: var(--info-bg);
+  border-left: 3px solid var(--info);
 }
 
 .stage.done {
-  background: #f6ffed;
-  border-left: 3px solid #52c41a;
+  background: var(--success-bg);
+  border-left: 3px solid var(--success);
 }
 
 .stageIcon {
@@ -57,11 +57,11 @@
 }
 
 .stage.processing .stageIcon {
-  color: #1890ff;
+  color: var(--info);
 }
 
 .stage.done .stageIcon {
-  color: #52c41a;
+  color: var(--success);
 }
 
 .stageInfo {

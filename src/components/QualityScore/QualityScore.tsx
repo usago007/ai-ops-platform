@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'antd'
 import styles from './QualityScore.module.css'
+import { STATUS_COLORS } from '../../styles/chartColors'
 
 interface QualityScoreProps {
   score: number
@@ -16,7 +17,7 @@ export const QualityScore: React.FC<QualityScoreProps> = ({
   size = 'default',
 }) => {
   const percentage = (score / maxScore) * 100
-  const color = percentage >= 80 ? '#52c41a' : percentage >= threshold ? '#faad14' : '#ff4d4f'
+  const color = percentage >= 80 ? STATUS_COLORS.success : percentage >= threshold ? STATUS_COLORS.warning : STATUS_COLORS.error
   const radius = size === 'large' ? 60 : size === 'small' ? 30 : 45
   const strokeWidth = size === 'large' ? 8 : size === 'small' ? 4 : 6
 
@@ -31,7 +32,7 @@ export const QualityScore: React.FC<QualityScoreProps> = ({
           cy={radius + strokeWidth}
           r={radius}
           fill="none"
-          stroke="#f0f0f0"
+          stroke="rgba(0,0,0,0.06)"
           strokeWidth={strokeWidth}
         />
         <circle

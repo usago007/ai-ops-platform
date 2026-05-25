@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Card, Row, Col, Statistic, Timeline, Tag } from 'antd'
 import { CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Column, Pie, Line } from '@ant-design/charts'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 import styles from './SystemObservabilityPage.module.css'
 
 interface LatencyBucket {
@@ -66,26 +67,26 @@ export const SystemObservabilityPage: React.FC = () => {
     xField: 'bucket',
     yField: 'count',
     color: (item: LatencyBucket) => {
-      const colors = ['#52c41a', '#1890ff', '#faad14', '#fa8c16', '#f5222d', '#cf1322']
+      const colors = [STATUS_COLORS.success, CHART_COLORS[1], STATUS_COLORS.warning, STATUS_COLORS.warning, STATUS_COLORS.error, STATUS_COLORS.error]
       const index = latencyData.indexOf(item)
       return colors[index]
     },
     label: {
       position: 'top',
       style: {
-        fill: '#fff',
+        fill: '#ffffff',
         opacity: 0.6,
       },
     },
     xAxis: {
       label: {
         autoRotate: true,
-        style: { fill: '#aaa' },
+        style: { fill: '#a1a1aa' },
       },
     },
     yAxis: {
       label: {
-        style: { fill: '#aaa' },
+        style: { fill: '#a1a1aa' },
       },
     },
     tooltip: {
@@ -109,14 +110,14 @@ export const SystemObservabilityPage: React.FC = () => {
       style: {
         textAlign: 'center',
         fontSize: 14,
-        fill: '#fff',
+        fill: '#ffffff',
       },
     },
     interactions: [{ type: 'element-active' }],
     legend: {
       position: 'right',
       itemName: {
-        style: { fill: '#aaa' },
+        style: { fill: '#a1a1aa' },
       },
     },
     tooltip: {
@@ -125,7 +126,7 @@ export const SystemObservabilityPage: React.FC = () => {
         value: `${datum.count}%`,
       }),
     },
-    color: ['#f5222d', '#fa8c16', '#faad14', '#1890ff', '#8c8c8c'],
+    color: [STATUS_COLORS.error, STATUS_COLORS.warning, STATUS_COLORS.warning, CHART_COLORS[1], '#a1a1aa'],
   }
 
   const volumeConfig = {
@@ -133,21 +134,21 @@ export const SystemObservabilityPage: React.FC = () => {
     xField: 'time',
     yField: 'requests',
     smooth: true,
-    color: '#1890ff',
+    color: CHART_COLORS[1],
     point: { size: 3, shape: 'circle' },
     areaStyle: {
-      fill: 'l(270) 0:#001529 0.5:#003a8c 1:#1890ff',
+      fill: 'l(270) 0:#1e40af 0.5:#2563eb 1:#3b82f6',
     },
     xAxis: {
       label: {
         autoRotate: false,
         autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
-        style: { fill: '#aaa' },
+        style: { fill: '#a1a1aa' },
       },
     },
     yAxis: {
       label: {
-        style: { fill: '#aaa' },
+        style: { fill: '#a1a1aa' },
       },
     },
     tooltip: {
@@ -171,7 +172,7 @@ export const SystemObservabilityPage: React.FC = () => {
               value={99.7}
               precision={1}
               suffix="%"
-              valueStyle={{ color: '#3f8600' }}
+              valueStyle={{ color: 'var(--success)' }}
               prefix={<CheckCircleOutlined />}
             />
           </Card>
@@ -209,7 +210,7 @@ export const SystemObservabilityPage: React.FC = () => {
       </Row>
 
       {/* Charts Row */}
-      <Row gutter={16} style={{ marginTop: 16 }}>
+      <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card className={styles.chartCard} title="延迟分布">
             <div className={styles.chartContainer}>
@@ -227,14 +228,14 @@ export const SystemObservabilityPage: React.FC = () => {
       </Row>
 
       {/* Request Volume Trend */}
-      <Card className={styles.chartCard} title="请求量趋势 (24h)" style={{ marginTop: 16 }}>
+      <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="请求量趋势 (24h)">
         <div className={styles.chartContainer}>
           <Line {...volumeConfig} />
         </div>
       </Card>
 
       {/* Recent Operations Timeline */}
-      <Card className={styles.chartCard} title="最近操作时间线" style={{ marginTop: 16 }}>
+      <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="最近操作时间线">
         <div className={styles.timelineContainer}>
           <Timeline
             items={recentOperations.map((op) => ({
@@ -247,7 +248,7 @@ export const SystemObservabilityPage: React.FC = () => {
                     <span
                       className={styles.latency}
                       style={{
-                        color: op.latency > 1000 ? '#f5222d' : op.latency > 500 ? '#faad14' : '#52c41a',
+                        color: op.latency > 1000 ? 'var(--error)' : op.latency > 500 ? 'var(--warning)' : 'var(--success)',
                       }}
                     >
                       {op.latency >= 1000 ? `${(op.latency / 1000).toFixed(1)}s` : `${op.latency}ms`}

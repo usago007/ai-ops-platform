@@ -11,6 +11,7 @@ import {
   EyeOutlined,
 } from '@ant-design/icons'
 import styles from './DashboardPage.module.css'
+import { CHART_COLORS, STATUS_COLORS } from '../../styles/chartColors'
 
 const quickAccessCards = [
   {
@@ -18,7 +19,7 @@ const quickAccessCards = [
     icon: <InboxOutlined />,
     path: '/inquiry/list',
     description: 'AI 自动识别并归类询报价邮件',
-    color: '#1890ff',
+    color: CHART_COLORS[1],
     todayCount: 128,
     trend: '+12%',
   },
@@ -27,7 +28,7 @@ const quickAccessCards = [
     icon: <TagsOutlined />,
     path: '/product/list',
     description: '提取商品关键属性生成结构化数据',
-    color: '#52c41a',
+    color: STATUS_COLORS.success,
     todayCount: 56,
     trend: '+8%',
   },
@@ -36,7 +37,7 @@ const quickAccessCards = [
     icon: <FileTextOutlined />,
     path: '/rules',
     description: '从复杂文档中提取业务规则',
-    color: '#722ed1',
+    color: CHART_COLORS[5],
     todayCount: 34,
     trend: '+15%',
   },
@@ -45,7 +46,7 @@ const quickAccessCards = [
     icon: <EditOutlined />,
     path: '/marketing/create',
     description: '一键生成营销文案和推广素材',
-    color: '#fa8c16',
+    color: STATUS_COLORS.warning,
     todayCount: 89,
     trend: '+22%',
   },
@@ -54,7 +55,7 @@ const quickAccessCards = [
     icon: <ShopOutlined />,
     path: '/selling-point',
     description: 'AI 智能分析并提炼产品核心卖点',
-    color: '#eb2f96',
+    color: CHART_COLORS[2],
     todayCount: 42,
     trend: '+5%',
   },
@@ -63,7 +64,7 @@ const quickAccessCards = [
     icon: <CustomerServiceOutlined />,
     path: '/cs/workspace',
     description: '智能辅助客服提升响应效率',
-    color: '#13c2c2',
+    color: CHART_COLORS[2],
     todayCount: 215,
     trend: '+18%',
   },
@@ -162,14 +163,14 @@ export const DashboardPage = () => {
         </p>
       </div>
 
-      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+      <Row gutter={[16, 16]} className={styles.statsRow}>
         <Col span={6}>
           <Card className={styles.statCard}>
             <Statistic
               title="今日处理任务"
               value={564}
               precision={0}
-              valueStyle={{ color: '#1890ff' }}
+              valueStyle={{ color: 'var(--chart-1)' }}
               prefix={<ArrowUpOutlined />}
               suffix="件"
             />
@@ -181,7 +182,7 @@ export const DashboardPage = () => {
               title="平均置信度"
               value={95.2}
               precision={1}
-              valueStyle={{ color: '#52c41a' }}
+              valueStyle={{ color: 'var(--success)' }}
               suffix="%"
             />
           </Card>
@@ -192,7 +193,7 @@ export const DashboardPage = () => {
               title="节省人力工时"
               value={48.5}
               precision={1}
-              valueStyle={{ color: '#722ed1' }}
+              valueStyle={{ color: 'var(--chart-5)' }}
               suffix="小时"
             />
           </Card>
@@ -203,35 +204,34 @@ export const DashboardPage = () => {
               title="待处理任务"
               value={23}
               precision={0}
-              valueStyle={{ color: '#fa8c16' }}
+              valueStyle={{ color: 'var(--warning)' }}
             />
           </Card>
         </Col>
       </Row>
 
       <h2 className={styles.sectionTitle}>快捷入口</h2>
-      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+      <Row gutter={[16, 16]} className={styles.quickAccessRow}>
         {quickAccessCards.map((card) => (
           <Col xs={24} sm={12} md={8} lg={8} key={card.path}>
             <Card
               hoverable
               className={styles.quickCard}
               style={{ borderTop: `3px solid ${card.color}` }}
-              bodyStyle={{ padding: '16px 20px' }}
             >
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+              <div className={styles.quickCardInner}>
                 <div
                   className={styles.iconWrapper}
                   style={{ background: `${card.color}15`, color: card.color }}
                 >
                   {card.icon}
                 </div>
-                <div style={{ flex: 1 }}>
+                <div className={styles.quickCardContent}>
                   <div className={styles.quickTitle}>{card.title}</div>
                   <div className={styles.quickDesc}>{card.description}</div>
                   <div className={styles.quickStats}>
                     <span className={styles.quickCount}>今日 {card.todayCount} 件</span>
-                    <span className={styles.quickTrend} style={{ color: '#52c41a' }}>
+                    <span className={styles.quickTrend}>
                       <ArrowUpOutlined /> {card.trend}
                     </span>
                   </div>

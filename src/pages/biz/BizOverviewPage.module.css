@@ -27,3 +27,15 @@
 .modalSection {
   margin-bottom: var(--spacing-md);
 }
+
+.kbLinkButton {
+  padding: 0;
+}
+
+.quickLinks {
+  width: 100%;
+}
+
+.kbModalTags {
+  margin-bottom: 16px;
+}

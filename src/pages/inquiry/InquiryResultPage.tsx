@@ -3,6 +3,7 @@ import { Card, Descriptions, Tag, Progress, Spin, Alert, Button, Space, Result, 
 import { CheckCircleOutlined, WarningOutlined, InboxOutlined, ThunderboltOutlined, RobotOutlined, EditOutlined, CheckOutlined, CloseOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { inquiryService } from '../../services'
+import { CHART_COLORS } from '../../styles/chartColors'
 import styles from './InquiryResultPage.module.css'
 
 export const InquiryResultPage: React.FC = () => {
@@ -99,9 +100,9 @@ export const InquiryResultPage: React.FC = () => {
   }
 
   const getConfidenceColor = (score: number) => {
-    if (score >= 0.8) return { color: '#10b981', gradient: 'linear-gradient(90deg, #10b981, #34d399)' }
-    if (score >= 0.6) return { color: '#f59e0b', gradient: 'linear-gradient(90deg, #f59e0b, #fbbf24)' }
-    return { color: '#ef4444', gradient: 'linear-gradient(90deg, #ef4444, #f87171)' }
+    if (score >= 0.8) return { color: 'var(--success)', gradient: 'linear-gradient(90deg, var(--success), var(--success))' }
+    if (score >= 0.6) return { color: 'var(--warning)', gradient: 'linear-gradient(90deg, var(--warning), var(--warning))' }
+    return { color: 'var(--error)', gradient: 'linear-gradient(90deg, var(--error), var(--error))' }
   }
 
   const getConfidenceLabel = (score: number) => {
@@ -182,7 +183,7 @@ export const InquiryResultPage: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.headerRow}>
         <div>
-          <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} style={{ padding: 0, marginBottom: 8 }}>
+          <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} className={styles.backButton}>
             返回线索池
           </Button>
           <h2 className={styles.title}>AI 解析结果</h2>
@@ -241,7 +242,7 @@ export const InquiryResultPage: React.FC = () => {
             <div className={styles.confidenceSection}>
               <div className={styles.confidenceHeader}>
                 <span className={styles.confidenceLabel}>解析置信度</span>
-                <span className={styles.confidenceBadge} style={{ color: confidenceConfig.color }}>
+                <span className={styles.confidenceBadgeDynamic} style={{ color: confidenceConfig.color }}>
                   {confidenceLabel}
                 </span>
               </div>
@@ -256,7 +257,7 @@ export const InquiryResultPage: React.FC = () => {
                   />
                 </div>
                 <div className={styles.gaugeLabels}>
-                  <span style={{ color: confidenceConfig.color, fontWeight: 700, fontSize: 20 }}>
+                  <span className={styles.gaugeValue} style={{ color: confidenceConfig.color }}>
                     {confidencePercentage}%
                   </span>
                   <span className={styles.gaugeScale}>
@@ -281,10 +282,10 @@ export const InquiryResultPage: React.FC = () => {
           <Card title="AI 归类结果" className={styles.card} loading={classifyLoading}>
             {classifyResult && (
               <div>
-                <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                <Space direction="vertical" size="large" className={styles.fullWidth}>
                   <div>
                     <span className={styles.label}>一级类目：</span>
-                    <Tag color="blue" style={{ fontSize: 14, padding: '4px 12px' }}>
+                    <Tag color="blue" className={styles.categoryTag}>
                       {classifyResult.level1}
                     </Tag>
                     <span className={styles.confidenceText}>
@@ -293,7 +294,7 @@ export const InquiryResultPage: React.FC = () => {
                   </div>
                   <div>
                     <span className={styles.label}>二级类目：</span>
-                    <Tag color="cyan" style={{ fontSize: 14, padding: '4px 12px' }}>
+                    <Tag color="cyan" className={styles.categoryTag}>
                       {classifyResult.level2}
                     </Tag>
                     <span className={styles.confidenceText}>
@@ -309,7 +310,7 @@ export const InquiryResultPage: React.FC = () => {
         <Col span={8}>
           <Card title="相似询价推荐">
             {similarItems.length > 0 ? (
-              <Space direction="vertical" style={{ width: '100%' }}>
+              <Space direction="vertical" className={styles.fullWidth}>
                 {similarItems.map((item: any) => (
                   <Card key={item.id} size="small" className={styles.similarCard}>
                     <div className={styles.similarTitle}>{item.title}</div>
@@ -321,7 +322,7 @@ export const InquiryResultPage: React.FC = () => {
                     <Progress
                       percent={Math.round(item.similarity * 100)}
                       size="small"
-                      strokeColor="#1890ff"
+                      strokeColor={CHART_COLORS[2]}
                       format={(p) => `匹配度 ${p}%`}
                     />
                   </Card>
@@ -335,7 +336,8 @@ export const InquiryResultPage: React.FC = () => {
           <Card title="风险等级" className={styles.card}>
             <div className={styles.riskCenter}>
               {React.cloneElement(riskConfig.icon as React.ReactElement, {
-                style: { fontSize: 48, color: riskConfig.color },
+                className: styles.riskIcon,
+                style: { color: riskConfig.color },
               })}
               <div className={styles.riskText}>{riskConfig.text}</div>
             </div>
@@ -368,7 +370,7 @@ export const InquiryResultPage: React.FC = () => {
         }
         width={600}
       >
-        <Form layout="vertical" style={{ marginTop: 16 }}>
+        <Form layout="vertical" className={styles.modalForm}>
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item label="品类">

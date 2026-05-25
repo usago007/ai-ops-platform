@@ -39,3 +39,15 @@
   background: var(--bg-secondary) !important;
   border: 1px solid var(--border-secondary) !important;
 }
+
+.attributionCard { margin-bottom: var(--spacing-md); }
+.attrItem { padding: var(--spacing-md); background: var(--bg-secondary); border-radius: var(--radius-sm); }
+.attrIconInfo { color: var(--info); }
+.attrIconSuccess { color: var(--success); }
+.attrIconChart5 { color: var(--chart-5); }
+.valueTertiary { color: var(--text-tertiary); }
+.valueSuccess { color: var(--success); }
+.tagMarginTop { margin-top: 8px; }
+.statValueLg :global(.ant-statistic-content-value) { font-size: 28px; }
+.versionAStat :global(.ant-statistic-content-value) { color: var(--text-tertiary); }
+.versionBStat :global(.ant-statistic-content-value) { color: var(--success); }
