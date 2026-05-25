@@ -175,7 +175,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         />
       </Sider>
 
-      <Layout>
+      <Layout className={styles.innerLayout}>
         <Header className={styles.header}>
           <div className={styles.headerLeft}>
             <Breadcrumb items={buildBreadcrumb(location.pathname).map(name => ({ title: name }))} />

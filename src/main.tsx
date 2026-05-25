@@ -7,14 +7,18 @@ import './styles/global.css'
 
 async function enableMocking() {
   if (import.meta.env.DEV) {
-    const { worker } = await import('./mock/browser')
-    await worker.start({
-      onUnhandledRequest: 'bypass',
-    })
+    try {
+      const { worker } = await import('./mock/browser')
+      await worker.start({
+        onUnhandledRequest: 'bypass',
+      })
+    } catch (e) {
+      console.warn('MSW failed to start, mocking disabled:', e)
+    }
   }
 }
 
-enableMocking().then(() => {
+enableMocking().finally(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <HashRouter>
