@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Table, Button, Tag, Progress, Space, message, Modal, Spin, Row, Col, Typography, Divider, Descriptions } from 'antd'
-import { ThunderboltOutlined, ReloadOutlined, InboxOutlined, TrophyOutlined, CheckCircleOutlined, PlusOutlined, AppstoreOutlined, EyeOutlined } from '@ant-design/icons'
+import { ThunderboltOutlined, ReloadOutlined, InboxOutlined, TrophyOutlined, CheckCircleOutlined, PlusOutlined, AppstoreOutlined, EyeOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './ProductListPage.module.css'
@@ -9,9 +9,30 @@ import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Text } = Typography
 
+interface ProductItem {
+  id: string
+  name: string
+  category?: string
+  brand?: string
+  source?: string
+  source_inquiry?: string
+  status: string
+  completenessScore: number
+  created_at?: string
+  model?: string
+  original_text?: string
+  attributes?: Array<{
+    name: string
+    value: string
+    confidence: number
+    source: string
+    status: string
+  }>
+}
+
 export const ProductListPage: React.FC = () => {
   const navigate = useNavigate()
-  const [products, setProducts] = useState<any[]>([])
+  const [products, setProducts] = useState<ProductItem[]>([])
   const [loading, setLoading] = useState(true)
   const [batchLoading, setBatchLoading] = useState(false)
 
@@ -66,7 +87,7 @@ export const ProductListPage: React.FC = () => {
 
   const columns = [
     { title: 'SKU', dataIndex: 'id', key: 'id', width: 140,
-      render: (text: string, record: any) => (
+      render: (text: string, record: ProductItem) => (
           record.source_inquiry ? (
           <Space>
             <Text className={styles.skuText}>{text}</Text>
@@ -76,7 +97,7 @@ export const ProductListPage: React.FC = () => {
       ),
     },
     { title: '商品名称', dataIndex: 'name', key: 'name',
-      render: (text: string, record: any) => (
+      render: (text: string, record: ProductItem) => (
         <div>
           <Text strong>{text}</Text>
           {record.source_inquiry && (
@@ -125,7 +146,7 @@ export const ProductListPage: React.FC = () => {
       title: '操作',
       key: 'action',
       width: 100,
-      render: (_: any, record: any) => (
+      render: (_: any, record: ProductItem) => (
         <Button
           type="link"
           size="small"
@@ -138,8 +159,8 @@ export const ProductListPage: React.FC = () => {
     },
   ]
 
-  const standardItems = products.filter((p: any) => !p.source_inquiry)
-  const pendingItems = products.filter((p: any) => p.source_inquiry)
+  const standardItems = products.filter((p: ProductItem) => !p.source_inquiry)
+  const pendingItems = products.filter((p: ProductItem) => p.source_inquiry)
 
   const getStatusTag = (status: string) => {
     if (status === 'confirmed') return <Tag color="green">已确认</Tag>
@@ -212,7 +233,7 @@ export const ProductListPage: React.FC = () => {
             size="small"
             pagination={false}
             expandable={{
-              expandedRowRender: (record: any) => (
+              expandedRowRender: (record: ProductItem) => (
                 <div className={styles.expandedRow}>
                   <Descriptions column={3} size="small" bordered>
                     <Descriptions.Item label="SKU">{record.id}</Descriptions.Item>

@@ -12,7 +12,7 @@ export interface ModelConfig {
   costPerCall: number
 }
 
-let models: ModelConfig[] = [
+const models: ModelConfig[] = [
   {
     id: 'model-1',
     name: 'gpt-4-turbo',

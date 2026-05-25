@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Row, Col, Select, Button, Spin, Typography, Tag, Image, Divider } from 'antd'
-import { EyeOutlined, ReloadOutlined } from '@ant-design/icons'
+import { EyeOutlined, ReloadOutlined } from '@/iconMap'
 import { marketingService } from '../../services'
 import styles from './LandingPagePreviewPage.module.css'
 

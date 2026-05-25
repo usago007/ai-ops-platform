@@ -3,7 +3,7 @@ import { Tabs } from 'antd'
 import {
   BarChartOutlined,
   NodeIndexOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { OverviewTab } from './tabs/OverviewTab'
 import { ConversionTab } from './tabs/ConversionTab'
 import styles from './MktOverviewPage.module.css'

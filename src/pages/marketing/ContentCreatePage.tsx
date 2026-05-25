@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Form, Select, Button, Input, Space, message, Spin, Typography, Tag, Divider, Image, Row, Col } from 'antd'
-import { RocketOutlined, ScanOutlined, BulbOutlined, HistoryOutlined } from '@ant-design/icons'
+import { RocketOutlined, ScanOutlined, BulbOutlined, HistoryOutlined } from '@/iconMap'
 import { useLocation } from 'react-router-dom'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { marketingService } from '../../services'
@@ -15,13 +15,43 @@ const QUICK_TEMPLATES = [
   { id: 'TPL-004', name: '限时秒杀', scene: 'flash_sale', style: 'urgent', channels: ['push', 'sms'] },
 ]
 
+interface Violation {
+  word: string
+  position: [number, number]
+  suggestion: string
+}
+
+interface ComplianceResult {
+  passed: boolean
+  violations: Violation[]
+}
+
+interface ContentVersion {
+  id: string
+  title: string
+  subtitle: string
+  body: string
+  style: string
+}
+
+interface GenerateResult {
+  versions: ContentVersion[]
+}
+
+interface Material {
+  id: string
+  url: string
+  name: string
+  tag: string
+}
+
 export const ContentCreatePage: React.FC = () => {
   const location = useLocation()
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<any>(null)
-  const [complianceResult, setComplianceResult] = useState<any>(null)
-  const [materials, setMaterials] = useState<any[]>([])
+  const [result, setResult] = useState<GenerateResult | null>(null)
+  const [complianceResult, setComplianceResult] = useState<ComplianceResult | null>(null)
+  const [materials, setMaterials] = useState<Material[]>([])
   const [complianceScanning, setComplianceScanning] = useState(false)
 
   useEffect(() => {
@@ -71,7 +101,7 @@ export const ContentCreatePage: React.FC = () => {
   const renderContent = (content: string) => {
     if (!complianceResult?.violations?.length) return content
     let result = content
-    complianceResult.violations.forEach((v: any) => {
+    complianceResult.violations.forEach((v: Violation) => {
       const before = result.slice(0, v.position[0])
       const word = result.slice(v.position[0], v.position[1])
       const after = result.slice(v.position[1])
@@ -142,7 +172,7 @@ export const ContentCreatePage: React.FC = () => {
         ) : (
           <>
             <div className={styles.versions}>
-              {result.versions.map((v: any, i: number) => (
+              {result.versions.map((v: ContentVersion, i: number) => (
                 <Card key={v.id} title={`版本 ${i + 1}`} size="small" className={styles.versionCard}
                   extra={<Tag>{v.style}</Tag>}>
                   <h4 className={styles.versionTitle}>{renderContent(v.title)}</h4>
@@ -168,7 +198,7 @@ export const ContentCreatePage: React.FC = () => {
                   <div>
                     <Tag color="red">⚠️ 发现 {complianceResult.violations.length} 处违规</Tag>
                     <ul>
-                      {complianceResult.violations.map((v: any, i: number) => (
+                      {complianceResult.violations.map((v: Violation, i: number) => (
                         <li key={i}>「<strong>{v.word}</strong>」→ 建议改为：{v.suggestion}</li>
                       ))}
                     </ul>

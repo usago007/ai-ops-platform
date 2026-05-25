@@ -19,9 +19,30 @@ interface RuleRecord {
   conflictWith?: string | null
 }
 
+interface GeneratedRule {
+  id: string
+  name: string
+  condition: string
+  action: string
+  status: 'active' | 'disabled'
+  version: string
+  createdAt: string
+  conflictWith: string | null
+}
+
+interface CreateRulePayload {
+  name: string
+  description?: string
+  condition: string
+  action: string
+  priority?: number
+  tags?: string[]
+  status?: string
+}
+
 let ruleIdCounter = 110
 
-let rules: RuleRecord[] = generateRules().map((rule: any, index: number) => ({
+const rules: RuleRecord[] = generateRules().map((rule: GeneratedRule, index: number) => ({
   id: rule.id,
   name: rule.name,
   description: `${rule.name} 的业务执行规则`,
@@ -41,7 +62,7 @@ export const ruleDataStore = {
 
   importRules: () => ({ imported: 8, skipped: 2, conflicts: 1 }),
 
-  createRule: (payload: any) => {
+  createRule: (payload: CreateRulePayload) => {
     const newRule: RuleRecord = {
       id: `RULE-${ruleIdCounter++}`,
       name: payload.name,
@@ -60,7 +81,7 @@ export const ruleDataStore = {
     return { message: '规则已创建', rule: clone(newRule) }
   },
 
-  updateRule: (id: string, payload: any) => {
+  updateRule: (id: string, payload: Partial<RuleRecord>) => {
     const index = rules.findIndex(rule => rule.id === id)
     if (index < 0) {
       return { message: '规则不存在' }
@@ -86,7 +107,7 @@ export const ruleDataStore = {
     return { message: '状态已切换', status: rule.status }
   },
 
-  getVersions: (id: string) => ({
+  getVersions: () => ({
     versions: [
       { version: 'v1.3', date: '2025-04-10', author: '陈明远', change: '新增交期校验条件' },
       { version: 'v1.2', date: '2025-03-15', author: '林晓峰', change: '修改路由目标' },

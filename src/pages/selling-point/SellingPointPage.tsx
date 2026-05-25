@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Tag, Space, Spin, Typography, Divider, Statistic, Row, Col, Progress, Button } from 'antd'
-import { StarOutlined, ArrowUpOutlined, ThunderboltOutlined, RocketOutlined, BulbOutlined } from '@ant-design/icons'
+import { Card, Tag, Space, Spin, Divider, Statistic, Row, Col, Button, Typography } from 'antd'
+import { StarOutlined, ArrowUpOutlined, BulbOutlined, RocketOutlined } from '@/iconMap'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Line } from '@ant-design/charts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { marketingService } from '../../services'
 import styles from './SellingPointPage.module.css'
-import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
+import { CHART_COLORS, CHART_LABEL_COLOR } from '../../styles/chartColors'
 
 const { Text, Title } = Typography
 
@@ -16,26 +16,42 @@ const SELLING_POINT_SCENES: Record<string, string[]> = {
   '长寿命': ['品牌故事营销', '用户案例分享', '行业白皮书'],
 }
 
+interface SellingPointItem {
+  text: string
+  support: string
+  ctr_impact: string
+}
+
+interface SellingPointData {
+  core: SellingPointItem[]
+  secondary: string[]
+  ctr_comparison: {
+    with_ai: number
+    without_ai: number
+    improvement: string
+  }
+}
+
 export const SellingPointPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>()
   const navigate = useNavigate()
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<SellingPointData | null>(null)
   const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    loadData()
-  }, [productId])
 
   const loadData = async () => {
     try {
-      const response = await marketingService.getSellingPoints(productId)
+      const response = await marketingService.getSellingPoints()
       if (response.success) setData(response.data)
     } catch (e) { console.error(e) }
     finally { setLoading(false) }
   }
 
+  useEffect(() => {
+    loadData()
+  }, [productId])
+
   const handleGenerateContent = () => {
-    const sellingPoints = data?.core?.map((sp: any) => sp.text).join('、') || ''
+    const sellingPoints = data?.core?.map((sp: SellingPointItem) => sp.text).join('、') || ''
     navigate('/marketing/create', { state: { prefill: { note: `核心卖点: ${sellingPoints}` } } })
   }
 
@@ -45,27 +61,13 @@ export const SellingPointPage: React.FC = () => {
 
   if (!data) return <div className={styles.center}><Text type="secondary">暂无卖点数据</Text></div>
 
-  const chartConfig = {
-    data: [
-      { type: '第1周', value: 3.2, category: '无AI卖点' },
-      { type: '第1周', value: 3.5, category: 'AI卖点' },
-      { type: '第2周', value: 3.2, category: '无AI卖点' },
-      { type: '第2周', value: 3.8, category: 'AI卖点' },
-      { type: '第3周', value: 3.1, category: '无AI卖点' },
-      { type: '第3周', value: 4.2, category: 'AI卖点' },
-      { type: '第4周', value: 3.2, category: '无AI卖点' },
-      { type: '第4周', value: 4.5, category: 'AI卖点' },
-      { type: '第5周', value: 3.3, category: '无AI卖点' },
-      { type: '第5周', value: 4.8, category: 'AI卖点' },
-    ],
-    xField: 'type',
-    yField: 'value',
-    seriesField: 'category',
-    smooth: true,
-    animation: { appear: { animation: 'path-in', duration: 1000 } },
-    color: [CHART_LABEL_COLOR, CHART_COLORS[1]],
-    point: { size: 5, shape: 'circle' },
-  }
+  const chartData = [
+    { type: '第1周', '无AI卖点': 3.2, 'AI卖点': 3.5 },
+    { type: '第2周', '无AI卖点': 3.2, 'AI卖点': 3.8 },
+    { type: '第3周', '无AI卖点': 3.1, 'AI卖点': 4.2 },
+    { type: '第4周', '无AI卖点': 3.2, 'AI卖点': 4.5 },
+    { type: '第5周', '无AI卖点': 3.3, 'AI卖点': 4.8 },
+  ]
 
   return (
     <div className={styles.container}>
@@ -94,7 +96,7 @@ export const SellingPointPage: React.FC = () => {
         <Col span={16}>
           <Card title={<span><StarOutlined className={styles.iconWarning} /> 核心卖点 (Top 3)</span>} className={styles.card}>
             <Space direction="vertical" className={styles.fullWidth} size="large">
-              {data.core.map((sp: any, i: number) => (
+              {data.core.map((sp: SellingPointItem, i: number) => (
                 <Card key={i} size="small" className={styles.coreSellingCard}>
                   <div className={styles.coreRank}>#{i + 1}</div>
                   <div className={styles.coreText}>{sp.text}</div>
@@ -137,7 +139,17 @@ export const SellingPointPage: React.FC = () => {
           </Card>
 
           <Card title="CTR 趋势对比" className={styles.card}>
-            <Line {...chartConfig} height={200} containerStyle={{ height: 200 }} />
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                <XAxis dataKey="type" tick={{ fill: CHART_LABEL_COLOR }} />
+                <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, 'CTR']} />
+                <Legend />
+                <Line type="monotone" dataKey="无AI卖点" stroke={CHART_LABEL_COLOR} dot={{ r: 5 }} activeDot={{ r: 7 }} />
+                <Line type="monotone" dataKey="AI卖点" stroke={CHART_COLORS[1]} dot={{ r: 5 }} activeDot={{ r: 7 }} />
+              </LineChart>
+            </ResponsiveContainer>
           </Card>
         </Col>
       </Row>

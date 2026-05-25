@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Form, Input, InputNumber, Button, Table, Space, Typography, Tag, Row, Col, message, Divider, Spin, Descriptions, Alert } from 'antd'
-import { ArrowLeftOutlined, SendOutlined, FileTextOutlined, CheckCircleOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, SendOutlined, FileTextOutlined, CheckCircleOutlined } from '@/iconMap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './QuotationEditPage.module.css'
 
 const { Title, Text } = Typography
 
+interface SimilarQuotation {
+  id: string
+  customer: string
+  products: string
+  total: number
+  delivery: string
+  status: string
+}
+
+interface QuotationFormValues {
+  products?: Array<{ name: string; quantity: number; unit: string; unitPrice: number }>
+  delivery?: string
+  payment?: string
+  validUntil?: string
+  note?: string
+}
+
 export const QuotationEditPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [lead, setLead] = useState<any>(null)
-  const [similarQuotations, setSimilarQuotations] = useState<any[]>([])
+  const [lead, setLead] = useState<Record<string, unknown> | null>(null)
+  const [similarQuotations, setSimilarQuotations] = useState<SimilarQuotation[]>([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [form] = Form.useForm()
@@ -33,7 +50,7 @@ export const QuotationEditPage: React.FC = () => {
     }
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: QuotationFormValues) => {
     setSubmitting(true)
     try {
       const result = await inquiryService.saveQuotation(id || '', values)

@@ -14,7 +14,7 @@ import {
   FrownOutlined,
   FileTextOutlined,
   DatabaseOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { MetricCard } from '../../components/MetricCard'
 import { ProcessFlow } from '../../components/ProcessFlow/ProcessFlow'
@@ -32,18 +32,85 @@ const KB_TYPE_CONFIG: Record<string, { color: string; label: string }> = {
   'service': { color: 'purple', label: '服务方案' },
 }
 
+interface BizStats {
+  processed: number
+}
+
+interface BizCase {
+  id: string
+  title: string
+  description: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  original_text: string
+  parse_result: {
+    category: string
+    spec: string
+    quantity: { value: number; unit: string }
+    delivery: string
+    region: string
+    confidence: number
+  }
+  classify_result: {
+    level1: string
+    level2: string
+    level1_confidence: number
+    level2_confidence: number
+  }
+}
+
+interface FunnelData {
+  conversion_rate: number
+  avg_cycle_days: number
+}
+
+interface SourceItem {
+  name: string
+  count: number
+  won: number
+  rate: number
+}
+
+interface CategoryItem {
+  name: string
+  count: number
+  won: number
+  rate: number
+  avg_amount: number
+}
+
+interface KnowledgeBaseItem {
+  id: string
+  title: string
+  category: string
+  type: string
+  summary: string
+  source_lead: string
+  outcome: string
+  amount: number
+  created_at: string
+  tags: string[]
+  reason?: string
+}
+
+interface TrendData {
+  dates: string[]
+  leads: number[]
+  won: number[]
+  amount: number[]
+}
+
 export const BizOverviewPage: React.FC = () => {
   const navigate = useNavigate()
-  const [stats, setStats] = useState<any>(null)
-  const [cases, setCases] = useState<any[]>([])
-  const [funnel, setFunnel] = useState<any>(null)
-  const [sources, setSources] = useState<any[]>([])
-  const [categories, setCategories] = useState<any[]>([])
-  const [knowledgeBase, setKnowledgeBase] = useState<any[]>([])
-  const [trend, setTrend] = useState<any>(null)
+  const [stats, setStats] = useState<BizStats | null>(null)
+  const [cases, setCases] = useState<BizCase[]>([])
+  const [funnel, setFunnel] = useState<FunnelData | null>(null)
+  const [sources, setSources] = useState<SourceItem[]>([])
+  const [categories, setCategories] = useState<CategoryItem[]>([])
+  const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([])
+  const [trend, setTrend] = useState<TrendData | null>(null)
   const [loading, setLoading] = useState(true)
-  const [selectedCase, setSelectedCase] = useState<any>(null)
-  const [selectedKB, setSelectedKB] = useState<any>(null)
+  const [selectedCase, setSelectedCase] = useState<BizCase | null>(null)
+  const [selectedKB, setSelectedKB] = useState<KnowledgeBaseItem | null>(null)
 
   useEffect(() => {
     loadData()
@@ -112,7 +179,7 @@ export const BizOverviewPage: React.FC = () => {
   const kbColumns = [
     {
       title: '知识标题', dataIndex: 'title', key: 'title',
-      render: (text: string, record: any) => (
+      render: (text: string, record: KnowledgeBaseItem) => (
         <Button type="link" className={styles.kbLinkButton} onClick={() => setSelectedKB(record)}>{text}</Button>
       ),
     },
@@ -202,10 +269,10 @@ export const BizOverviewPage: React.FC = () => {
         <Col span={12}>
           <Card title="线索来源转化分析" className={styles.card} size="small">
             {sources.length === 0 ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
-                <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
-                <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
-                <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+              <div className={styles.emptyState}>
+                <InboxOutlined className={styles.emptyIcon} />
+                <p className={styles.emptyTitle}>暂无数据</p>
+                <p className={styles.emptyDesc}>开始使用后，这里将展示您的数据概览</p>
               </div>
             ) : (
               <Table
@@ -234,10 +301,10 @@ export const BizOverviewPage: React.FC = () => {
       <Card title="沉淀知识库" className={styles.card} size="small"
         extra={<Text type="secondary">基于成单/丢单结果自动沉淀</Text>}>
         {knowledgeBase.length === 0 ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
-            <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
-            <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
-            <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+          <div className={styles.emptyState}>
+            <InboxOutlined className={styles.emptyIcon} />
+            <p className={styles.emptyTitle}>暂无数据</p>
+            <p className={styles.emptyDesc}>开始使用后，这里将展示您的数据概览</p>
           </div>
         ) : (
           <Table
@@ -258,10 +325,10 @@ export const BizOverviewPage: React.FC = () => {
             extra={<Text type="secondary">点击案例查看完整解析流程</Text>}
           >
             {cases.length === 0 ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
-                <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
-                <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无数据</p>
-                <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>开始使用后，这里将展示您的数据概览</p>
+              <div className={styles.emptyState}>
+                <InboxOutlined className={styles.emptyIcon} />
+                <p className={styles.emptyTitle}>暂无数据</p>
+                <p className={styles.emptyDesc}>开始使用后，这里将展示您的数据概览</p>
               </div>
             ) : (
               <Row gutter={[16, 16]}>

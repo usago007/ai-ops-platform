@@ -1,11 +1,55 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Descriptions, Timeline, Form, Input, Button, Space, Typography, Tag, Row, Col, message, Spin, Modal, Divider, Table } from 'antd'
-import { ArrowLeftOutlined, ClockCircleOutlined, PlusOutlined, TrophyOutlined, FrownOutlined, FileTextOutlined, EditOutlined, HistoryOutlined, SendOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, ClockCircleOutlined, PlusOutlined, TrophyOutlined, FrownOutlined, FileTextOutlined, EditOutlined, HistoryOutlined, SendOutlined } from '@/iconMap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './QuotationDetailPage.module.css'
 
 const { Title, Text } = Typography
+
+interface QuotationProduct {
+  name: string
+  quantity: number
+  unit: string
+  unitPrice: number
+  subtotal: number
+}
+
+interface InquiryLead {
+  id: string
+  source: string
+  customer: string
+  company: string
+  contact: string
+  full_text: string
+  status: string
+  created_at: string
+  quotation?: {
+    delivery: string
+    payment: string
+    validUntil: string
+    products: QuotationProduct[]
+  }
+}
+
+interface FollowUpItem {
+  type: string
+  content: string
+  created_at: string
+}
+
+interface QuotationVersion {
+  version: number
+  total: number
+  delivery: string
+  payment: string
+  created_at: string
+}
+
+interface FollowUpFormValues {
+  type: string
+  content: string
+}
 
 const RESULT_CONFIG: Record<string, { color: string; label: string }> = {
   'quoting': { color: 'blue', label: '报价中' },
@@ -27,9 +71,9 @@ const TIMELINE_EVENT_CONFIG: Record<string, { color: string; label: string }> = 
 export const QuotationDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [lead, setLead] = useState<any>(null)
-  const [followUps, setFollowUps] = useState<any[]>([])
-  const [quotationHistory, setQuotationHistory] = useState<any[]>([])
+  const [lead, setLead] = useState<InquiryLead | null>(null)
+  const [followUps, setFollowUps] = useState<FollowUpItem[]>([])
+  const [quotationHistory, setQuotationHistory] = useState<QuotationVersion[]>([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [resultModalVisible, setResultModalVisible] = useState(false)
@@ -56,7 +100,7 @@ export const QuotationDetailPage: React.FC = () => {
     }
   }
 
-  const handleAddFollowUp = async (values: any) => {
+  const handleAddFollowUp = async (values: FollowUpFormValues) => {
     setSubmitting(true)
     try {
       const result = await inquiryService.addFollowUp(id || '', values)
@@ -79,7 +123,7 @@ export const QuotationDetailPage: React.FC = () => {
         id || '',
         selectedResult,
         reason,
-        lead?.quotation?.products?.reduce((s: number, p: any) => s + p.quantity * p.unitPrice, 0),
+        lead?.quotation?.products?.reduce((s: number, p: QuotationProduct) => s + p.quantity * p.unitPrice, 0),
       )
       if (result.success) {
         message.success(selectedResult === 'won' ? '已标记为成单' : '已标记为丢单')
@@ -103,15 +147,15 @@ export const QuotationDetailPage: React.FC = () => {
     { title: '数量', dataIndex: 'quantity', key: 'quantity', width: 80 },
     { title: '单位', dataIndex: 'unit', key: 'unit', width: 80 },
     { title: '单价', dataIndex: 'unitPrice', key: 'unitPrice', width: 120, render: (v: number) => `¥${v.toLocaleString()}` },
-    { title: '小计', dataIndex: 'subtotal', key: 'subtotal', width: 120, render: (_: any, r: any) => `¥${(r.quantity * r.unitPrice).toLocaleString()}` },
+    { title: '小计', dataIndex: 'subtotal', key: 'subtotal', width: 120, render: (_: any, r: QuotationProduct) => `¥${(r.quantity * r.unitPrice).toLocaleString()}` },
   ]
 
-  const totalAmount = (lead?.quotation?.products || []).reduce((sum: number, p: any) => sum + p.quantity * p.unitPrice, 0)
+  const totalAmount = (lead?.quotation?.products || []).reduce((sum: number, p: QuotationProduct) => sum + p.quantity * p.unitPrice, 0)
 
   if (loading) return <div className={styles.center}><Spin size="large" tip="加载报价详情..." /></div>
 
   const allTimelineItems = [
-    ...followUps.map((fu: any) => ({
+    ...followUps.map((fu: FollowUpItem) => ({
       color: TIMELINE_EVENT_CONFIG[fu.type]?.color || 'gray',
       children: (
         <div className={styles.timelineItem}>
@@ -125,7 +169,7 @@ export const QuotationDetailPage: React.FC = () => {
         </div>
       ),
     })),
-    ...quotationHistory.map((v: any) => ({
+    ...quotationHistory.map((v: QuotationVersion) => ({
       color: 'orange',
       children: (
         <div className={styles.timelineItem}>

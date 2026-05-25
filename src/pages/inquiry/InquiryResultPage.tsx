@@ -1,72 +1,63 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Descriptions, Tag, Progress, Spin, Alert, Button, Space, Result, Row, Col, message, Input, Form, Modal } from 'antd'
-import { CheckCircleOutlined, WarningOutlined, InboxOutlined, ThunderboltOutlined, RobotOutlined, EditOutlined, CheckOutlined, CloseOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined, WarningOutlined, InboxOutlined, ThunderboltOutlined, RobotOutlined, EditOutlined, CheckOutlined, CloseOutlined, ArrowLeftOutlined } from '@/iconMap'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import { CHART_COLORS } from '../../styles/chartColors'
 import styles from './InquiryResultPage.module.css'
 
+interface ParseResult {
+  category: string
+  spec: string
+  quantity: { value: number; unit: string }
+  delivery: string
+  region: string
+  payment: string
+  confidence: number
+  risk_level: string
+  risk_reasons?: string[]
+  raw_text?: string
+}
+
+interface ClassifyResult {
+  level1: string
+  level2: string
+  level1_confidence: number
+  level2_confidence: number
+}
+
+interface SimilarItem {
+  id: string
+  title: string
+  similarity: number
+  status: string
+  amount: string | null
+}
+
+interface EditFormValues {
+  category: string
+  spec: string
+  quantity: string
+  unit: string
+  delivery: string
+  region: string
+  payment: string
+}
+
 export const InquiryResultPage: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const [parseResult, setParseResult] = useState<any>(null)
-  const [classifyResult, setClassifyResult] = useState<any>(null)
-  const [similarItems, setSimilarItems] = useState<any[]>([])
+  const [parseResult, setParseResult] = useState<ParseResult | null>(null)
+  const [classifyResult, setClassifyResult] = useState<ClassifyResult | null>(null)
+  const [similarItems, setSimilarItems] = useState<SimilarItem[]>([])
   const [loading, setLoading] = useState(true)
   const [classifyLoading, setClassifyLoading] = useState(false)
-  const [showResult, setShowResult] = useState(false)
+  const [, setShowResult] = useState(false)
   const [engineType, setEngineType] = useState<'rule_engine' | 'ai_engine'>('rule_engine')
   const [totalDuration, setTotalDuration] = useState(0)
   const [editMode, setEditMode] = useState(false)
-  const [editForm, setEditForm] = useState<any>({})
-
-  useEffect(() => {
-    if (location.state?.parseResult) {
-      setParseResult(location.state.parseResult)
-      setEngineType(location.state.engineType || 'rule_engine')
-      setTotalDuration(location.state.totalDuration || 0)
-      setLoading(false)
-      setShowResult(true)
-      handleClassify()
-      handleSimilar()
-    } else {
-      const leadId = searchParams.get('leadId')
-      if (leadId) {
-        loadLeadData(leadId)
-      }
-    }
-  }, [])
-
-  const loadLeadData = async (leadId: string) => {
-    setLoading(true)
-    try {
-      const result = await inquiryService.getInquiryDetail(leadId)
-      if (result.success) {
-        const lead = result.data
-        setParseResult({
-          raw_text: lead.full_text,
-          category: lead.quotation?.products?.[0]?.name || '待解析',
-          spec: lead.quotation?.products?.map((p: any) => p.name).join(', ') || '',
-          quantity: { value: lead.quotation?.products?.reduce((s: number, p: any) => s + p.quantity, 0) || 0, unit: lead.quotation?.products?.[0]?.unit || '' },
-          delivery: lead.quotation?.delivery || '-',
-          region: '-',
-          payment: lead.quotation?.payment || '-',
-          confidence: 0.85,
-          risk_level: 'low',
-        })
-        setEngineType('rule_engine')
-        setTotalDuration(0)
-        setShowResult(true)
-        handleClassify()
-        handleSimilar()
-      }
-    } catch (e) {
-      message.error('加载线索失败')
-    } finally {
-      setLoading(false)
-    }
-  }
+  const [editForm, setEditForm] = useState<EditFormValues>({ category: '', spec: '', quantity: '', unit: '', delivery: '', region: '', payment: '' })
 
   const handleClassify = async () => {
     setClassifyLoading(true)
@@ -92,6 +83,51 @@ export const InquiryResultPage: React.FC = () => {
       console.error(e)
     }
   }
+
+  const loadLeadData = async (leadId: string) => {
+    setLoading(true)
+    try {
+      const result = await inquiryService.getInquiryDetail(leadId)
+      if (result.success) {
+        const lead = result.data
+        setParseResult({
+          raw_text: lead.full_text,
+          category: lead.quotation?.products?.[0]?.name || '待解析',
+          spec: lead.quotation?.products?.map((p: { name: string }) => p.name).join(', ') || '',
+          quantity: { value: lead.quotation?.products?.reduce((s: number, p: { quantity: number }) => s + p.quantity, 0) || 0, unit: lead.quotation?.products?.[0]?.unit || '' },
+          delivery: lead.quotation?.delivery || '-',
+          region: '-',
+          payment: lead.quotation?.payment || '-',
+          confidence: 0.85,
+          risk_level: 'low',
+        })
+        setEngineType('rule_engine')
+        setTotalDuration(0)
+        handleClassify()
+        handleSimilar()
+      }
+    } catch (e) {
+      message.error('加载线索失败')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (location.state?.parseResult) {
+      setParseResult(location.state.parseResult)
+      setEngineType(location.state.engineType || 'rule_engine')
+      setTotalDuration(location.state.totalDuration || 0)
+      setLoading(false)
+      handleClassify()
+      handleSimilar()
+    } else {
+      const leadId = searchParams.get('leadId')
+      if (leadId) {
+        loadLeadData(leadId)
+      }
+    }
+  }, [])
 
   const getRiskConfig = (level: string) => {
     if (level === 'high') return { color: 'red', icon: <WarningOutlined />, text: '高风险' }
@@ -311,7 +347,7 @@ export const InquiryResultPage: React.FC = () => {
           <Card title="相似询价推荐">
             {similarItems.length > 0 ? (
               <Space direction="vertical" className={styles.fullWidth}>
-                {similarItems.map((item: any) => (
+                {similarItems.map((item: SimilarItem) => (
                   <Card key={item.id} size="small" className={styles.similarCard}>
                     <div className={styles.similarTitle}>{item.title}</div>
                     <div className={styles.similarMeta}>

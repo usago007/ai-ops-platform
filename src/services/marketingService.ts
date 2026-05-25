@@ -1,8 +1,17 @@
 import { demoApi } from './demoApi'
 import { marketingDataStore } from './marketingData'
 
+interface MarketingGenerateData {
+  scene?: string
+  style?: string
+  channel?: string[]
+  note?: string
+  productName?: string
+  [key: string]: unknown
+}
+
 export const marketingService = {
-  generate: (data: any) =>
+  generate: (data: MarketingGenerateData) =>
     demoApi.post(marketingDataStore.generate(data), 800),
 
   getMaterials: () =>

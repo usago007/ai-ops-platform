@@ -5,7 +5,7 @@ import {
   DollarOutlined,
   RiseOutlined,
   EyeOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { HealthOverviewTab } from './tabs/HealthOverviewTab'
 import { AICostTab } from './tabs/AICostTab'
 import { BusinessValueTab } from './tabs/BusinessValueTab'

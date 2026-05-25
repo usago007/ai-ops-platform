@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'antd'
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
+import { ArrowUpOutlined, ArrowDownOutlined } from '@/iconMap'
 import styles from './MetricCard.module.css'
 
 interface MetricCardProps {

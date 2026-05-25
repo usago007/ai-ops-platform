@@ -10,6 +10,59 @@ interface ProductCategoryNode {
   children?: ProductCategoryNode[]
 }
 
+interface GeneratedProduct {
+  id: string
+  name: string
+  completenessScore: number
+  category: string
+  price: number
+  status: string
+  missingFields: string[]
+}
+
+interface SeedInquiryLead {
+  id: string
+  status: string
+  full_text: string
+  summary: string
+  created_at: string
+}
+
+interface ProductRecord {
+  id: string
+  name: string
+  category: string
+  brand: string
+  model: string
+  description?: string
+  original_text?: string
+  source_inquiry?: string
+  source: string
+  unit?: string
+  price?: number
+  completenessScore?: number
+  status: string
+  created_at: string
+  attributes: Array<{
+    name: string
+    value: string
+    confidence: number
+    status: string
+    source: string
+  }>
+}
+
+interface CreateProductPayload {
+  brand?: string
+  category?: string
+  model?: string
+  description?: string
+  raw_text?: string
+  unit?: string
+  price?: number
+  source?: string
+}
+
 const clone = <T,>(value: T): T => JSON.parse(JSON.stringify(value))
 
 const seedInquiryLeads = [
@@ -18,7 +71,7 @@ const seedInquiryLeads = [
   { id: 'IQ-2024-0006', status: 'confirmed', full_text: '采购ABB变频器ACS580-01-044A-3 5台，功率22kW，三相380V，要求含安装指导手册，30天内交货。', summary: '变频器ACS580-01-044A-3 x5台，含安装指导...', created_at: '4小时前' },
 ]
 
-const baseProducts = generateProducts().map((product: any, index: number) => ({
+const baseProducts = generateProducts().map((product: GeneratedProduct, index: number) => ({
   ...product,
   id: product.id,
   brand: ['三菱', '欧姆龙', 'ABB', '三菱', 'Basler', '西门子', '倍加福', '施耐德', '西门子', '库卡', '横河', '施耐德'][index] || '待确认',
@@ -34,9 +87,9 @@ const baseProducts = generateProducts().map((product: any, index: number) => ({
   created_at: '2026-05-01',
 }))
 
-const pendingProducts = generatePendingProducts(seedInquiryLeads as any)
-let createdProducts: any[] = []
-let categories: ProductCategoryNode[] = clone(productCategories)
+const pendingProducts = generatePendingProducts(seedInquiryLeads as SeedInquiryLead[])
+const createdProducts: ProductRecord[] = []
+const categories: ProductCategoryNode[] = clone(productCategories)
 
 const allProducts = () => [...baseProducts, ...pendingProducts, ...createdProducts]
 
@@ -101,7 +154,7 @@ export const productDataStore = {
     return { message: '品类已创建', category: clone(newChild) }
   },
 
-  createProduct: (payload: any) => {
+  createProduct: (payload: CreateProductPayload) => {
     const id = `SKU-${String(2000 + createdProducts.length + 1)}`
     const product = {
       id,
@@ -127,7 +180,7 @@ export const productDataStore = {
     return { message: '商品已创建', product: clone(product) }
   },
 
-  confirmProduct: (id: string, payload: any) => {
+  confirmProduct: (id: string, payload: Partial<ProductRecord>) => {
     const pendingIndex = pendingProducts.findIndex(product => product.id === id)
     if (pendingIndex >= 0) {
       const pending = pendingProducts[pendingIndex]
@@ -156,7 +209,7 @@ export const productDataStore = {
   parseProductText: (text: string) => {
     const categoryMatch = text.match(/(PLC控制器|变频器|传感器|伺服系统|继电器|工业机器人|断路器)/)
     const category = categoryMatch ? categoryMatch[1] : '其他'
-    const specMatch = text.match(/[\u4e00-\u9fa5A-Z0-9\-]+(?:系列|型号|型)?/)
+    const specMatch = text.match(/[\u4e00-\u9fa5A-Z0-9-]+(?:系列|型号|型)?/)
     const spec = specMatch ? specMatch[0] : '待确认'
     return {
       parsed: {

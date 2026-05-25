@@ -114,3 +114,15 @@
 .dividerCompact {
   margin: 8px 0;
 }
+
+.iconInfo {
+  color: var(--info);
+}
+
+.iconSuccess {
+  color: var(--success);
+}
+
+.iconMuted {
+  color: var(--text-muted);
+}

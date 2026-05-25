@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Table, Tabs, Tag, Checkbox, Row, Col, Spin, Button, Space, Modal, Form, Input, Select, message, Popconfirm, Empty } from 'antd'
-import { PlusOutlined, EditOutlined, DeleteOutlined, StopOutlined, CheckCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined, EditOutlined, DeleteOutlined, StopOutlined, CheckCircleOutlined } from '@/iconMap'
 import type { ColumnsType } from 'antd/es/table'
 import { systemService } from '../../services'
 import styles from './UserManagementPage.module.css'

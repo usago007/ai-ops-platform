@@ -8,7 +8,7 @@ interface CaseCardProps {
   title: string
   description: string
   difficulty: 'easy' | 'medium' | 'hard'
-  previewData: any
+  previewData: Record<string, unknown>
   onClick: () => void
 }
 

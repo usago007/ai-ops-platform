@@ -41,3 +41,19 @@
 .searchInput {
   width: 260px;
 }
+
+.statCardInfo {
+  border-left: 3px solid var(--info) !important;
+}
+
+.statCardSuccess {
+  border-left: 3px solid var(--success) !important;
+}
+
+.statCardWarning {
+  border-left: 3px solid var(--warning) !important;
+}
+
+.statCardError {
+  border-left: 3px solid var(--error) !important;
+}

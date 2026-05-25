@@ -8,9 +8,9 @@ import {
   StarOutlined,
   DollarOutlined,
   InboxOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
-import { Line } from '@ant-design/charts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { MetricCard } from '../../../components/MetricCard'
 import { ProcessFlow } from '../../../components/ProcessFlow/ProcessFlow'
 import { CapabilityBanner } from '../../../components/CapabilityBanner/CapabilityBanner'
@@ -20,12 +20,44 @@ import { CHART_COLORS, CHART_LABEL_COLOR } from '../../../styles/chartColors'
 
 const { Text } = Typography
 
+interface MktStats {
+  generated: number
+  avg_latency: number
+  compliance_rate: number
+  ctr_lift: number
+}
+
+interface Template {
+  id: string
+  name: string
+  description: string
+  scene: string
+  style: string
+  expected_ctr?: string
+}
+
+interface TrendData {
+  dates: string[]
+  ctr: number[]
+  ai_ctr: number[]
+}
+
+interface AttributionItem {
+  name: string
+  channel: string
+  impressions: number
+  ctr: number
+  cvr: number
+  ai_assisted: boolean
+  amount: number
+}
+
 export const OverviewTab: React.FC = () => {
   const navigate = useNavigate()
-  const [stats, setStats] = useState<any>(null)
-  const [templates, setTemplates] = useState<any[]>([])
-  const [trend, setTrend] = useState<any>(null)
-  const [attribution, setAttribution] = useState<any[]>([])
+  const [stats, setStats] = useState<MktStats | null>(null)
+  const [templates, setTemplates] = useState<Template[]>([])
+  const [trend, setTrend] = useState<TrendData | null>(null)
+  const [attribution, setAttribution] = useState<AttributionItem[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -55,7 +87,7 @@ export const OverviewTab: React.FC = () => {
     }
   }
 
-  const useTemplate = (tpl: any) => {
+  const useTemplate = (tpl: Template) => {
     navigate('/marketing/create', { state: { template: tpl } })
   }
 
@@ -63,27 +95,11 @@ export const OverviewTab: React.FC = () => {
     return <div className={styles.center}><Spin size="large" tip="加载营销数据..." /></div>
   }
 
-  const chartConfig = trend ? {
-    data: [
-      ...trend.dates.map((d: string, i: number) => ({
-        week: d,
-        rate: trend.ctr[i],
-        type: '自然流量',
-      })),
-      ...trend.dates.map((d: string, i: number) => ({
-        week: d,
-        rate: trend.ai_ctr[i],
-        type: 'AI辅助内容',
-      })),
-    ],
-    xField: 'week',
-    yField: 'rate',
-    seriesField: 'type',
-    smooth: true,
-    color: [CHART_LABEL_COLOR, CHART_COLORS[1]],
-    point: { size: 5, shape: 'circle' },
-    animation: { appear: { animation: 'fade-in', duration: 1000 } },
-  } : {}
+  const chartData = trend ? trend.dates.map((d: string, i: number) => ({
+    week: d,
+    自然流量: trend.ctr[i],
+    'AI辅助内容': trend.ai_ctr[i],
+  })) : null
 
   const attributionColumns = [
     { title: '营销活动', dataIndex: 'name', key: 'name' },
@@ -229,9 +245,19 @@ export const OverviewTab: React.FC = () => {
         </Col>
       </Row>
 
-      {chartConfig && (
+      {chartData && (
         <Card title="CTR 趋势对比（AI 辅助 vs 自然流量）" className={styles.card}>
-          <Line {...chartConfig} height={250} containerStyle={{ height: 250 }} />
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="week" tick={{ fill: CHART_LABEL_COLOR }} />
+              <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+              <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, 'CTR']} />
+              <Legend />
+              <Line type="monotone" dataKey="自然流量" stroke={CHART_LABEL_COLOR} dot={{ r: 5 }} activeDot={{ r: 7 }} />
+              <Line type="monotone" dataKey="AI辅助内容" stroke={CHART_COLORS[1]} dot={{ r: 5 }} activeDot={{ r: 7 }} />
+            </LineChart>
+          </ResponsiveContainer>
         </Card>
       )}
 

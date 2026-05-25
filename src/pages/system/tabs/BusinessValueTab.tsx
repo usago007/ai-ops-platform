@@ -6,8 +6,8 @@ import {
   TeamOutlined,
   ThunderboltOutlined,
   HeartOutlined,
-} from '@ant-design/icons'
-import { Column, Line } from '@ant-design/charts'
+} from '@/iconMap'
+import { BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { MetricCard } from '../../../components/MetricCard'
 import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
 import styles from '../SystemStatusPage.module.css'
@@ -25,53 +25,15 @@ export const BusinessValueTab: React.FC = () => {
     [],
   )
 
-  const comparisonConfig = useMemo(
-    () => ({
-      data: comparisonData,
-      xField: 'metric',
-      yField: 'value',
-      seriesField: 'type',
-      color: ({ type }: { type: string }) => (type === '人工处理' ? STATUS_COLORS.error : STATUS_COLORS.success),
-      columnStyle: {
-        radius: [4, 4, 0, 0],
-      },
-      label: {
-        position: 'top' as const,
-        style: {
-          fill: 'rgba(0,0,0,0.06)',
-          fontSize: 11,
-        },
-      },
-      xAxis: {
-        label: {
-          style: {
-            fill: CHART_LABEL_COLOR,
-            fontSize: 12,
-          },
-        },
-      },
-      yAxis: {
-        label: {
-          style: {
-            fill: CHART_LABEL_COLOR,
-          },
-        },
-      },
-      legend: {
-        position: 'top-right' as const,
-        itemName: {
-          style: {
-            fill: 'rgba(0,0,0,0.06)',
-          },
-        },
-      },
-      animation: {
-        appear: {
-          animation: 'scale-in-y' as const,
-          duration: 600,
-        },
-      },
-    }),
+  const comparisonChartData = useMemo(
+    () => {
+      const metrics = [...new Set(comparisonData.map(d => d.metric))]
+      return metrics.map(metric => {
+        const item: Record<string, string | number> = { metric }
+        comparisonData.filter(d => d.metric === metric).forEach(d => { item[d.type] = d.value })
+        return item as { metric: string; 人工处理: number; AI处理: number }
+      })
+    },
     [comparisonData],
   )
 
@@ -87,50 +49,7 @@ export const BusinessValueTab: React.FC = () => {
     [],
   )
 
-  const roiConfig = useMemo(
-    () => ({
-      data: roiData,
-      xField: 'month',
-      yField: 'cumulative',
-      smooth: true,
-      color: CHART_COLORS[1],
-      point: { size: 4, shape: 'circle' },
-      label: {
-        style: {
-          fill: CHART_LABEL_COLOR,
-        },
-      },
-      xAxis: {
-        label: {
-          autoRotate: false,
-          autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
-          style: {
-            fill: CHART_LABEL_COLOR,
-          },
-        },
-      },
-      yAxis: {
-        label: {
-          style: {
-            fill: CHART_LABEL_COLOR,
-          },
-        },
-      },
-      lineStyle: {
-        lineWidth: 3,
-      },
-      areaStyle: {
-        fill: 'l(270) 0:rgba(29, 78, 216, 0.3) 1:rgba(29, 78, 216, 0)',
-      },
-      tooltip: {
-        formatter: (datum: { month: string; savings: number; cumulative: number }) => ({
-          name: '累计节省',
-          value: `$${datum.cumulative.toLocaleString()}`,
-        }),
-      },
-    }),
-    [roiData],
-  )
+  const ROI_COLOR = CHART_COLORS[1]
 
   const savingsData = useMemo(
     () => [
@@ -142,51 +61,8 @@ export const BusinessValueTab: React.FC = () => {
     [],
   )
 
-  const savingsConfig = useMemo(
-    () => ({
-      data: savingsData.flatMap((d) => [
-        { category: d.category, type: '引入前', value: d.before },
-        { category: d.category, type: '引入后', value: d.after },
-      ]),
-      xField: 'category',
-      yField: 'value',
-      seriesField: 'type',
-      isGroup: true,
-      color: ({ type }: { type: string }) => (type === '引入前' ? STATUS_COLORS.warning : STATUS_COLORS.success),
-      columnStyle: {
-        radius: [4, 4, 0, 0],
-      },
-      label: {
-        position: 'top' as const,
-        style: {
-          fill: 'rgba(0,0,0,0.06)',
-          fontSize: 11,
-        },
-      },
-      xAxis: {
-        label: {
-          style: {
-            fill: CHART_LABEL_COLOR,
-            fontSize: 12,
-          },
-        },
-      },
-      yAxis: {
-        label: {
-          style: {
-            fill: CHART_LABEL_COLOR,
-          },
-        },
-      },
-      legend: {
-        position: 'top-right' as const,
-        itemName: {
-          style: {
-            fill: 'rgba(0,0,0,0.06)',
-          },
-        },
-      },
-    }),
+  const savingsChartData = useMemo(
+    () => savingsData.map(d => ({ category: d.category, 引入前: d.before, 引入后: d.after })),
     [savingsData],
   )
 
@@ -258,14 +134,38 @@ export const BusinessValueTab: React.FC = () => {
         <Col span={12}>
           <Card title="人工 vs AI 处理对比" className={styles.chartCard}>
             <div className={styles.chartContainer}>
-              <Column {...comparisonConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={comparisonChartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="metric" tick={{ fill: CHART_LABEL_COLOR, fontSize: 12 }} />
+                  <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="人工处理" fill={STATUS_COLORS.error} radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="AI处理" fill={STATUS_COLORS.success} radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>
         <Col span={12}>
           <Card title="累计节省趋势" className={styles.chartCard}>
             <div className={styles.chartContainer}>
-              <Line {...roiConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={roiData}>
+                  <defs>
+                    <linearGradient id="roiGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#1d4ed8" stopOpacity={0.3} />
+                      <stop offset="100%" stopColor="#1d4ed8" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="month" tick={{ fill: CHART_LABEL_COLOR }} />
+                  <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                  <Tooltip formatter={(value: number) => [`$${value.toLocaleString()}`, '累计节省']} />
+                  <Area type="monotone" dataKey="cumulative" stroke={ROI_COLOR} fill="url(#roiGradient)" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>
@@ -299,7 +199,17 @@ export const BusinessValueTab: React.FC = () => {
         <Col span={16}>
           <Card title="成本节约明细" className={styles.chartCard}>
             <div className={styles.chartContainer}>
-              <Column {...savingsConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={savingsChartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="category" tick={{ fill: CHART_LABEL_COLOR, fontSize: 12 }} />
+                  <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="引入前" fill={STATUS_COLORS.warning} radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="引入后" fill={STATUS_COLORS.success} radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>

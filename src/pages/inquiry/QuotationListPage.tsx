@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Table, Button, Tag, Space, Input, Typography, message, Divider } from 'antd'
-import { EditOutlined, SearchOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { EditOutlined, SearchOutlined, ArrowLeftOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './QuotationListPage.module.css'
@@ -14,9 +14,19 @@ const STATUS_CONFIG: Record<string, { color: string; label: string }> = {
   'lost': { color: 'red', label: '丢单' },
 }
 
+interface QuotationLead {
+  id: string
+  customer: string
+  company: string
+  summary: string
+  source: string
+  created_at: string
+  status: string
+}
+
 export const QuotationListPage: React.FC = () => {
   const navigate = useNavigate()
-  const [leads, setLeads] = useState<any[]>([])
+  const [leads, setLeads] = useState<QuotationLead[]>([])
   const [loading, setLoading] = useState(true)
   const [searchText, setSearchText] = useState('')
 
@@ -27,7 +37,7 @@ export const QuotationListPage: React.FC = () => {
     try {
       const result = await inquiryService.getInquiryList()
       if (result.success) {
-        const quotingLeads = result.data.items.filter((l: any) => l.status === 'quoting' || l.status === 'quoted')
+        const quotingLeads = result.data.items.filter((l: QuotationLead) => l.status === 'quoting' || l.status === 'quoted')
         setLeads(quotingLeads)
       }
     } catch (e) {
@@ -58,7 +68,7 @@ export const QuotationListPage: React.FC = () => {
       title: '客户信息',
       dataIndex: 'customer',
       key: 'customer',
-      render: (_: string, record: any) => (
+      render: (_: string, record: QuotationLead) => (
         <div>
           <div><Text strong>{record.customer}</Text></div>
           <Text type="secondary" className={styles.companyText}>{record.company}</Text>
@@ -92,7 +102,7 @@ export const QuotationListPage: React.FC = () => {
       title: '操作',
       key: 'action',
       width: 120,
-      render: (_: any, record: any) => (
+      render: (_: any, record: QuotationLead) => (
         <Button type="link" size="small" icon={<EditOutlined />} onClick={() => navigate(`/inquiry/quotation/${record.id}`)}>
           开始报价
         </Button>

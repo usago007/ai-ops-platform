@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Table, Button, Tag, Space, Input, Typography, Row, Col, Select, message, Checkbox, Divider, Empty } from 'antd'
+import { Card, Table, Button, Tag, Space, Input, Select, message, Divider, Typography } from 'antd'
 import {
   InboxOutlined,
   PlusOutlined,
@@ -8,12 +8,25 @@ import {
   EyeOutlined,
   ReloadOutlined,
   CheckCircleOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './InquiryListPage.module.css'
 
 const { Title, Text } = Typography
+
+interface InquiryLeadSimple {
+  id: string
+  source: string
+  customer: string
+  company: string
+  contact: string
+  summary: string
+  full_text: string
+  status: string
+  priority: string
+  created_at: string
+}
 
 const SOURCE_CONFIG: Record<string, { color: string; icon: string }> = {
   '官网表单': { color: 'blue', icon: '🌐' },
@@ -43,7 +56,7 @@ const PRIORITY_CONFIG: Record<string, { color: string; label: string }> = {
 
 export const InquiryListPage: React.FC = () => {
   const navigate = useNavigate()
-  const [leads, setLeads] = useState<any[]>([])
+  const [leads, setLeads] = useState<InquiryLeadSimple[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
   const [filterStatus, setFilterStatus] = useState<string>('all')
@@ -80,11 +93,11 @@ export const InquiryListPage: React.FC = () => {
     }
   }
 
-  const handleTransform = (lead: any) => {
+  const handleTransform = (lead: InquiryLeadSimple) => {
     navigate(`/inquiry/transform?ids=${lead.id}`)
   }
 
-  const handleViewResult = async (record: any) => {
+  const handleViewResult = async (record: InquiryLeadSimple) => {
     try {
       const result = await inquiryService.getInquiryDetail(record.id)
       if (result.success) {
@@ -113,7 +126,7 @@ export const InquiryListPage: React.FC = () => {
     }
   }
 
-  const handleView = async (lead: any) => {
+  const handleView = async (lead: InquiryLeadSimple) => {
     handleViewResult(lead)
   }
 
@@ -152,7 +165,7 @@ export const InquiryListPage: React.FC = () => {
       title: '客户信息',
       dataIndex: 'customer',
       key: 'customer',
-      render: (_: string, record: any) => (
+      render: (_: string, record: InquiryLeadSimple) => (
         <div>
           <div><Text strong>{record.customer}</Text></div>
           <Text type="secondary" className={styles.companyText}>{record.company}</Text>
@@ -164,7 +177,7 @@ export const InquiryListPage: React.FC = () => {
       dataIndex: 'summary',
       key: 'summary',
       width: 400,
-      render: (text: string, record: any) => (
+      render: (text: string, record: InquiryLeadSimple) => (
         <div>
           <Text className={styles.summaryText}>
             {text}
@@ -198,7 +211,7 @@ export const InquiryListPage: React.FC = () => {
       title: '操作',
       key: 'action',
       width: 120,
-      render: (_: any, record: any) => {
+      render: (_: any, record: InquiryLeadSimple) => {
         if (record.status === 'pending') {
           return <Button type="link" size="small" icon={<ThunderboltOutlined />} onClick={() => handleTransform(record)}>AI转化</Button>
         }
@@ -222,7 +235,7 @@ export const InquiryListPage: React.FC = () => {
   const rowSelection = {
     selectedRowKeys,
     onChange: (keys: React.Key[]) => setSelectedRowKeys(keys),
-    getCheckboxProps: (record: any) => ({
+    getCheckboxProps: (record: InquiryLeadSimple) => ({
       disabled: record.status === 'completed',
     }),
   }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, List, Input, Button, Space, Tag, Avatar, Badge, Spin, Typography, Empty, Segmented } from 'antd'
-import { SendOutlined, RobotOutlined, UserOutlined, CustomerServiceOutlined } from '@ant-design/icons'
+import { SendOutlined, RobotOutlined, UserOutlined, CustomerServiceOutlined } from '@/iconMap'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { csService } from '../../services'
 import styles from './CSWorkspacePage.module.css'
@@ -8,22 +8,62 @@ import styles from './CSWorkspacePage.module.css'
 const { Text } = Typography
 type SceneMode = 'general' | 'marketing'
 
+interface CSSession {
+  id: string
+  customer: string
+  company?: string
+  lastMessage?: string
+  unread: number
+}
+
+interface CSMessage {
+  id: string
+  role: 'customer' | 'agent'
+  content: string
+  timestamp: string
+  intent?: string
+}
+
 export const CSWorkspacePage: React.FC = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const scene = searchParams.get('scene') === 'marketing' ? 'marketing' : 'general'
-  const [sessions, setSessions] = useState<any[]>([])
-  const [messages, setMessages] = useState<any[]>([])
+  const [sessions, setSessions] = useState<CSSession[]>([])
+  const [messages, setMessages] = useState<CSMessage[]>([])
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [activeSession, setActiveSession] = useState<string | null>(null)
   const [inputText, setInputText] = useState('')
   const [loading, setLoading] = useState(true)
   const [suggestionsLoading, setSuggestionsLoading] = useState(false)
 
-  useEffect(() => { loadSessions() }, [scene])
-
   const isMarketingScene = scene === 'marketing'
   const suggestionTitle = isMarketingScene ? '营销推荐' : '推荐话术'
+
+  useEffect(() => { loadSessions() }, [scene])
+
+  const loadSuggestions = async (sessionId: string) => {
+    setSuggestionsLoading(true)
+    try {
+      const result = isMarketingScene
+        ? await csService.getMarketingRecommendations()
+        : await csService.getReplySuggestions(sessionId, 'last_message')
+      if (result.success) {
+        const data = result.data as { suggestions?: string[]; recommendations?: Array<{ product: string; reason: string }> }
+        const list = data.suggestions || data.recommendations?.map((item: { product: string; reason: string }) => `${item.product}｜${item.reason}`) || []
+        setSuggestions(list)
+      }
+    } catch (e) { console.error(e) }
+    finally { setSuggestionsLoading(false) }
+  }
+
+  const selectSession = async (id: string) => {
+    setActiveSession(id)
+    try {
+      const result = await csService.getMessages(id)
+      if (result.success) setMessages(result.data.messages)
+      loadSuggestions(id)
+    } catch (e) { console.error(e) }
+  }
 
   const loadSessions = async () => {
     setLoading(true)
@@ -43,30 +83,6 @@ export const CSWorkspacePage: React.FC = () => {
       }
     } catch (e) { console.error(e) }
     finally { setLoading(false) }
-  }
-
-  const selectSession = async (id: string) => {
-    setActiveSession(id)
-    try {
-      const result = await csService.getMessages(id)
-      if (result.success) setMessages(result.data.messages)
-      loadSuggestions(id)
-    } catch (e) { console.error(e) }
-  }
-
-  const loadSuggestions = async (sessionId: string) => {
-    setSuggestionsLoading(true)
-    try {
-      const result = isMarketingScene
-        ? await csService.getMarketingRecommendations()
-        : await csService.getReplySuggestions(sessionId, 'last_message')
-      if (result.success) {
-        const data: any = result.data
-        const list = data.suggestions || data.recommendations?.map((item: any) => `${item.product}｜${item.reason}`) || []
-        setSuggestions(list)
-      }
-    } catch (e) { console.error(e) }
-    finally { setSuggestionsLoading(false) }
   }
 
   const handleSend = () => {
@@ -99,7 +115,7 @@ export const CSWorkspacePage: React.FC = () => {
           ) : (
             <List
               dataSource={sessions}
-              renderItem={(s) => (
+              renderItem={(s: CSSession) => (
                 <List.Item className={`${styles.sessionItem} ${activeSession === s.id ? styles.active : ''}`}
                   onClick={() => selectSession(s.id)}>
                   <Badge count={s.unread} offset={[5, 5]}>
@@ -142,7 +158,7 @@ export const CSWorkspacePage: React.FC = () => {
           />
         </div>
         <div className={styles.messageList}>
-          {messages.length === 0 ? <Empty description="暂无会话消息" /> : messages.map((msg) => (
+          {messages.length === 0 ? <Empty description="暂无会话消息" /> : messages.map((msg: CSMessage) => (
             <div key={msg.id} className={`${styles.message} ${msg.role === 'customer' ? styles.customerMsg : styles.agentMsg}`}>
               <Avatar size="small" icon={msg.role === 'customer' ? <UserOutlined /> : <CustomerServiceOutlined />} />
               <div className={styles.messageContent}>

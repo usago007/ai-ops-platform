@@ -265,7 +265,15 @@ export const productCategories = [
   },
 ]
 
-export const generatePendingProducts = (inquiryLeads: any[]) => {
+interface InquiryLeadInput {
+  status: string
+  full_text?: string
+  summary?: string
+  created_at: string
+  id: string
+}
+
+export const generatePendingProducts = (inquiryLeads: InquiryLeadInput[]) => {
   return inquiryLeads
     .filter(lead => lead.status === 'confirmed' || lead.status === 'quoting' || lead.status === 'quoted')
     .map(lead => {

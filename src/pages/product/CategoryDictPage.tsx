@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Button, Table, Tag, Space, Spin, message, Modal, Form, Input, Select, Typography } from 'antd'
-import { ArrowLeftOutlined, PlusOutlined, EditOutlined, DeleteOutlined, AppstoreOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, PlusOutlined, EditOutlined, DeleteOutlined, AppstoreOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './CategoryDictPage.module.css'
@@ -8,12 +8,27 @@ import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
 
+interface CategoryItem {
+  id: string
+  name: string
+  brand?: string
+  children?: CategoryItem[]
+  productCount?: number
+  inquiryCount?: number
+}
+
+interface CategoryFormValues {
+  level1: string
+  name: string
+  brand?: string
+}
+
 export const CategoryDictPage: React.FC = () => {
   const navigate = useNavigate()
-  const [categories, setCategories] = useState<any[]>([])
+  const [categories, setCategories] = useState<CategoryItem[]>([])
   const [loading, setLoading] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
-  const [editingCategory, setEditingCategory] = useState<any>(null)
+  const [editingCategory, setEditingCategory] = useState<CategoryItem | null>(null)
   const [form] = Form.useForm()
 
   useEffect(() => { loadCategories() }, [])
@@ -38,13 +53,13 @@ export const CategoryDictPage: React.FC = () => {
     setModalVisible(true)
   }
 
-  const handleEdit = (record: any) => {
+  const handleEdit = (record: CategoryItem) => {
     setEditingCategory(record)
     form.setFieldsValue({ name: record.name, brand: record.brand })
     setModalVisible(true)
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: CategoryFormValues) => {
     try {
       const result = await productService.createCategory({
         parent_id: values.level1,
@@ -67,29 +82,29 @@ export const CategoryDictPage: React.FC = () => {
     },
     {
       title: '二级品类', key: 'level2',
-      render: (_: any, record: any) => (
+      render: (_: any, record: CategoryItem) => (
         <Space wrap>
-          {(record.children || []).map((ch: any) => (
+          {(record.children || []).map((ch: CategoryItem) => (
             <Tag key={ch.id} color="blue">{ch.name} {ch.brand && <span className={styles.brandHint}>({ch.brand})</span>}</Tag>
           ))}
         </Space>
       ),
     },
     { title: '商品数', key: 'productCount', width: 100,
-      render: (_: any, record: any) => {
-        const total = (record.children || []).reduce((sum: number, ch: any) => sum + (ch.productCount || 0), 0)
+      render: (_: any, record: CategoryItem) => {
+        const total = (record.children || []).reduce((sum: number, ch: CategoryItem) => sum + (ch.productCount || 0), 0)
         return <Text strong>{total}</Text>
       },
     },
     { title: '询价数', key: 'inquiryCount', width: 100,
-      render: (_: any, record: any) => {
-        const total = (record.children || []).reduce((sum: number, ch: any) => sum + (ch.inquiryCount || 0), 0)
+      render: (_: any, record: CategoryItem) => {
+        const total = (record.children || []).reduce((sum: number, ch: CategoryItem) => sum + (ch.inquiryCount || 0), 0)
         return <Text>{total}</Text>
       },
     },
     {
       title: '操作', key: 'action', width: 120,
-      render: (_: any, record: any) => (
+      render: (_: any, record: CategoryItem) => (
         <Space>
           <Button type="link" size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)}>编辑</Button>
           <Button type="link" size="small" danger icon={<DeleteOutlined />} />
@@ -128,7 +143,7 @@ export const CategoryDictPage: React.FC = () => {
           pagination={false}
           expandable={{
             rowExpandable: () => true,
-            expandedRowRender: (record: any) => (
+            expandedRowRender: (record: CategoryItem) => (
               <Table
                 dataSource={record.children || []}
                 rowKey="id"
@@ -143,7 +158,7 @@ export const CategoryDictPage: React.FC = () => {
                   { title: '询价数', dataIndex: 'inquiryCount', key: 'inquiryCount', width: 80 },
                   {
                     title: '操作', key: 'action', width: 80,
-                    render: (_: any, ch: any) => (
+                    render: (_: any, ch: CategoryItem) => (
                       <Button type="link" size="small" icon={<EditOutlined />} onClick={() => handleEdit(ch)}>编辑</Button>
                     ),
                   },

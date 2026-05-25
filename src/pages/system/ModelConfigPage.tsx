@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Table, Button, Modal, Form, Input, InputNumber, Switch, Tag, Spin, message, Select } from 'antd'
-import { EditOutlined, StopOutlined, ThunderboltOutlined, PlusOutlined, InboxOutlined } from '@ant-design/icons'
+import { EditOutlined, StopOutlined, ThunderboltOutlined, PlusOutlined, InboxOutlined } from '@/iconMap'
 import { modelService } from '../../services'
 import styles from './ModelConfigPage.module.css'
 
@@ -203,9 +203,9 @@ export const ModelConfigPage: React.FC = () => {
         }
       >
         {models.length === 0 ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '48px 0', color: 'var(--text-tertiary)' }}>
-            <InboxOutlined style={{ fontSize: 48, marginBottom: 16, color: 'var(--text-muted)' }} />
-            <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 8 }}>暂无模型配置</p>
+          <div className={styles.emptyState}>
+            <InboxOutlined className={styles.emptyIcon} />
+            <p className={styles.emptyTitle}>暂无模型配置</p>
             <Button type="primary" icon={<PlusOutlined />} onClick={() => setCreateModalVisible(true)}>添加您的第一个模型</Button>
           </div>
         ) : (

@@ -7,7 +7,7 @@ import {
   ArrowLeftOutlined,
   EyeOutlined,
   ClockCircleOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './InquiryTransformPage.module.css'
@@ -27,6 +27,17 @@ interface TransformStage {
   duration?: number
 }
 
+interface TransformTaskResult {
+  category: string
+  spec: string
+  quantity: { value: number; unit: string }
+  delivery: string
+  region: string
+  payment: string
+  confidence: number
+  risk_level: string
+}
+
 interface TransformTask {
   leadId: string
   customer: string
@@ -34,7 +45,7 @@ interface TransformTask {
   summary: string
   status: 'queued' | 'running' | 'done' | 'failed'
   stages: TransformStage[]
-  result?: any
+  result?: TransformTaskResult
 }
 
 export const InquiryTransformPage: React.FC = () => {
@@ -55,8 +66,8 @@ export const InquiryTransformPage: React.FC = () => {
     try {
       const result = await inquiryService.getInquiryList()
       if (result.success) {
-        const leads = result.data.items.filter((l: any) => ids.includes(l.id))
-        const initialTasks: TransformTask[] = leads.map((lead: any) => ({
+        const leads = result.data.items.filter((l: { id: string; customer: string; company: string; summary: string }) => ids.includes(l.id))
+        const initialTasks: TransformTask[] = leads.map((lead: { id: string; customer: string; company: string; summary: string }) => ({
           leadId: lead.id,
           customer: lead.customer,
           company: lead.company,
@@ -167,7 +178,7 @@ export const InquiryTransformPage: React.FC = () => {
           {runningTask && (
             <Card className={styles.activeCard} title={
               <Space>
-                <LoadingOutlined style={{ color: 'var(--info)' }} />
+                <LoadingOutlined className={styles.iconInfo} />
                 <Text strong>正在处理: {runningTask.leadId} - {runningTask.customer}/{runningTask.company}</Text>
               </Space>
             }>
@@ -190,7 +201,7 @@ export const InquiryTransformPage: React.FC = () => {
           )}
 
           {allCompleted > 0 && (
-            <Card title={<Space><CheckCircleOutlined style={{ color: 'var(--success)' }} /><Text strong>已完成 ({allCompleted}/{tasks.length})</Text></Space>} className={styles.completedCard}>
+            <Card title={<Space><CheckCircleOutlined className={styles.iconSuccess} /><Text strong>已完成 ({allCompleted}/{tasks.length})</Text></Space>} className={styles.completedCard}>
               <Space direction="vertical" className={styles.fullWidth} size="middle">
                 {tasks.filter(t => t.status === 'done').map(task => (
                   <Card key={task.leadId} size="small" className={styles.resultCard}>
@@ -223,7 +234,7 @@ export const InquiryTransformPage: React.FC = () => {
                 renderItem={(task: TransformTask) => (
                   <List.Item>
                     <Space>
-                      <ClockCircleOutlined style={{ color: 'var(--text-muted)' }} />
+                      <ClockCircleOutlined className={styles.iconMuted} />
                       <Text>{task.leadId}</Text>
                       <Text type="secondary">{task.customer} - {task.company}</Text>
                     </Space>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
+import { CheckCircleFilled, LoadingOutlined } from '@/iconMap'
 import styles from './ProcessingSteps.module.css'
 
 interface Step {

@@ -67,7 +67,7 @@ let settings: SystemSettings = {
   language: 'zh-CN',
 }
 
-let complianceWords: ComplianceWordsData = {
+const complianceWords: ComplianceWordsData = {
   forbidden: ['最优惠', '第一', '顶级', '唯一', '绝对', '100%', '国家级', '全球首发'],
   extreme: ['最好', '最强', '最大', '最便宜', '第一品牌', '全网最低', '独家'],
   sensitive: ['疗效', '治愈', '无副作用', '保本', '稳赚'],

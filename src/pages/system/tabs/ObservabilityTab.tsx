@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Row, Col, Statistic, Timeline, Tag } from 'antd'
-import { CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
-import { Column, Pie, Line } from '@ant-design/charts'
+import { CheckCircleOutlined, ClockCircleOutlined } from '@/iconMap'
+import { BarChart, Bar, PieChart, Pie as RPie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
 import styles from '../SystemStatusPage.module.css'
 
@@ -62,108 +62,15 @@ export const ObservabilityTab: React.FC = () => {
     { timestamp: '2026-04-19 14:25:19', status: 'success', endpoint: '/api/v1/content/create', latency: 1560, method: 'POST' },
   ]
 
-  const latencyConfig = {
-    data: latencyData,
-    xField: 'bucket',
-    yField: 'count',
-    color: (item: LatencyBucket) => {
-      const colors = [STATUS_COLORS.success, CHART_COLORS[1], STATUS_COLORS.warning, STATUS_COLORS.warning, STATUS_COLORS.error, STATUS_COLORS.error]
-      const index = latencyData.indexOf(item)
-      return colors[index]
-    },
-    label: {
-      position: 'top',
-      style: {
-        fill: '#ffffff',
-        opacity: 0.6,
-      },
-    },
-    xAxis: {
-      label: {
-        autoRotate: true,
-        style: { fill: CHART_LABEL_COLOR },
-      },
-    },
-    yAxis: {
-      label: {
-        style: { fill: CHART_LABEL_COLOR },
-      },
-    },
-    tooltip: {
-      formatter: (datum: LatencyBucket) => ({
-        name: '请求数',
-        value: datum.count.toLocaleString(),
-      }),
-    },
-  }
+  const errorTotal = errorData.reduce((s, d) => s + d.count, 0)
 
-  const errorConfig = {
-    data: errorData,
-    angleField: 'count',
-    colorField: 'type',
-    radius: 0.8,
-    innerRadius: 0.6,
-    label: {
-      type: 'inner',
-      offset: '-50%',
-      content: '{percentage}',
-      style: {
-        textAlign: 'center',
-        fontSize: 14,
-        fill: '#ffffff',
-      },
-    },
-    interactions: [{ type: 'element-active' }],
-    legend: {
-      position: 'right',
-      itemName: {
-        style: { fill: CHART_LABEL_COLOR },
-      },
-    },
-    tooltip: {
-      formatter: (datum: ErrorType) => ({
-        name: datum.type,
-        value: `${datum.count}%`,
-      }),
-    },
-    color: [STATUS_COLORS.error, STATUS_COLORS.warning, STATUS_COLORS.warning, CHART_COLORS[1], CHART_LABEL_COLOR],
-  }
-
-  const volumeConfig = {
-    data: volumeData,
-    xField: 'time',
-    yField: 'requests',
-    smooth: true,
-    color: CHART_COLORS[1],
-    point: { size: 3, shape: 'circle' },
-    areaStyle: {
-      fill: 'l(270) 0:#1e40af 0.5:#2563eb 1:#3b82f6',
-    },
-    xAxis: {
-      label: {
-        autoRotate: false,
-        autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
-        style: { fill: CHART_LABEL_COLOR },
-      },
-    },
-    yAxis: {
-      label: {
-        style: { fill: CHART_LABEL_COLOR },
-      },
-    },
-    tooltip: {
-      formatter: (datum: RequestVolume) => ({
-        name: '请求数',
-        value: datum.requests.toLocaleString(),
-      }),
-    },
-  }
+  const latencyColors = [STATUS_COLORS.success, CHART_COLORS[1], STATUS_COLORS.warning, STATUS_COLORS.warning, STATUS_COLORS.error, STATUS_COLORS.error]
 
   return (
     <>
       <Row gutter={[16, 16]}>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--success)' }}>
+          <Card className={styles.statCardSuccess}>
             <Statistic
               title="API 成功率"
               value={99.7}
@@ -175,7 +82,7 @@ export const ObservabilityTab: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--info)' }}>
+          <Card className={styles.statCardInfo}>
             <Statistic
               title="P50 延迟"
               value={320}
@@ -185,7 +92,7 @@ export const ObservabilityTab: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--warning)' }}>
+          <Card className={styles.statCardWarning}>
             <Statistic
               title="P95 延迟"
               value={1.2}
@@ -195,7 +102,7 @@ export const ObservabilityTab: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--error)' }}>
+          <Card className={styles.statCardError}>
             <Statistic
               title="P99 延迟"
               value={2.8}
@@ -210,14 +117,45 @@ export const ObservabilityTab: React.FC = () => {
         <Col span={12}>
           <Card className={styles.chartCard} title="延迟分布">
             <div className={styles.chartContainer}>
-              <Column {...latencyConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={latencyData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="bucket" tick={{ fill: CHART_LABEL_COLOR }} />
+                  <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                  <Tooltip formatter={(value: number) => [value.toLocaleString(), '请求数']} />
+                  <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                    {latencyData.map((_, idx) => (
+                      <Cell key={idx} fill={latencyColors[idx % latencyColors.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>
         <Col span={12}>
           <Card className={styles.chartCard} title="错误类型分布">
             <div className={styles.chartContainer}>
-              <Pie {...errorConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <RPie
+                    data={errorData}
+                    dataKey="count"
+                    nameKey="type"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius="80%"
+                    innerRadius="60%"
+                    label={({ type, count }: { type: string; count: number }) => `${type} ${(count / errorTotal * 100).toFixed(0)}%`}
+                  >
+                    {errorData.map((_, idx) => (
+                      <Cell key={idx} fill={[STATUS_COLORS.error, STATUS_COLORS.warning, STATUS_COLORS.warning, CHART_COLORS[1], CHART_LABEL_COLOR][idx]} />
+                    ))}
+                  </RPie>
+                  <Tooltip formatter={(value: number) => [`${(value / errorTotal * 100).toFixed(1)}%`, '占比']} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>
@@ -225,7 +163,21 @@ export const ObservabilityTab: React.FC = () => {
 
       <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="请求量趋势 (24h)">
         <div className={styles.chartContainer}>
-          <Line {...volumeConfig} containerStyle={{ height: 300 }} />
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={volumeData}>
+              <defs>
+                <linearGradient id="volumeGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#1e40af" stopOpacity={0.3} />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              <XAxis dataKey="time" tick={{ fill: CHART_LABEL_COLOR }} />
+              <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+              <Tooltip formatter={(value: number) => [value.toLocaleString(), '请求数']} />
+              <Area type="monotone" dataKey="requests" stroke={CHART_COLORS[1]} fill="url(#volumeGradient)" dot={{ r: 3 }} activeDot={{ r: 5 }} />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       </Card>
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
-import { Card, Input, Button, Upload, Space, message, Typography, Tag } from 'antd'
-import { InboxOutlined, SendOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { Card, Input, Button, Upload, message, Typography } from 'antd'
+import { InboxOutlined, SendOutlined, ArrowLeftOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './InquiryManualEntryPage.module.css'

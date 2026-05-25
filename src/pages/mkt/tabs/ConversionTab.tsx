@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Row, Col, Statistic, Spin, Typography, Tag, Divider, Space, Button, Popover } from 'antd'
-import { ArrowUpOutlined, BarChartOutlined, PlusOutlined, BulbOutlined } from '@ant-design/icons'
-import { Funnel, Line } from '@ant-design/charts'
+import { ArrowUpOutlined, BarChartOutlined, PlusOutlined, BulbOutlined } from '@/iconMap'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
+import { FunnelChart } from '../../../components/FunnelChart/FunnelChart'
 import { CapabilityBanner } from '../../../components/CapabilityBanner/CapabilityBanner'
 import { EmptyState } from '../../../components/EmptyState'
 import { marketingService } from '../../../services'
@@ -9,6 +10,21 @@ import styles from '../MktOverviewPage.module.css'
 import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
 
 const { Text } = Typography
+
+interface FunnelStage {
+  name: string
+  count: number
+  rate: number
+}
+
+interface FunnelData {
+  stages: FunnelStage[]
+  ab_test?: {
+    version_a: { name: string; conversion: number; data: number[] }
+    version_b: { name: string; conversion: number; data: number[] }
+    significant: boolean
+  }
+}
 
 const OPTIMIZATION_SUGGESTIONS: Record<string, string> = {
   '展现': '使用AI生成更具吸引力的标题和主图',
@@ -18,7 +34,7 @@ const OPTIMIZATION_SUGGESTIONS: Record<string, string> = {
 }
 
 export const ConversionTab: React.FC = () => {
-  const [funnelData, setFunnelData] = useState<any>(null)
+  const [funnelData, setFunnelData] = useState<FunnelData | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -52,47 +68,18 @@ export const ConversionTab: React.FC = () => {
     )
   }
 
-  const funnelConfig = {
-    data: funnelData.stages.map((s: any) => ({ stage: s.name, count: s.count })),
-    xField: 'stage',
-    yField: 'count',
-    legend: false,
-    label: {
-      style: { fill: '#ffffff', fontSize: 14 },
-      content: ({ stage, count }: any) => `${stage}\n${count.toLocaleString()}`,
-    },
-    style: {
-      fill: (d: any) => {
-        const colors = [CHART_COLORS[1], CHART_COLORS[2], STATUS_COLORS.warning, STATUS_COLORS.success]
-        const idx = funnelData.stages.findIndex((s: any) => s.stage === d.stage)
-        return colors[idx] || CHART_LABEL_COLOR
-      },
-    },
-    animation: {
-      appear: { animation: 'fade-in', duration: 800 },
-    },
-  }
+  const funnelStageData = funnelData.stages.map((s: FunnelStage) => ({ stage: s.name, count: s.count }))
+  const funnelColors = [CHART_COLORS[1], CHART_COLORS[2], STATUS_COLORS.warning, STATUS_COLORS.success]
 
-  const lineData: any[] = []
+  const lineData: Array<{ week: string; [key: string]: string | number }> = []
   if (funnelData.ab_test) {
     const ab = funnelData.ab_test
     ab.version_a.data.forEach((v: number, i: number) => {
-      lineData.push({ week: `W${i + 1}`, conversion: v, version: ab.version_a.name })
+      const row: Record<string, string | number> = { week: `W${i + 1}` }
+      row[ab.version_a.name] = v
+      row[ab.version_b.name] = ab.version_b.data[i]
+      lineData.push(row)
     })
-    ab.version_b.data.forEach((v: number, i: number) => {
-      lineData.push({ week: `W${i + 1}`, conversion: v, version: ab.version_b.name })
-    })
-  }
-
-  const lineConfig = {
-    data: lineData,
-    xField: 'week',
-    yField: 'conversion',
-    seriesField: 'version',
-    smooth: true,
-    color: [CHART_LABEL_COLOR, STATUS_COLORS.success],
-    point: { size: 5, shape: 'circle' },
-    animation: { appear: { animation: 'fade-in', duration: 1000 } },
   }
 
   return (
@@ -116,7 +103,7 @@ export const ConversionTab: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={10}>
           <Card title="全链路转化漏斗" className={styles.card}>
-            <Funnel {...funnelConfig} height={300} containerStyle={{ height: 300 }} />
+            <FunnelChart data={funnelStageData} colors={funnelColors} height={300} />
           </Card>
         </Col>
 
@@ -157,7 +144,18 @@ export const ConversionTab: React.FC = () => {
               </Col>
             </Row>
             <Divider />
-            <Line {...lineConfig} height={200} containerStyle={{ height: 200 }} />
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={lineData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                <XAxis dataKey="week" tick={{ fill: CHART_LABEL_COLOR }} />
+                <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                <Tooltip formatter={(value: number) => [`${value.toFixed(1)}%`, 'CTR']} />
+                <Legend />
+                {lineData.length > 0 && Object.keys(lineData[0]!).filter(k => k !== 'week').map((key, idx) => (
+                  <Line key={key} type="monotone" dataKey={key} stroke={idx === 0 ? CHART_LABEL_COLOR : STATUS_COLORS.success} dot={{ r: 5 }} activeDot={{ r: 7 }} />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
           </Card>
         </Col>
       </Row>
@@ -192,7 +190,7 @@ export const ConversionTab: React.FC = () => {
       </Card>
 
       <Row gutter={16}>
-        {funnelData.stages.map((stage: any, i: number) => {
+        {funnelData.stages.map((stage: FunnelStage, i: number) => {
           const prev = i > 0 ? funnelData.stages[i - 1] : null
           const lossRate = prev ? (((prev.count - stage.count) / prev.count) * 100).toFixed(1) : '0'
           const suggestion = OPTIMIZATION_SUGGESTIONS[stage.name]

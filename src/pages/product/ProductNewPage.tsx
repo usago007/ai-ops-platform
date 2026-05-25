@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Form, Input, Select, Button, Space, message, Spin, Row, Col, Typography, Divider, Alert } from 'antd'
-import { ArrowLeftOutlined, ThunderboltOutlined, SaveOutlined } from '@ant-design/icons'
+import { ArrowLeftOutlined, ThunderboltOutlined, SaveOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './ProductNewPage.module.css'
@@ -20,6 +20,28 @@ const CATEGORIES = [
 
 const ALL_BRANDS = Array.from(new Set(CATEGORIES.flatMap(c => c.children)))
 
+interface CategoryOption {
+  value: string
+  label: string
+  children: string[]
+}
+
+interface CategoryNode {
+  name: string
+  brand?: string
+  children?: CategoryNode[]
+}
+
+interface ProductFormValues {
+  raw_text?: string
+  category?: string
+  brand?: string
+  model?: string
+  description?: string
+  unit?: string
+  price?: string
+}
+
 export const ProductNewPage: React.FC = () => {
   const navigate = useNavigate()
   const [form] = Form.useForm()
@@ -36,8 +58,8 @@ export const ProductNewPage: React.FC = () => {
     try {
       const result = await productService.getCategories()
       if (result.success) {
-        const cats = result.data.categories.flatMap((c: any) =>
-          c.children?.map((ch: any) => ({
+        const cats = result.data.categories.flatMap((c: CategoryNode) =>
+          c.children?.map((ch: CategoryNode) => ({
             value: ch.name,
             label: ch.name,
             children: ch.brand ? [ch.brand] : [],
@@ -84,7 +106,7 @@ export const ProductNewPage: React.FC = () => {
     }
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: ProductFormValues) => {
     setLoading(true)
     try {
       const result = await productService.createProduct({

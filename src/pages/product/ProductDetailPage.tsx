@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Descriptions, Tag, Button, Space, Spin, Table, message, Typography, Divider, Alert, Input, Modal, Form } from 'antd'
-import { CheckOutlined, CloseOutlined, EditOutlined, ScanOutlined, ArrowLeftOutlined, LinkOutlined } from '@ant-design/icons'
+import { CheckOutlined, CloseOutlined, EditOutlined, ScanOutlined, ArrowLeftOutlined, LinkOutlined } from '@/iconMap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './ProductDetailPage.module.css'
@@ -8,14 +8,36 @@ import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Text, Title } = Typography
 
+interface ProductAttribute {
+  name: string
+  value: string
+  confidence: number
+  status: 'confirmed' | 'pending' | 'suggested'
+  source: string
+}
+
+interface ProductData {
+  id: string
+  category: string
+  brand: string
+  model: string
+  description?: string
+  unit: string
+  price?: string
+  completenessScore: number
+  attributes: ProductAttribute[]
+  source_inquiry?: string
+  original_text?: string
+}
+
 export const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [product, setProduct] = useState<any>(null)
+  const [product, setProduct] = useState<ProductData | null>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [editModalVisible, setEditModalVisible] = useState(false)
-  const [editingAttr, setEditingAttr] = useState<any>(null)
+  const [editingAttr, setEditingAttr] = useState<ProductAttribute | null>(null)
   const [attrValue, setAttrValue] = useState('')
 
   useEffect(() => {
@@ -56,7 +78,7 @@ export const ProductDetailPage: React.FC = () => {
     }
   }
 
-  const handleEditAttr = (attr: any) => {
+  const handleEditAttr = (attr: ProductAttribute) => {
     setEditingAttr(attr)
     setAttrValue(attr.value)
     setEditModalVisible(true)
@@ -64,7 +86,7 @@ export const ProductDetailPage: React.FC = () => {
 
   const handleSaveAttr = () => {
     if (!editingAttr) return
-    const updatedAttrs = (product.attributes || []).map((a: any) =>
+    const updatedAttrs = (product.attributes || []).map((a: ProductAttribute) =>
       a.name === editingAttr.name ? { ...a, value: attrValue, status: 'confirmed' } : a
     )
     setProduct({ ...product, attributes: updatedAttrs })
@@ -96,7 +118,7 @@ export const ProductDetailPage: React.FC = () => {
     { title: '属性名', dataIndex: 'name', key: 'name', width: 120 },
     {
       title: '属性值', dataIndex: 'value', key: 'value',
-      render: (v: string, record: any) => (
+      render: (v: string, record: ProductAttribute) => (
         <Button type="link" size="small" className={styles.noPadding} onClick={() => handleEditAttr(record)}>
           {v} <EditOutlined className={styles.editIcon} />
         </Button>

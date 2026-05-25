@@ -1,24 +1,67 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Table, Button, Tag, Space, message, Modal, Input, Upload, Timeline, Spin, Form, Select, Tag as AntTag, Divider, Descriptions, Switch, InputNumber } from 'antd'
-import { PlusOutlined, ImportOutlined, SearchOutlined, HistoryOutlined, WarningOutlined, FileTextOutlined, EditOutlined, EyeOutlined, PoweroffOutlined } from '@ant-design/icons'
+import { PlusOutlined, ImportOutlined, SearchOutlined, HistoryOutlined, WarningOutlined, FileTextOutlined, EditOutlined, EyeOutlined, PoweroffOutlined } from '@/iconMap'
 import { ruleService } from '../../services'
 import styles from './RuleListPage.module.css'
 import { EmptyState } from '../../components/EmptyState'
 
 const { TextArea } = Input
 
+interface RuleItem {
+  id: string
+  name: string
+  condition: string
+  action: string
+  priority: number
+  status: string
+  version: number
+  tags: string[]
+  conflictWith?: boolean
+  creator?: string
+  created_at?: string
+  description?: string
+}
+
+interface VersionItem {
+  version: string
+  date: string
+  author: string
+  change: string
+}
+
+interface ConflictInfo {
+  ruleA: { name: string; condition: string }
+  ruleB: { name: string; condition: string }
+  description: string
+}
+
+interface ConflictResult {
+  hasConflict: boolean
+  conflicts: ConflictInfo[]
+}
+
+interface RuleFormValues {
+  name: string
+  description?: string
+  condition: string
+  action: string
+  priority: number
+  tags?: string
+  status: boolean
+}
+
 export const RuleListPage: React.FC = () => {
-  const [rules, setRules] = useState<any[]>([])
+  const [rules, setRules] = useState<RuleItem[]>([])
   const [loading, setLoading] = useState(true)
   const [importModalVisible, setImportModalVisible] = useState(false)
   const [createModalVisible, setCreateModalVisible] = useState(false)
   const [detailModalVisible, setDetailModalVisible] = useState(false)
   const [editModalVisible, setEditModalVisible] = useState(false)
   const [versionsVisible, setVersionsVisible] = useState(false)
-  const [versions, setVersions] = useState<any[]>([])
+  const [versions, setVersions] = useState<VersionItem[]>([])
   const [conflictVisible, setConflictVisible] = useState(false)
-  const [conflictResult, setConflictResult] = useState<any>(null)
-  const [selectedRule, setSelectedRule] = useState<any>(null)
+  const [conflictResult, setConflictResult] = useState<ConflictResult | null>(null)
+  const [selectedRule, setSelectedRule] = useState<RuleItem | null>(null)
   const [createForm] = Form.useForm()
   const [editForm] = Form.useForm()
 
@@ -48,7 +91,7 @@ export const RuleListPage: React.FC = () => {
     } catch (e) { message.error('导入失败') }
   }
 
-  const handleCreateRule = async (values: any) => {
+  const handleCreateRule = async (values: RuleFormValues) => {
     try {
       const result = await ruleService.createRule({
         ...values,
@@ -64,7 +107,7 @@ export const RuleListPage: React.FC = () => {
     } catch (e) { message.error('创建失败') }
   }
 
-  const handleEditRule = async (values: any) => {
+  const handleEditRule = async (values: RuleFormValues) => {
     if (!selectedRule) return
     try {
       const result = await ruleService.updateRule(selectedRule.id, {
@@ -81,7 +124,7 @@ export const RuleListPage: React.FC = () => {
     } catch (e) { message.error('更新失败') }
   }
 
-  const handleToggleRule = async (rule: any) => {
+  const handleToggleRule = async (rule: RuleItem) => {
     try {
       const result = await ruleService.toggleRule(rule.id)
       if (result.success) {
@@ -91,12 +134,12 @@ export const RuleListPage: React.FC = () => {
     } catch (e) { message.error('操作失败') }
   }
 
-  const handleViewDetail = (rule: any) => {
+  const handleViewDetail = (rule: RuleItem) => {
     setSelectedRule(rule)
     setDetailModalVisible(true)
   }
 
-  const handleEdit = (rule: any) => {
+  const handleEdit = (rule: RuleItem) => {
     setSelectedRule(rule)
     editForm.setFieldsValue({
       name: rule.name,
@@ -146,7 +189,7 @@ export const RuleListPage: React.FC = () => {
     { title: '版本', dataIndex: 'version', key: 'version', width: 80 },
     {
       title: '操作', key: 'action', width: 240,
-      render: (_: any, r: any) => (
+      render: (_: any, r: RuleItem) => (
         <Space>
           <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(r)} title="详情" />
           <Button type="link" size="small" icon={<EditOutlined />} onClick={() => handleEdit(r)} title="编辑" />
@@ -332,7 +375,7 @@ export const RuleListPage: React.FC = () => {
 
       <Modal title="版本历史" open={versionsVisible} onCancel={() => setVersionsVisible(false)} footer={null}>
         <Timeline>
-          {versions.map((v: any) => (
+          {versions.map((v: VersionItem) => (
             <Timeline.Item key={v.version}>{v.version} - {v.date} - {v.author} - {v.change}</Timeline.Item>
           ))}
         </Timeline>
@@ -340,7 +383,7 @@ export const RuleListPage: React.FC = () => {
 
       <Modal title="规则冲突检测" open={conflictVisible} onCancel={() => setConflictVisible(false)}
         footer={<Button type="primary" onClick={() => setConflictVisible(false)}>我知道了</Button>}>
-        {conflictResult?.hasConflict && conflictResult.conflicts.map((c: any, i: number) => (
+        {conflictResult?.hasConflict && conflictResult.conflicts.map((c: ConflictInfo, i: number) => (
           <Card key={i} className={styles.conflictCard}>
             <Tag color="red" className={styles.conflictTag}><WarningOutlined /> 冲突检测</Tag>
             <div className={styles.conflictGrid}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Row, Col, Statistic, Table, Tag } from 'antd'
-import { ArrowUpOutlined, ThunderboltOutlined, DollarOutlined, ClockCircleOutlined } from '@ant-design/icons'
-import { Pie, Line } from '@ant-design/charts'
+import { ArrowUpOutlined, ThunderboltOutlined, DollarOutlined, ClockCircleOutlined } from '@/iconMap'
+import { PieChart, Pie as RPie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import type { ColumnsType } from 'antd/es/table'
 import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
 import styles from '../SystemStatusPage.module.css'
@@ -16,11 +16,7 @@ interface ModuleCostRow {
   avgLatency: number
 }
 
-interface TokenTrendPoint {
-  day: string
-  type: string
-  tokens: number
-}
+
 
 const moduleDistribution = [
   { module: '询报价', percentage: 45 },
@@ -30,33 +26,11 @@ const moduleDistribution = [
 ]
 
 const pieData = moduleDistribution.map((m) => ({
-  type: m.module,
+  name: m.module,
   value: m.percentage,
 }))
 
-const pieConfig = {
-  data: pieData,
-  angleField: 'value',
-  colorField: 'type',
-  radius: 0.8,
-  innerRadius: 0.6,
-  label: {
-    type: 'outer',
-    content: '{name} {percentage}',
-    style: {
-      fill: CHART_LABEL_COLOR,
-      fontSize: 12,
-    },
-  },
-  interactions: [{ type: 'element-active' }],
-  legend: {
-    position: 'right' as const,
-    itemName: {
-      style: { fill: CHART_LABEL_COLOR },
-    },
-  },
-  color: [CHART_COLORS[1], STATUS_COLORS.success, STATUS_COLORS.warning, STATUS_COLORS.error],
-}
+const PIE_COLORS = [CHART_COLORS[1], STATUS_COLORS.success, STATUS_COLORS.warning, STATUS_COLORS.error]
 
 const modelColors = [CHART_COLORS[1], STATUS_COLORS.success, STATUS_COLORS.warning, CHART_COLORS[5]] as const
 
@@ -67,8 +41,14 @@ const modelDistribution = [
   { model: 'DeepSeek', percentage: 5 },
 ]
 
-function generateTokenTrend(): TokenTrendPoint[] {
-  const data: TokenTrendPoint[] = []
+interface TokenTrendPointWide {
+  day: string
+  input_tokens: number
+  output_tokens: number
+}
+
+function generateTokenTrend(): TokenTrendPointWide[] {
+  const data: TokenTrendPointWide[] = []
   const today = new Date()
   for (let i = 29; i >= 0; i--) {
     const d = new Date(today)
@@ -76,54 +56,12 @@ function generateTokenTrend(): TokenTrendPoint[] {
     const day = `${d.getMonth() + 1}/${d.getDate()}`
     const baseInput = 80000 + Math.random() * 40000
     const baseOutput = 30000 + Math.random() * 20000
-    data.push({ day, type: 'input_tokens', tokens: Math.round(baseInput) })
-    data.push({ day, type: 'output_tokens', tokens: Math.round(baseOutput) })
+    data.push({ day, input_tokens: Math.round(baseInput), output_tokens: Math.round(baseOutput) })
   }
   return data
 }
 
 const lineData = generateTokenTrend()
-
-const lineConfig = {
-  data: lineData,
-  xField: 'day',
-  yField: 'tokens',
-  seriesField: 'type',
-  smooth: true,
-  color: [CHART_COLORS[1], STATUS_COLORS.success],
-  legend: {
-    itemName: {
-      style: { fill: CHART_LABEL_COLOR },
-    },
-  },
-  point: { size: 3, shape: 'circle' },
-  xAxis: {
-    label: {
-      autoRotate: true,
-      style: { fill: CHART_LABEL_COLOR },
-      formatter: (val: string) => {
-        const num = parseInt(val.split('/')[1], 10)
-        if (num === 1 || num % 5 === 0) return val
-        return ''
-      },
-    },
-  },
-  yAxis: {
-    label: {
-      style: { fill: CHART_LABEL_COLOR },
-      formatter: (val: number) => {
-        if (val >= 100000) return `${(val / 1000).toFixed(0)}K`
-        return val.toString()
-      },
-    },
-  },
-  tooltip: {
-    formatter: (datum: TokenTrendPoint) => ({
-      name: datum.type === 'input_tokens' ? 'Input Tokens' : 'Output Tokens',
-      value: datum.tokens.toLocaleString(),
-    }),
-  },
-}
 
 const costTableData: ModuleCostRow[] = [
   { key: 'quote', module: '询报价', calls: 5603, inputTokens: 2_240_000, outputTokens: 890_000, cost: 351.20, avgLatency: 2.1 },
@@ -275,14 +213,43 @@ export const AICostTab: React.FC = () => {
         <Col span={12}>
           <Card className={styles.chartCard} title="模块调用分布">
             <div className={styles.chartContainer}>
-              <Pie {...pieConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <RPie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius="80%"
+                    innerRadius="60%"
+                    label={({ name, value }) => `${name} ${value}%`}
+                  >
+                    {pieData.map((_, idx) => (
+                      <Cell key={idx} fill={PIE_COLORS[idx % PIE_COLORS.length]} />
+                    ))}
+                  </RPie>
+                  <Tooltip formatter={(value: number) => [`${value}%`, '占比']} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>
         <Col span={12}>
           <Card className={styles.chartCard} title="Token 用量趋势 (30 天)">
             <div className={styles.chartContainer}>
-              <Line {...lineConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={lineData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="day" tick={{ fill: CHART_LABEL_COLOR }} interval={4} />
+                  <YAxis tick={{ fill: CHART_LABEL_COLOR }} tickFormatter={(v: number) => v >= 100000 ? `${(v / 1000).toFixed(0)}K` : v.toString()} />
+                  <Tooltip formatter={(value: number) => [value.toLocaleString(), 'Tokens']} />
+                  <Legend />
+                  <Line type="monotone" dataKey="input_tokens" stroke={CHART_COLORS[1]} name="Input Tokens" dot={{ r: 3 }} activeDot={{ r: 5 }} />
+                  <Line type="monotone" dataKey="output_tokens" stroke={STATUS_COLORS.success} name="Output Tokens" dot={{ r: 3 }} activeDot={{ r: 5 }} />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>

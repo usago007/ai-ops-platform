@@ -14,11 +14,11 @@ interface InquiryLead {
   status: LeadStatus
   priority: 'high' | 'medium' | 'low'
   created_at: string
-  quotation?: any
+  quotation?: QuotationInfo
   result_reason?: string
   result_amount?: number
-  classification?: any
-  parse_result?: any
+  classification?: ClassificationResult
+  parse_result?: ParseResult
 }
 
 interface FollowUpRecord {
@@ -37,6 +37,35 @@ interface QuotationVersion {
   payment: string
   products: number
   note?: string
+}
+
+interface QuotationProduct {
+  name: string
+  quantity: number
+  unit: string
+  unitPrice: number
+}
+
+interface QuotationInfo {
+  products: QuotationProduct[]
+  delivery: string
+  payment: string
+  validUntil: string
+  note?: string
+}
+
+interface ClassificationResult {
+  category?: string
+  spec?: string
+  [key: string]: string | undefined
+}
+
+interface ParseResult {
+  category?: string
+  spec?: string
+  quantity?: { value: number; unit: string }
+  delivery?: string
+  payment?: string
 }
 
 const leads: InquiryLead[] = [
@@ -322,7 +351,7 @@ const statsFromLeads = () => ({
   anomaly: leads.filter(l => l.status === 'anomaly').length,
 })
 
-const makeQuotationFromParse = (leadId: string, parseResult: any) => ({
+const makeQuotationFromParse = (leadId: string, parseResult: ParseResult) => ({
   leadId,
   products: [
     {
@@ -389,7 +418,7 @@ export const inquiryDataStore = {
 
   getSimilarInquiries: () => clone(generateSimilarInquiries()),
 
-  confirmInquiry: (leadId: string, classification: any, parseResult?: any) => {
+  confirmInquiry: (leadId: string, classification: ClassificationResult, parseResult?: ParseResult) => {
     const lead = leads.find(item => item.id === leadId)
     if (!lead) {
       return { message: '线索不存在' }
@@ -427,14 +456,14 @@ export const inquiryDataStore = {
     similar: clone(similarQuotations),
   }),
 
-  saveQuotation: (leadId: string, quotation: any) => {
+  saveQuotation: (leadId: string, quotation: QuotationInfo) => {
     const lead = leads.find(item => item.id === leadId)
     if (!lead) {
       return { message: '线索不存在' }
     }
     lead.quotation = clone(quotation)
     lead.status = 'quoted'
-    const total = (quotation.products || []).reduce((sum: number, item: any) => sum + Number(item.quantity || 0) * Number(item.unitPrice || 0), 0)
+    const total = (quotation.products || []).reduce((sum: number, item: QuotationProduct) => sum + Number(item.quantity || 0) * Number(item.unitPrice || 0), 0)
     const versions = quotationHistories[leadId] || []
     const version = versions.length + 1
     versions.unshift({

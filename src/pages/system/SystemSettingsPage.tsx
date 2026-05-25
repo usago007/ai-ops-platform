@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Form, InputNumber, Input, Select, Button, message, Spin, Row, Col, Divider, Tabs, Table, Tag, Switch, Space, Popconfirm, Modal } from 'antd'
-import { SaveOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { SaveOutlined, DeleteOutlined, PlusOutlined } from '@/iconMap'
 import type { ColumnsType } from 'antd/es/table'
 import { systemService } from '../../services'
 import styles from './SystemSettingsPage.module.css'

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Rate, Button, Space, Typography } from 'antd'
-import { LikeOutlined, DislikeOutlined } from '@ant-design/icons'
+import { LikeOutlined, DislikeOutlined } from '@/iconMap'
 import styles from './FeedbackPanel.module.css'
 
 const { Text } = Typography

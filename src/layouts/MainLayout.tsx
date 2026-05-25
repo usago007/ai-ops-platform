@@ -24,7 +24,7 @@ import {
   ExperimentOutlined,
   MonitorOutlined,
   PieChartOutlined,
-} from '@ant-design/icons'
+} from '@/iconMap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './MainLayout.module.css'
 
@@ -161,7 +161,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Menu
           mode="inline"
           selectedKeys={[selectedKey]}
-          defaultOpenKeys={['business']}
+          defaultOpenKeys={['business', 'marketing', 'system']}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
           className={styles.menu}

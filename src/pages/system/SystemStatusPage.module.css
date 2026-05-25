@@ -70,12 +70,24 @@
   border-left: 3px solid var(--chart-1) !important;
 }
 
+.statCardChart1 {
+  border-left: 3px solid var(--chart-1) !important;
+}
+
 .statCardSuccess {
   border-left: 3px solid var(--success) !important;
 }
 
+.statCardInfo {
+  border-left: 3px solid var(--info) !important;
+}
+
 .statCardWarning {
   border-left: 3px solid var(--warning) !important;
+}
+
+.statCardError {
+  border-left: 3px solid var(--error) !important;
 }
 
 .statCardChart5 {

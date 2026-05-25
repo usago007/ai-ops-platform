@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Row, Col, Statistic, Timeline, Tag, Spin } from 'antd'
-import { ArrowUpOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
-import { Line } from '@ant-design/charts'
+import { ArrowUpOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@/iconMap'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { systemService } from '../../../services'
 import { CHART_COLORS, CHART_LABEL_COLOR } from '../../../styles/chartColors'
 import styles from '../SystemStatusPage.module.css'
@@ -45,23 +45,7 @@ export const HealthOverviewTab: React.FC = () => {
     qps: 30 + Math.random() * 40,
   }))
 
-  const latencyConfig = {
-    data: chartData,
-    xField: 'time',
-    yField: 'latency',
-    smooth: true,
-    color: CHART_COLORS[1],
-    point: { size: 3, shape: 'circle' },
-    label: {
-      style: { fill: CHART_LABEL_COLOR },
-    },
-    xAxis: {
-      label: {
-        autoRotate: false,
-        autoHide: { type: 'equidistance', cfg: { minGap: 6 } },
-      },
-    },
-  }
+  const latencyData = chartData
 
   if (loading) {
     return <Spin size="large" className={styles.loading} />
@@ -71,7 +55,7 @@ export const HealthOverviewTab: React.FC = () => {
     <>
       <Row gutter={[16, 16]}>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--info)' }}>
+          <Card className={styles.statCardInfo}>
             <Statistic
               title="API 成功率"
               value={health?.successRate}
@@ -83,7 +67,7 @@ export const HealthOverviewTab: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--success)' }}>
+          <Card className={styles.statCardSuccess}>
             <Statistic
               title="当前 QPS"
               value={health?.qps}
@@ -93,7 +77,7 @@ export const HealthOverviewTab: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--warning)' }}>
+          <Card className={styles.statCardWarning}>
             <Statistic
               title="P95 延迟"
               value={health?.apiLatency.p95}
@@ -103,7 +87,7 @@ export const HealthOverviewTab: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderLeft: '3px solid var(--chart-5)' }}>
+          <Card className={styles.statCardChart5}>
             <Statistic
               title="在线 Agent"
               value={health?.activeAgents}
@@ -118,7 +102,15 @@ export const HealthOverviewTab: React.FC = () => {
         <Col span={12}>
           <Card title="API 延迟趋势 (24h)">
             <div className={styles.chartContainer}>
-              <Line {...latencyConfig} containerStyle={{ height: 300 }} />
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={latencyData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis dataKey="time" tick={{ fill: CHART_LABEL_COLOR }} />
+                  <YAxis tick={{ fill: CHART_LABEL_COLOR }} />
+                  <Tooltip formatter={(value: number) => [value.toLocaleString(), '延迟 (ms)']} />
+                  <Line type="monotone" dataKey="latency" stroke={CHART_COLORS[1]} dot={{ r: 3 }} activeDot={{ r: 5 }} />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </Card>
         </Col>

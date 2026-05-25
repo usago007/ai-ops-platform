@@ -66,7 +66,7 @@ export const marketingDataStore = {
     }
   },
 
-  getSellingPoints: (productId?: string) => generateSellingPoints(),
+  getSellingPoints: () => generateSellingPoints(),
 
   getConversionFunnel: () => generateFunnelData(),
 

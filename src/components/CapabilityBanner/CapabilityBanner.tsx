@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Alert, Button, Space, Collapse, Typography } from 'antd'
-import { CloseOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import React, { useState } from 'react'
+import { Alert, Button, Collapse, Typography } from 'antd'
 import styles from './CapabilityBanner.module.css'
 
 const { Text } = Typography
@@ -14,22 +13,8 @@ interface CapabilityBannerProps {
   onLearnMore?: () => void
 }
 
-export const CapabilityBanner: React.FC<CapabilityBannerProps> = ({
-  title,
-  icon,
-  capabilities,
-  limits = [],
-  storageKey,
-  onLearnMore,
-}) => {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const dismissed = localStorage.getItem(storageKey)
-    if (!dismissed) {
-      setVisible(true)
-    }
-  }, [storageKey])
+export const CapabilityBanner: React.FC<CapabilityBannerProps> = ({ title, icon, capabilities, limits, storageKey, onLearnMore }) => {
+  const [visible, setVisible] = useState(() => !localStorage.getItem(storageKey))
 
   const handleDismiss = () => {
     localStorage.setItem(storageKey, 'true')
@@ -48,32 +33,34 @@ export const CapabilityBanner: React.FC<CapabilityBannerProps> = ({
         </div>
       }
       description={
-        <div className={styles.content}>
-          <div className={styles.section}>
-            <Text type="secondary" className={styles.sectionTitle}>支持能力：</Text>
-            <ul className={styles.list}>
-              {capabilities.map((cap, i) => (
-                <li key={i}>{cap}</li>
-              ))}
-            </ul>
-          </div>
-          {limits.length > 0 && (
-            <Collapse
-              ghost
-              className={styles.collapse}
-              items={[{
-                key: 'limits',
-                label: <Text type="secondary">使用说明与限制</Text>,
+        <div>
+          <Collapse
+            ghost
+            items={[
+              {
+                key: 'capabilities',
+                label: '能力说明',
                 children: (
                   <ul className={styles.list}>
-                    {limits.map((limit, i) => (
-                      <li key={i}>{limit}</li>
+                    {capabilities.map((cap, i) => (
+                      <li key={i}>{cap}</li>
                     ))}
                   </ul>
                 ),
-              }]}
-            />
-          )}
+              },
+              ...(limits ? [{
+                key: 'limits',
+                label: '限制说明',
+                children: (
+                  <ul className={styles.list}>
+                    {limits.map((lim, i) => (
+                      <li key={i}>{lim}</li>
+                    ))}
+                  </ul>
+                ),
+              }] : []),
+            ]}
+          />
           <div className={styles.actions}>
             {onLearnMore && <Button type="link" size="small" onClick={onLearnMore}>了解更多</Button>}
             <Button type="link" size="small" onClick={handleDismiss}>不再提示</Button>

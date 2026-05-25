@@ -1,30 +1,31 @@
+import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
-import { DashboardPage } from '@/pages/dashboard/DashboardPage'
-import { InquiryListPage } from '@/pages/inquiry/InquiryListPage'
-import { InquiryTransformPage } from '@/pages/inquiry/InquiryTransformPage'
-import { InquiryManualEntryPage } from '@/pages/inquiry/InquiryManualEntryPage'
-import { InquiryResultPage } from '@/pages/inquiry/InquiryResultPage'
-import { QuotationListPage } from '@/pages/inquiry/QuotationListPage'
-import { QuotationEditPage } from '@/pages/inquiry/QuotationEditPage'
-import { QuotationDetailPage } from '@/pages/inquiry/QuotationDetailPage'
-import { ProductListPage } from '@/pages/product/ProductListPage'
-import { ProductDetailPage } from '@/pages/product/ProductDetailPage'
-import { ProductNewPage } from '@/pages/product/ProductNewPage'
-import { CategoryDictPage } from '@/pages/product/CategoryDictPage'
-import { RuleListPage } from '@/pages/rules/RuleListPage'
-import { CSWorkspacePage } from '@/pages/cs/CSWorkspacePage'
-import { ContentCreatePage } from '@/pages/marketing/ContentCreatePage'
-import { SellingPointPage } from '@/pages/selling-point/SellingPointPage'
-import { LandingPagePreviewPage } from '@/pages/conversion/LandingPagePreviewPage'
-import { AgentOrchestrationPage } from '@/pages/system/AgentOrchestrationPage'
-import { ModelConfigPage } from '@/pages/system/ModelConfigPage'
-import { SystemSettingsPage } from '@/pages/system/SystemSettingsPage'
-import { AuditLogPage } from '@/pages/system/AuditLogPage'
-import { UserManagementPage } from '@/pages/system/UserManagementPage'
-import { SystemStatusPage } from '@/pages/system/SystemStatusPage'
-import { BizOverviewPage } from '@/pages/biz/BizOverviewPage'
-import { MktOverviewPage } from '@/pages/mkt/MktOverviewPage'
-import { NotFoundPage } from '@/pages/NotFoundPage'
+
+const BizOverviewPage = lazy(() => import('@/pages/biz/BizOverviewPage').then(m => ({ default: m.BizOverviewPage })))
+const MktOverviewPage = lazy(() => import('@/pages/mkt/MktOverviewPage').then(m => ({ default: m.MktOverviewPage })))
+const InquiryListPage = lazy(() => import('@/pages/inquiry/InquiryListPage').then(m => ({ default: m.InquiryListPage })))
+const InquiryTransformPage = lazy(() => import('@/pages/inquiry/InquiryTransformPage').then(m => ({ default: m.InquiryTransformPage })))
+const InquiryManualEntryPage = lazy(() => import('@/pages/inquiry/InquiryManualEntryPage').then(m => ({ default: m.InquiryManualEntryPage })))
+const InquiryResultPage = lazy(() => import('@/pages/inquiry/InquiryResultPage').then(m => ({ default: m.InquiryResultPage })))
+const QuotationListPage = lazy(() => import('@/pages/inquiry/QuotationListPage').then(m => ({ default: m.QuotationListPage })))
+const QuotationEditPage = lazy(() => import('@/pages/inquiry/QuotationEditPage').then(m => ({ default: m.QuotationEditPage })))
+const QuotationDetailPage = lazy(() => import('@/pages/inquiry/QuotationDetailPage').then(m => ({ default: m.QuotationDetailPage })))
+const ProductListPage = lazy(() => import('@/pages/product/ProductListPage').then(m => ({ default: m.ProductListPage })))
+const ProductDetailPage = lazy(() => import('@/pages/product/ProductDetailPage').then(m => ({ default: m.ProductDetailPage })))
+const ProductNewPage = lazy(() => import('@/pages/product/ProductNewPage').then(m => ({ default: m.ProductNewPage })))
+const CategoryDictPage = lazy(() => import('@/pages/product/CategoryDictPage').then(m => ({ default: m.CategoryDictPage })))
+const RuleListPage = lazy(() => import('@/pages/rules/RuleListPage').then(m => ({ default: m.RuleListPage })))
+const CSWorkspacePage = lazy(() => import('@/pages/cs/CSWorkspacePage').then(m => ({ default: m.CSWorkspacePage })))
+const ContentCreatePage = lazy(() => import('@/pages/marketing/ContentCreatePage').then(m => ({ default: m.ContentCreatePage })))
+const SellingPointPage = lazy(() => import('@/pages/selling-point/SellingPointPage').then(m => ({ default: m.SellingPointPage })))
+const LandingPagePreviewPage = lazy(() => import('@/pages/conversion/LandingPagePreviewPage').then(m => ({ default: m.LandingPagePreviewPage })))
+const AgentOrchestrationPage = lazy(() => import('@/pages/system/AgentOrchestrationPage').then(m => ({ default: m.AgentOrchestrationPage })))
+const ModelConfigPage = lazy(() => import('@/pages/system/ModelConfigPage').then(m => ({ default: m.ModelConfigPage })))
+const SystemSettingsPage = lazy(() => import('@/pages/system/SystemSettingsPage').then(m => ({ default: m.SystemSettingsPage })))
+const AuditLogPage = lazy(() => import('@/pages/system/AuditLogPage').then(m => ({ default: m.AuditLogPage })))
+const UserManagementPage = lazy(() => import('@/pages/system/UserManagementPage').then(m => ({ default: m.UserManagementPage })))
+const SystemStatusPage = lazy(() => import('@/pages/system/SystemStatusPage').then(m => ({ default: m.SystemStatusPage })))
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })))
 
 export const routerConfig = [
   { path: '/', element: <Navigate to="/biz/overview" replace /> },
