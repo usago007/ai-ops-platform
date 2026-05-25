@@ -6,13 +6,10 @@
 
 .title {
   font-size: var(--font-size-2xl);
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: var(--spacing-sm);
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .desc {
@@ -23,18 +20,22 @@
 
 .card {
   margin-bottom: var(--spacing-xl);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--border-secondary) !important;
   background: var(--bg-secondary) !important;
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
   backdrop-filter: blur(8px);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-primary) !important;
   transform: translateY(-1px);
+}
+
+.card:active {
+  transform: translateY(0);
 }
 
 .textarea {
@@ -66,7 +67,7 @@
   background: var(--bg-secondary);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-card);
 }
 
 .processingCard {

@@ -6,28 +6,29 @@
 
 .title {
   font-size: var(--font-size-2xl);
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: var(--spacing-xl);
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .card {
   margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   background: var(--bg-surface) !important;
-  border: 1px solid var(--border-primary) !important;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
   backdrop-filter: blur(8px);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-primary) !important;
+}
+
+.card:active {
+  transform: translateY(0);
 }
 
 .center {
@@ -65,13 +66,17 @@
   border-radius: var(--radius-md);
   background: var(--bg-tertiary);
   border: 1px solid var(--border-secondary);
-  transition: all var(--transition-normal);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
 }
 
 .similarCard:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-accent);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-primary);
   transform: translateY(-1px);
+}
+
+.similarCard:active {
+  transform: translateY(0);
 }
 
 .similarTitle {

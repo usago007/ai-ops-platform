@@ -26,17 +26,21 @@
 
 .card {
   margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-primary) !important;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
   backdrop-filter: blur(8px);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-primary) !important;
+}
+
+.card:active {
+  transform: translateY(0);
 }
 
 .coreSellingCard {

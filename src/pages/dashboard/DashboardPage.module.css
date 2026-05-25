@@ -10,13 +10,10 @@
 
 .title {
   font-size: var(--font-size-2xl);
-  font-weight: 700;
+  font-weight: 600;
   margin: 0 0 var(--spacing-sm);
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -26,16 +23,20 @@
 }
 
 .statCard {
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-primary) !important;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
 }
 
 .statCard:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+.statCard:active {
+  transform: translateY(0);
 }
 
 .sectionTitle {
@@ -48,15 +49,19 @@
 .quickCard {
   border-radius: var(--radius-lg) !important;
   background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-primary) !important;
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
 }
 
 .quickCard:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-  border-color: var(--border-accent) !important;
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+  border-color: var(--border-primary) !important;
+}
+
+.quickCard:active {
+  transform: translateY(0);
 }
 
 .iconWrapper {
@@ -102,8 +107,8 @@
 }
 
 .tableCard {
-  border-radius: var(--radius-xl) !important;
+  border-radius: var(--radius-2xl) !important;
   background: var(--bg-secondary) !important;
-  border: 1px solid var(--border-primary) !important;
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-card);
 }
