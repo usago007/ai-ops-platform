@@ -3,9 +3,9 @@ import { Card, Row, Col, Statistic, Table, Tag, Spin } from 'antd'
 import { ArrowUpOutlined, ThunderboltOutlined, DollarOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Pie, Line } from '@ant-design/charts'
 import type { ColumnsType } from 'antd/es/table'
-import { getCallLogsSummary } from '../../mock/handlers'
-import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
-import styles from './AICostDashboardPage.module.css'
+import { getCallLogsSummary } from '../../../mock/handlers'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
+import styles from '../SystemStatusPage.module.css'
 
 interface ModuleCostRow {
   key: string
@@ -219,7 +219,7 @@ const columns: ColumnsType<ModuleCostRow> = [
   },
 ]
 
-export const AICostDashboardPage: React.FC = () => {
+export const AICostTab: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [summary, setSummary] = useState<{
     totalCalls: number
@@ -252,10 +252,7 @@ export const AICostDashboardPage: React.FC = () => {
   const displayAvgDuration = summary?.avgDuration ?? 1800
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.pageTitle}>AI 调用成本与性能面板</h2>
-
-      {/* Summary Cards */}
+    <>
       <Row gutter={[16, 16]}>
         <Col span={6}>
           <Card className={`${styles.statCard} ${styles.statCardChart1}`}>
@@ -312,7 +309,6 @@ export const AICostDashboardPage: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Charts Row: Pie + Line */}
       <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card className={styles.chartCard} title="模块调用分布">
@@ -330,7 +326,6 @@ export const AICostDashboardPage: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Model Distribution */}
       <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="模型分布">
         <div className={styles.modelDistributionContent}>
           {modelDistribution.map((m, i) => (
@@ -342,7 +337,6 @@ export const AICostDashboardPage: React.FC = () => {
         </div>
       </Card>
 
-      {/* Cost Breakdown Table */}
       <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="费用明细">
         <Table<ModuleCostRow>
           dataSource={costTableData}
@@ -354,6 +348,6 @@ export const AICostDashboardPage: React.FC = () => {
           summary={() => null}
         />
       </Card>
-    </div>
+    </>
   )
 }

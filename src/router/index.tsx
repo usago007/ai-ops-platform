@@ -22,10 +22,7 @@ import { ModelConfigPage } from '@/pages/system/ModelConfigPage'
 import { SystemSettingsPage } from '@/pages/system/SystemSettingsPage'
 import { AuditLogPage } from '@/pages/system/AuditLogPage'
 import { UserManagementPage } from '@/pages/system/UserManagementPage'
-import { SystemDashboardPage } from '@/pages/system/SystemDashboardPage'
-import { BusinessMetricsPage } from '@/pages/system/BusinessMetricsPage'
-import { AICostDashboardPage } from '@/pages/system/AICostDashboardPage'
-import { SystemObservabilityPage } from '@/pages/system/SystemObservabilityPage'
+import { SystemStatusPage } from '@/pages/system/SystemStatusPage'
 import { BizOverviewPage } from '@/pages/biz/BizOverviewPage'
 import { MktOverviewPage } from '@/pages/mkt/MktOverviewPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -59,9 +56,9 @@ export const routerConfig = [
   { path: '/sys/settings', element: <SystemSettingsPage /> },
   { path: '/sys/audit-log', element: <AuditLogPage /> },
   { path: '/sys/users', element: <UserManagementPage /> },
-  { path: '/sys/dashboard', element: <SystemDashboardPage /> },
-  { path: '/sys/business-metrics', element: <BusinessMetricsPage /> },
-  { path: '/sys/ai-cost', element: <AICostDashboardPage /> },
-  { path: '/sys/observability', element: <SystemObservabilityPage /> },
+  { path: '/sys/dashboard', element: <SystemStatusPage /> },
+  { path: '/sys/business-metrics', element: <Navigate to="/sys/dashboard" replace /> },
+  { path: '/sys/ai-cost', element: <Navigate to="/sys/dashboard" replace /> },
+  { path: '/sys/observability', element: <Navigate to="/sys/dashboard" replace /> },
   { path: '*', element: <NotFoundPage /> },
 ]

@@ -16,7 +16,7 @@ import {
   DatabaseOutlined,
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { MetricCard } from '../../components/MetricCard/MetricCard'
+import { MetricCard } from '../../components/MetricCard'
 import { ProcessFlow } from '../../components/ProcessFlow/ProcessFlow'
 import { CaseCard } from '../../components/CaseCard/CaseCard'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'

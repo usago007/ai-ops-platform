@@ -1,68 +1,18 @@
-import React, { useMemo, useState } from 'react'
-import { Card, Row, Col, Statistic, Tag, Spin } from 'antd'
+import React, { useMemo } from 'react'
+import { Card, Row, Col } from 'antd'
 import {
-  ArrowUpOutlined,
-  ArrowDownOutlined,
   RocketOutlined,
   ClockCircleOutlined,
   TeamOutlined,
   ThunderboltOutlined,
   HeartOutlined,
-  DollarOutlined,
 } from '@ant-design/icons'
 import { Column, Line } from '@ant-design/charts'
-import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
-import styles from './BusinessMetricsPage.module.css'
+import { MetricCard } from '../../../components/MetricCard'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
+import styles from '../SystemStatusPage.module.css'
 
-interface MetricCardProps {
-  title: string
-  value: string | number
-  suffix?: string
-  prefix?: React.ReactNode
-  trend?: 'up' | 'down'
-  trendLabel?: string
-  color?: string
-  comparison?: string
-}
-
-const MetricCard: React.FC<MetricCardProps> = ({
-  title,
-  value,
-  suffix,
-  prefix,
-  trend,
-  trendLabel,
-  color,
-  comparison,
-}) => (
-  <Card className={styles.metricCard} style={color ? { borderLeft: `3px solid ${color}` } : undefined}>
-    <div className={styles.metricContent}>
-      <div className={styles.metricHeader}>
-        <span className={styles.metricIcon}>{prefix}</span>
-        <span className={styles.metricTitle}>{title}</span>
-      </div>
-      <div className={styles.metricValue} style={color ? { color } : undefined}>
-        {value}
-        {suffix && <span className={styles.metricSuffix}>{suffix}</span>}
-      </div>
-      {trend && (
-        <div className={styles.metricTrend}>
-          {trend === 'up' ? (
-            <ArrowUpOutlined className={styles.trendUp} />
-          ) : (
-            <ArrowDownOutlined className={styles.trendDown} />
-          )}
-          <span>{trendLabel}</span>
-        </div>
-      )}
-      {comparison && <div className={styles.metricComparison}>{comparison}</div>}
-    </div>
-  </Card>
-)
-
-export const BusinessMetricsPage: React.FC = () => {
-  const [loading] = useState(false)
-
+export const BusinessValueTab: React.FC = () => {
   const comparisonData = useMemo(
     () => [
       { metric: '处理速度', type: '人工处理', value: 45 },
@@ -240,20 +190,8 @@ export const BusinessMetricsPage: React.FC = () => {
     [savingsData],
   )
 
-  if (loading) {
-    return <Spin size="large" className={styles.loading} />
-  }
-
   return (
-    <div className={styles.container}>
-      <div className={styles.pageHeader}>
-        <h2 className={styles.pageTitle}>业务价值仪表盘</h2>
-        <Tag color="green" className={styles.statusTag}>
-          数据已更新
-        </Tag>
-      </div>
-
-      {/* Core Metric Cards */}
+    <>
       <Row gutter={[16, 16]}>
         <Col span={5}>
           <MetricCard
@@ -316,7 +254,6 @@ export const BusinessMetricsPage: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Comparison & ROI Charts */}
       <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card title="人工 vs AI 处理对比" className={styles.chartCard}>
@@ -334,10 +271,9 @@ export const BusinessMetricsPage: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Cost-Benefit & Cost Savings */}
       <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={8}>
-          <Card title="成本效益分析" className={styles.costBenefitCard}>
+          <Card title="成本效益分析" className={styles.chartCard}>
             <div className={styles.costBenefitContent}>
               <div className={styles.costItem}>
                 <div className={styles.costLabel}>AI 月度成本</div>
@@ -368,6 +304,6 @@ export const BusinessMetricsPage: React.FC = () => {
           </Card>
         </Col>
       </Row>
-    </div>
+    </>
   )
 }

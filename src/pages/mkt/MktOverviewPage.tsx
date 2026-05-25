@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { Line } from '@ant-design/charts'
-import { MetricCard } from '../../components/MetricCard/MetricCard'
+import { MetricCard } from '../../components/MetricCard'
 import { ProcessFlow } from '../../components/ProcessFlow/ProcessFlow'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { mktService } from '../../services'

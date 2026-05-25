@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Row, Col, Statistic, Timeline, Spin, Tag } from 'antd'
-import { ArrowUpOutlined, ArrowDownOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
+import { Card, Row, Col, Statistic, Timeline, Tag, Spin } from 'antd'
+import { ArrowUpOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Line } from '@ant-design/charts'
-import { systemService } from '../../services'
-import { CHART_COLORS, CHART_LABEL_COLOR } from '../../styles/chartColors'
-import styles from './SystemDashboardPage.module.css'
+import { systemService } from '../../../services'
+import { CHART_COLORS, CHART_LABEL_COLOR } from '../../../styles/chartColors'
+import styles from '../SystemStatusPage.module.css'
 
 interface HealthMetrics {
   apiLatency: { p95: number; p99: number }
@@ -16,7 +16,7 @@ interface HealthMetrics {
   lastDeploy: string
 }
 
-export const SystemDashboardPage: React.FC = () => {
+export const HealthOverviewTab: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [health, setHealth] = useState<HealthMetrics | null>(null)
 
@@ -25,8 +25,7 @@ export const SystemDashboardPage: React.FC = () => {
       .then(data => {
         setHealth(data.data)
       })
-      .catch((error) => {
-        console.error(error)
+      .catch(() => {
         setHealth({
           apiLatency: { p95: 0, p99: 0 },
           successRate: 0,
@@ -69,11 +68,8 @@ export const SystemDashboardPage: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.pageTitle}>系统仪表盘</h2>
-
+    <>
       <Row gutter={[16, 16]}>
-        {/* 健康指标卡片 */}
         <Col span={6}>
           <Card style={{ borderLeft: '3px solid var(--info)' }}>
             <Statistic
@@ -192,6 +188,6 @@ export const SystemDashboardPage: React.FC = () => {
           </Col>
         </Row>
       </Card>
-    </div>
+    </>
   )
 }

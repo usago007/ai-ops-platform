@@ -58,9 +58,6 @@ const breadcrumbRouteMap: Record<string, string[]> = {
   '/sys/audit-log':           ['系统管理', '操作日志'],
   '/sys/users':               ['系统管理', '用户与权限'],
   '/sys/dashboard':           ['系统管理', '系统状态'],
-  '/sys/business-metrics':    ['系统管理', '业务指标'],
-  '/sys/ai-cost':             ['系统管理', 'AI 成本'],
-  '/sys/observability':       ['系统管理', '系统可观测性'],
 }
 
 function buildBreadcrumb(pathname: string): string[] {
@@ -126,9 +123,6 @@ const menuItems = [
       { key: '/sys/audit-log', label: '操作日志', icon: <FileSearchOutlined /> },
       { key: '/sys/users', label: '用户与权限', icon: <TeamOutlined /> },
       { key: '/sys/dashboard', label: '系统状态', icon: <DashboardOutlined /> },
-      { key: '/sys/business-metrics', label: '业务指标', icon: <PieChartOutlined /> },
-      { key: '/sys/ai-cost', label: 'AI 成本', icon: <ExperimentOutlined /> },
-      { key: '/sys/observability', label: '系统可观测性', icon: <MonitorOutlined /> },
     ],
   },
 ]

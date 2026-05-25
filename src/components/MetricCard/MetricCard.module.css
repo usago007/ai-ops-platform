@@ -1,51 +1,75 @@
-.card {
-  border-radius: var(--radius-md);
-  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-  cursor: default;
+.metricCard {
+  border-radius: var(--radius-2xl);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-normal), transform var(--transition-fast), border-color var(--transition-normal);
+  backdrop-filter: blur(8px);
 }
 
-.card:hover {
+.metricCard:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-1px);
+  border-color: var(--border-primary) !important;
 }
 
-.card:active {
+.metricCard:active {
   transform: translateY(0);
 }
 
-.inner {
-  text-align: center;
-  padding: var(--spacing-md) 0;
+.metricContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
 }
 
-.prefix {
-  font-size: 24px;
-  margin-bottom: var(--spacing-sm);
-  color: var(--primary-color);
+.metricHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
-.value {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-xs);
+.metricIcon {
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
 }
 
-.title {
+.metricTitle {
   font-size: var(--font-size-sm);
   color: var(--text-secondary);
 }
 
-.trend {
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
+.metricValue {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
 }
 
-.positive {
+.metricSuffix {
+  font-size: var(--font-size-lg);
+  margin-left: var(--spacing-xs);
+}
+
+.metricTrend {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.trendUp {
   color: var(--success);
 }
 
-.negative {
-  color: var(--error);
+.trendDown {
+  color: var(--success);
+}
+
+.metricComparison {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  padding-top: var(--spacing-xs);
+  border-top: 1px solid var(--border-secondary);
 }

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Row, Col, Statistic, Timeline, Tag } from 'antd'
 import { CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Column, Pie, Line } from '@ant-design/charts'
-import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
-import styles from './SystemObservabilityPage.module.css'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
+import styles from '../SystemStatusPage.module.css'
 
 interface LatencyBucket {
   bucket: string
@@ -28,7 +28,7 @@ interface OperationEvent {
   method: string
 }
 
-export const SystemObservabilityPage: React.FC = () => {
+export const ObservabilityTab: React.FC = () => {
   const latencyData: LatencyBucket[] = [
     { bucket: '<100ms', count: 12500 },
     { bucket: '100-300ms', count: 45200 },
@@ -160,13 +160,10 @@ export const SystemObservabilityPage: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.pageTitle}>系统可观测性面板</h2>
-
-      {/* Health Overview Cards */}
+    <>
       <Row gutter={[16, 16]}>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card style={{ borderLeft: '3px solid var(--success)' }}>
             <Statistic
               title="API 成功率"
               value={99.7}
@@ -178,7 +175,7 @@ export const SystemObservabilityPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card style={{ borderLeft: '3px solid var(--info)' }}>
             <Statistic
               title="P50 延迟"
               value={320}
@@ -188,7 +185,7 @@ export const SystemObservabilityPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card style={{ borderLeft: '3px solid var(--warning)' }}>
             <Statistic
               title="P95 延迟"
               value={1.2}
@@ -198,7 +195,7 @@ export const SystemObservabilityPage: React.FC = () => {
           </Card>
         </Col>
         <Col span={6}>
-          <Card className={styles.statCard}>
+          <Card style={{ borderLeft: '3px solid var(--error)' }}>
             <Statistic
               title="P99 延迟"
               value={2.8}
@@ -209,7 +206,6 @@ export const SystemObservabilityPage: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Charts Row */}
       <Row gutter={16} className={styles.rowMarginTop}>
         <Col span={12}>
           <Card className={styles.chartCard} title="延迟分布">
@@ -227,14 +223,12 @@ export const SystemObservabilityPage: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Request Volume Trend */}
       <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="请求量趋势 (24h)">
         <div className={styles.chartContainer}>
           <Line {...volumeConfig} />
         </div>
       </Card>
 
-      {/* Recent Operations Timeline */}
       <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="最近操作时间线">
         <div className={styles.timelineContainer}>
           <Timeline
@@ -266,6 +260,6 @@ export const SystemObservabilityPage: React.FC = () => {
           />
         </div>
       </Card>
-    </div>
+    </>
   )
 }
