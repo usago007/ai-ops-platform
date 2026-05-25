@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Card, Row, Col, Statistic, Table, Tag, Spin } from 'antd'
+import React from 'react'
+import { Card, Row, Col, Statistic, Table, Tag } from 'antd'
 import { ArrowUpOutlined, ThunderboltOutlined, DollarOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import { Pie, Line } from '@ant-design/charts'
 import type { ColumnsType } from 'antd/es/table'
-import { getCallLogsSummary } from '../../../mock/handlers'
 import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
 import styles from '../SystemStatusPage.module.css'
 
@@ -220,37 +219,6 @@ const columns: ColumnsType<ModuleCostRow> = [
 ]
 
 export const AICostTab: React.FC = () => {
-  const [loading, setLoading] = useState(true)
-  const [summary, setSummary] = useState<{
-    totalCalls: number
-    totalTokens: number
-    totalCost: number
-    avgDuration: number
-  } | null>(null)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const s = getCallLogsSummary()
-      setSummary({
-        totalCalls: s.totalCalls || 12450,
-        totalTokens: s.totalTokens || 8200000,
-        totalCost: s.totalCost || 780.5,
-        avgDuration: s.avgDuration || 1800,
-      })
-      setLoading(false)
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (loading) {
-    return <Spin size="large" className={styles.loading} />
-  }
-
-  const displayTotalCalls = summary?.totalCalls ?? 12450
-  const displayTotalTokens = summary?.totalTokens ?? 8200000
-  const displayTotalCost = summary?.totalCost ?? 780.5
-  const displayAvgDuration = summary?.avgDuration ?? 1800
-
   return (
     <>
       <Row gutter={[16, 16]}>
@@ -258,7 +226,7 @@ export const AICostTab: React.FC = () => {
           <Card className={`${styles.statCard} ${styles.statCardChart1}`}>
             <Statistic
               title="总调用次数"
-              value={displayTotalCalls}
+              value={12450}
               valueStyle={{ color: 'var(--chart-1)' }}
               prefix={<ArrowUpOutlined />}
               suffix="次"
@@ -269,17 +237,11 @@ export const AICostTab: React.FC = () => {
           <Card className={`${styles.statCard} ${styles.statCardSuccess}`}>
             <Statistic
               title="总 Token 消耗"
-              value={displayTotalTokens}
-              precision={0}
+              value={8.2}
+              precision={1}
               valueStyle={{ color: 'var(--success)' }}
               prefix={<ThunderboltOutlined />}
-              suffix=" tokens"
-              formatter={(val) => {
-                const n = Number(val)
-                if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
-                if (n >= 1000) return `${(n / 1000).toFixed(0)}K`
-                return n.toString()
-              }}
+              suffix="M tokens"
             />
           </Card>
         </Col>
@@ -287,7 +249,7 @@ export const AICostTab: React.FC = () => {
           <Card className={`${styles.statCard} ${styles.statCardWarning}`}>
             <Statistic
               title="月度费用估算"
-              value={displayTotalCost}
+              value={780.50}
               precision={2}
               valueStyle={{ color: 'var(--warning)' }}
               prefix={<DollarOutlined />}
@@ -299,7 +261,7 @@ export const AICostTab: React.FC = () => {
           <Card className={`${styles.statCard} ${styles.statCardChart5}`}>
             <Statistic
               title="平均响应时间"
-              value={displayAvgDuration / 1000}
+              value={1.8}
               precision={1}
               valueStyle={{ color: 'var(--chart-5)' }}
               prefix={<ClockCircleOutlined />}
@@ -313,14 +275,14 @@ export const AICostTab: React.FC = () => {
         <Col span={12}>
           <Card className={styles.chartCard} title="模块调用分布">
             <div className={styles.chartContainer}>
-              <Pie {...pieConfig} />
+              <Pie {...pieConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>
         <Col span={12}>
           <Card className={styles.chartCard} title="Token 用量趋势 (30 天)">
             <div className={styles.chartContainer}>
-              <Line {...lineConfig} />
+              <Line {...lineConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>

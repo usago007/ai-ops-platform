@@ -137,7 +137,7 @@ export const SellingPointPage: React.FC = () => {
           </Card>
 
           <Card title="CTR 趋势对比" className={styles.card}>
-            <Line {...chartConfig} height={200} />
+            <Line {...chartConfig} height={200} containerStyle={{ height: 200 }} />
           </Card>
         </Col>
       </Row>

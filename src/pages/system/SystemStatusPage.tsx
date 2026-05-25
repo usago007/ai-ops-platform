@@ -55,7 +55,7 @@ export const SystemStatusPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.pageHeader}>
-        <h2 className={styles.pageTitle}>系统状态</h2>
+        <h2 className={styles.pageTitle}>系统概览</h2>
       </div>
       <Tabs defaultActiveKey="health" items={items} size="large" className={styles.tabs} />
     </div>

@@ -1483,6 +1483,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 label={{ type: 'outer', content: '{name} {percentage}%' }}
                 interactions={[{ type: 'element-active' }]}
                 color={[CHART_COLORS[1], CHART_COLORS[3], CHART_COLORS[4], CHART_COLORS[5], CHART_COLORS[6]]}
+                containerStyle={{ height: 280 }}
               />
             </div>
           </Card>
@@ -1890,6 +1891,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 point={{ size: 3, shape: 'circle' }}
                 yAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
                 xAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
+                containerStyle={{ height: 250 }}
               />
             </div>
           </Card>
@@ -2073,6 +2075,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 color={CHART_COLORS[1]}
                 xAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
                 yAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
+                containerStyle={{ height: 300 }}
               />
             </div>
           </Card>
@@ -2089,6 +2092,7 @@ export const AgentOrchestrationPage: React.FC = () => {
                 point={{ size: 3, shape: 'circle' }}
                 xAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
                 yAxis={{ label: { style: { fill: CHART_LABEL_COLOR } } }}
+                containerStyle={{ height: 300 }}
               />
             </div>
           </Card>

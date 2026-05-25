@@ -210,14 +210,14 @@ export const ObservabilityTab: React.FC = () => {
         <Col span={12}>
           <Card className={styles.chartCard} title="延迟分布">
             <div className={styles.chartContainer}>
-              <Column {...latencyConfig} />
+              <Column {...latencyConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>
         <Col span={12}>
           <Card className={styles.chartCard} title="错误类型分布">
             <div className={styles.chartContainer}>
-              <Pie {...errorConfig} />
+              <Pie {...errorConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>
@@ -225,7 +225,7 @@ export const ObservabilityTab: React.FC = () => {
 
       <Card className={`${styles.chartCard} ${styles.cardMarginTop}`} title="请求量趋势 (24h)">
         <div className={styles.chartContainer}>
-          <Line {...volumeConfig} />
+          <Line {...volumeConfig} containerStyle={{ height: 300 }} />
         </div>
       </Card>
 

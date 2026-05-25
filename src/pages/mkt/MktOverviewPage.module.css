@@ -11,6 +11,29 @@
   min-height: 400px;
 }
 
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+
+.pageTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.tabs :global(.ant-tabs-nav) {
+  margin-bottom: var(--spacing-lg);
+}
+
+.tabs :global(.ant-tabs-tab) {
+  font-size: var(--font-size-base);
+  padding: 8px 16px;
+}
+
 .desc {
   display: block;
   margin-bottom: var(--spacing-lg);
@@ -76,10 +99,75 @@
   font-size: var(--font-size-md);
 }
 
+.attrValueLg {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--chart-1);
+  margin: var(--spacing-xs) 0;
+}
+
 .attrNote {
   display: block;
   font-size: var(--font-size-xs);
 }
 
+.attrLabel {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
 .amountSuccess { color: var(--success); }
 .dividerMargin { margin: 16px 0; }
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  color: var(--text-tertiary);
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: var(--text-muted);
+}
+
+.emptyTitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.emptyDesc {
+  font-size: 14px;
+  color: var(--text-tertiary);
+}
+
+.statCard {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  border-left: 3px solid var(--brand-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.statCard :global(.ant-statistic-content-value) {
+  font-size: 28px;
+}
+
+.versionAStat :global(.ant-statistic-content-value) {
+  color: var(--text-tertiary);
+}
+
+.versionBStat :global(.ant-statistic-content-value) {
+  color: var(--success);
+}
+
+.tagMarginTop { margin-top: 8px; }
+
+.attrIconInfo { color: var(--info); }
+.attrIconSuccess { color: var(--success); }
+.attrIconChart5 { color: var(--chart-5); }

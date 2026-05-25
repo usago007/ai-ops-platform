@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, Statistic, Spin, Typography, Tag, Divider, Space, Button, Collapse, Popover } from 'antd'
-import { ArrowUpOutlined, ArrowDownOutlined, BarChartOutlined, PlusOutlined, BulbOutlined } from '@ant-design/icons'
+import { Card, Row, Col, Statistic, Spin, Typography, Tag, Divider, Space, Button, Popover } from 'antd'
+import { ArrowUpOutlined, BarChartOutlined, PlusOutlined, BulbOutlined } from '@ant-design/icons'
 import { Funnel, Line } from '@ant-design/charts'
-import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
-import styles from './ConversionDashboard.module.css'
-import { EmptyState } from '../../components/EmptyState'
-import { marketingService } from '../../services'
-import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../styles/chartColors'
+import { CapabilityBanner } from '../../../components/CapabilityBanner/CapabilityBanner'
+import { EmptyState } from '../../../components/EmptyState'
+import { marketingService } from '../../../services'
+import styles from '../MktOverviewPage.module.css'
+import { CHART_COLORS, CHART_LABEL_COLOR, STATUS_COLORS } from '../../../styles/chartColors'
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 const OPTIMIZATION_SUGGESTIONS: Record<string, string> = {
   '展现': '使用AI生成更具吸引力的标题和主图',
@@ -17,7 +17,7 @@ const OPTIMIZATION_SUGGESTIONS: Record<string, string> = {
   '成交': '应用智能优惠策略和限时促销话术',
 }
 
-export const ConversionDashboard: React.FC = () => {
+export const ConversionTab: React.FC = () => {
   const [funnelData, setFunnelData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -39,19 +39,16 @@ export const ConversionDashboard: React.FC = () => {
 
   if (!funnelData) {
     return (
-      <div className={styles.container}>
-        <Title level={3}>转化漏斗仪表盘</Title>
-        <EmptyState
-          icon={<BarChartOutlined />}
-          title="暂无转化数据"
-          description="请确保已配置转化跟踪并收集到足够的数据"
-          actionButton={
-            <Button type="primary" onClick={loadData}>
-              重新加载
-            </Button>
-          }
-        />
-      </div>
+      <EmptyState
+        icon={<BarChartOutlined />}
+        title="暂无转化数据"
+        description="请确保已配置转化跟踪并收集到足够的数据"
+        actionButton={
+          <Button type="primary" onClick={loadData}>
+            重新加载
+          </Button>
+        }
+      />
     )
   }
 
@@ -99,7 +96,7 @@ export const ConversionDashboard: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <>
       <CapabilityBanner
         title="📊 转化漏斗能力说明"
         icon={<BarChartOutlined />}
@@ -116,12 +113,10 @@ export const ConversionDashboard: React.FC = () => {
         storageKey="conversion-banner-dismissed"
       />
 
-      <Title level={3}>转化漏斗仪表盘</Title>
-
       <Row gutter={[16, 16]}>
         <Col span={10}>
           <Card title="全链路转化漏斗" className={styles.card}>
-            <Funnel {...funnelConfig} height={300} />
+            <Funnel {...funnelConfig} height={300} containerStyle={{ height: 300 }} />
           </Card>
         </Col>
 
@@ -162,34 +157,34 @@ export const ConversionDashboard: React.FC = () => {
               </Col>
             </Row>
             <Divider />
-            <Line {...lineConfig} height={200} />
+            <Line {...lineConfig} height={200} containerStyle={{ height: 200 }} />
           </Card>
         </Col>
       </Row>
 
-      <Card title="📊 AI 辅助效果归因" className={styles.attributionCard}>
+      <Card title="📊 AI 辅助效果归因" className={styles.card}>
         <Row gutter={[16, 16]}>
           <Col span={8}>
             <div className={styles.attrItem}>
-              <div className={styles.attrIcon}><BulbOutlined className={styles.attrIconInfo} /></div>
+              <div className={styles.attrIconInfo}><BulbOutlined className={styles.attrIconInfo} /></div>
               <Text strong className={styles.attrLabel}>点击率提升</Text>
-              <div className={styles.attrValue}>+42%</div>
+              <div className={styles.attrValueLg}>+42%</div>
               <Text type="secondary" className={styles.attrNote}>AI 优化文案</Text>
             </div>
           </Col>
           <Col span={8}>
             <div className={styles.attrItem}>
-              <div className={styles.attrIcon}><BulbOutlined className={styles.attrIconSuccess} /></div>
+              <div className={styles.attrIconSuccess}><BulbOutlined className={styles.attrIconSuccess} /></div>
               <Text strong className={styles.attrLabel}>加购率提升</Text>
-              <div className={styles.attrValue}>+18%</div>
+              <div className={styles.attrValueLg}>+18%</div>
               <Text type="secondary" className={styles.attrNote}>AI 优化卖点</Text>
             </div>
           </Col>
           <Col span={8}>
             <div className={styles.attrItem}>
-              <div className={styles.attrIcon}><BulbOutlined className={styles.attrIconChart5} /></div>
+              <div className={styles.attrIconChart5}><BulbOutlined className={styles.attrIconChart5} /></div>
               <Text strong className={styles.attrLabel}>成交率提升</Text>
-              <div className={styles.attrValue}>+12%</div>
+              <div className={styles.attrValueLg}>+12%</div>
               <Text type="secondary" className={styles.attrNote}>AI 优化落地页</Text>
             </div>
           </Col>
@@ -201,16 +196,16 @@ export const ConversionDashboard: React.FC = () => {
           const prev = i > 0 ? funnelData.stages[i - 1] : null
           const lossRate = prev ? (((prev.count - stage.count) / prev.count) * 100).toFixed(1) : '0'
           const suggestion = OPTIMIZATION_SUGGESTIONS[stage.name]
-          
+
           const stageCard = (
             <Col span={6} key={stage.name}>
-               <Card className={`${styles.statCard} ${styles.statValueLg}`}>
+              <Card className={styles.statCard}>
                 <Statistic
                   title={stage.name}
                   value={stage.count}
                   precision={0}
                   groupSeparator=","
-                 />
+                />
                 <Divider />
                 <Space>
                   <Tag>转化率 {stage.rate}%</Tag>
@@ -236,6 +231,6 @@ export const ConversionDashboard: React.FC = () => {
           return stageCard
         })}
       </Row>
-    </div>
+    </>
   )
 }

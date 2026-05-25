@@ -15,7 +15,6 @@ import { RuleListPage } from '@/pages/rules/RuleListPage'
 import { CSWorkspacePage } from '@/pages/cs/CSWorkspacePage'
 import { ContentCreatePage } from '@/pages/marketing/ContentCreatePage'
 import { SellingPointPage } from '@/pages/selling-point/SellingPointPage'
-import { ConversionDashboard } from '@/pages/conversion/ConversionDashboard'
 import { LandingPagePreviewPage } from '@/pages/conversion/LandingPagePreviewPage'
 import { AgentOrchestrationPage } from '@/pages/system/AgentOrchestrationPage'
 import { ModelConfigPage } from '@/pages/system/ModelConfigPage'
@@ -48,7 +47,7 @@ export const routerConfig = [
   { path: '/selling-point', element: <SellingPointPage /> },
   { path: '/selling-point/:productId', element: <SellingPointPage /> },
   { path: '/cs/marketing', element: <Navigate to="/cs/workspace?scene=marketing" replace /> },
-  { path: '/conversion/dashboard', element: <ConversionDashboard /> },
+  { path: '/conversion/dashboard', element: <Navigate to="/mkt/overview" replace /> },
   { path: '/conversion/agents', element: <AgentOrchestrationPage /> },
   { path: '/landing-page/preview', element: <LandingPagePreviewPage /> },
   { path: '/sys/agent-orchestration', element: <AgentOrchestrationPage /> },

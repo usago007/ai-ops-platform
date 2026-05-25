@@ -258,14 +258,14 @@ export const BusinessValueTab: React.FC = () => {
         <Col span={12}>
           <Card title="人工 vs AI 处理对比" className={styles.chartCard}>
             <div className={styles.chartContainer}>
-              <Column {...comparisonConfig} />
+              <Column {...comparisonConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>
         <Col span={12}>
           <Card title="累计节省趋势" className={styles.chartCard}>
             <div className={styles.chartContainer}>
-              <Line {...roiConfig} />
+              <Line {...roiConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>
@@ -299,7 +299,7 @@ export const BusinessValueTab: React.FC = () => {
         <Col span={16}>
           <Card title="成本节约明细" className={styles.chartCard}>
             <div className={styles.chartContainer}>
-              <Column {...savingsConfig} />
+              <Column {...savingsConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>

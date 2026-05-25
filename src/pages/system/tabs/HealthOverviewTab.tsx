@@ -118,7 +118,7 @@ export const HealthOverviewTab: React.FC = () => {
         <Col span={12}>
           <Card title="API 延迟趋势 (24h)">
             <div className={styles.chartContainer}>
-              <Line {...latencyConfig} />
+              <Line {...latencyConfig} containerStyle={{ height: 300 }} />
             </div>
           </Card>
         </Col>
