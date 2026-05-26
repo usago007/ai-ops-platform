@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs } from 'antd'
+import { Tabs, Typography } from 'antd'
 import {
   HeartOutlined,
   DollarOutlined,
@@ -11,6 +11,8 @@ import { AICostTab } from './tabs/AICostTab'
 import { BusinessValueTab } from './tabs/BusinessValueTab'
 import { ObservabilityTab } from './tabs/ObservabilityTab'
 import styles from './SystemStatusPage.module.css'
+
+const { Title } = Typography
 
 export const SystemStatusPage: React.FC = () => {
   const items = [
@@ -55,7 +57,7 @@ export const SystemStatusPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.pageHeader}>
-        <h2 className={styles.pageTitle}>系统概览</h2>
+        <Title level={3} className={styles.pageTitle}>系统概览</Title>
       </div>
       <Tabs defaultActiveKey="health" items={items} size="large" className={styles.tabs} />
     </div>

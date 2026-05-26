@@ -349,7 +349,7 @@ export const BizOverviewPage: React.FC = () => {
         <Col span={8}>
           <Card title="快捷入口" className={styles.card}>
             <Space direction="vertical" className={styles.quickLinks} size="middle">
-              <Button type="primary" icon={<InboxOutlined />} block size="large" onClick={() => navigate('/inquiry/list')}>
+              <Button icon={<InboxOutlined />} block size="large" onClick={() => navigate('/inquiry/list')}>
                 查看询价线索池
               </Button>
               <Button icon={<DollarOutlined />} block size="large" onClick={() => navigate('/inquiry/quotation-list')}>

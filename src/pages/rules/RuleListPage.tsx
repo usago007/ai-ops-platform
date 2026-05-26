@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Table, Button, Tag, Space, message, Modal, Input, Upload, Timeline, Spin, Form, Select, Tag as AntTag, Divider, Descriptions, Switch, InputNumber, Row, Col } from 'antd'
+import { Card, Table, Button, Tag, Space, message, Modal, Input, Upload, Timeline, Spin, Form, Select, Tag as AntTag, Divider, Descriptions, Switch, InputNumber, Row, Col, Typography } from 'antd'
 import { PlusOutlined, ImportOutlined, SearchOutlined, HistoryOutlined, WarningOutlined, FileTextOutlined, EditOutlined, EyeOutlined, PoweroffOutlined } from '@/iconMap'
 import { ruleService } from '../../services'
 import styles from './RuleListPage.module.css'
 import formStyles from '../../styles/form.module.css'
+
+const { Title } = Typography
 import { EmptyState } from '../../components/EmptyState'
 
 const { TextArea } = Input
@@ -209,7 +211,7 @@ export const RuleListPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>业务规则智能归纳</h2>
+        <Title level={3} className={styles.title}>业务规则智能归纳</Title>
         <Space>
           <Input.Search placeholder="搜索规则..." className={styles.searchInput} />
           <Button type="primary" icon={<PlusOutlined />} onClick={() => { createForm.resetFields(); setCreateModalVisible(true) }}>

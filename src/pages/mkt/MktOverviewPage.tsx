@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs } from 'antd'
+import { Tabs, Typography } from 'antd'
 import {
   BarChartOutlined,
   NodeIndexOutlined,
@@ -7,6 +7,8 @@ import {
 import { OverviewTab } from './tabs/OverviewTab'
 import { ConversionTab } from './tabs/ConversionTab'
 import styles from './MktOverviewPage.module.css'
+
+const { Title } = Typography
 
 export const MktOverviewPage: React.FC = () => {
   const items = [
@@ -33,7 +35,7 @@ export const MktOverviewPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.pageHeader}>
-        <h2 className={styles.pageTitle}>营销概览</h2>
+        <Title level={3} className={styles.pageTitle}>营销概览</Title>
       </div>
       <Tabs defaultActiveKey="overview" items={items} size="large" className={styles.tabs} />
     </div>

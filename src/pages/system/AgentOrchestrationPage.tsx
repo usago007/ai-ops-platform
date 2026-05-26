@@ -566,7 +566,7 @@ export const AgentOrchestrationPage: React.FC = () => {
   }
 
   if (loading) {
-    return <div className={styles.loading}>Loading...</div>
+    return <Spin size="large" className={styles.loading} />
   }
 
   return (

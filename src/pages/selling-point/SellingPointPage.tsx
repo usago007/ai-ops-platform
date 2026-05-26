@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Tag, Space, Spin, Divider, Statistic, Row, Col, Button, Typography } from 'antd'
+import { Card, Tag, Space, Spin, Divider, Statistic, Row, Col, Button, Typography, Empty } from 'antd'
 import { StarOutlined, ArrowUpOutlined, BulbOutlined, RocketOutlined } from '@/iconMap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
@@ -60,7 +60,7 @@ export const SellingPointPage: React.FC = () => {
     return <div className={styles.center}><Spin size="large" tip="AI 正在提炼卖点..." /></div>
   }
 
-  if (!data) return <div className={styles.center}><Text type="secondary">暂无卖点数据</Text></div>
+  if (!data) return <div className={styles.center}><Empty description="暂无卖点数据" /></div>
 
   const chartData = [
     { type: '第1周', '无AI卖点': 3.2, 'AI卖点': 3.5 },

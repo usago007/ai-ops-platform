@@ -27,7 +27,13 @@ const CustomBarShape = (props: { x: number; y: number; width: number; height: nu
 }
 
 export const FunnelChart: React.FC<FunnelChartProps> = ({ data, colors, height = 300 }) => {
-  if (data.length === 0) return null
+  if (data.length === 0) {
+    return (
+      <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-tertiary)', fontSize: 14 }}>
+        暂无转化数据
+      </div>
+    )
+  }
 
   const maxCount = Math.max(...data.map(d => d.count))
 

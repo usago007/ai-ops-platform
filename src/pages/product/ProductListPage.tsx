@@ -7,7 +7,7 @@ import styles from './ProductListPage.module.css'
 import { EmptyState } from '../../components/EmptyState'
 import { STATUS_COLORS } from '../../styles/chartColors'
 
-const { Text } = Typography
+const { Text, Title } = Typography
 
 interface ProductItem {
   id: string
@@ -171,7 +171,7 @@ export const ProductListPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>商品信息结构化</h2>
+        <Title level={3} className={styles.title}>商品信息结构化</Title>
         <Space>
           <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate('/product/new')}>
             新增商品

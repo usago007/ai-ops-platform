@@ -110,7 +110,7 @@ export const CSWorkspacePage: React.FC = () => {
     <div className={styles.workspace}>
       <div className={styles.sessionList}>
         <h3 className={styles.sidebarTitle}>会话列表</h3>
-        {loading ? <Spin /> : (
+        {loading ? <div className={styles.center}><Spin /></div> : (
           sessions.length === 0 ? (
             <Empty description="暂无活跃会话" image={Empty.PRESENTED_IMAGE_SIMPLE} />
           ) : (
@@ -159,7 +159,7 @@ export const CSWorkspacePage: React.FC = () => {
           />
         </div>
         <div className={styles.messageList}>
-          {messages.length === 0 ? <Empty description="暂无会话消息" /> : messages.map((msg: CSMessage) => (
+          {messages.length === 0 ? <Empty description="暂无会话消息" image={Empty.PRESENTED_IMAGE_SIMPLE} /> : messages.map((msg: CSMessage) => (
             <div key={msg.id} className={`${styles.message} ${msg.role === 'customer' ? styles.customerMsg : styles.agentMsg}`}>
               <Avatar size="small" icon={msg.role === 'customer' ? <UserOutlined /> : <CustomerServiceOutlined />} />
               <div className={styles.messageContent}>

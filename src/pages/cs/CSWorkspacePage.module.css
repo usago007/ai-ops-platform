@@ -10,6 +10,13 @@
   border: 1px solid var(--border-primary);
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
 .sessionList {
   background: var(--bg-tertiary);
   display: flex;

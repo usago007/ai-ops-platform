@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Descriptions, Tag, Button, Space, Spin, Table, message, Typography, Divider, Alert, Input, Modal, Form } from 'antd'
+import { Card, Descriptions, Tag, Button, Space, Spin, Table, message, Typography, Divider, Alert, Input, Modal, Form, Empty } from 'antd'
 import { CheckOutlined, CloseOutlined, EditOutlined, ScanOutlined, ArrowLeftOutlined, LinkOutlined } from '@/iconMap'
 import { useParams, useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
@@ -141,7 +141,16 @@ export const ProductDetailPage: React.FC = () => {
     )
   }
 
-  if (!product) return null
+  if (!product) {
+    return (
+      <div className={styles.center}>
+        <Empty description="商品不存在或已删除" />
+        <Button type="primary" onClick={() => navigate('/product/list')} style={{ marginTop: 16 }}>
+          返回商品库
+        </Button>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.container}>

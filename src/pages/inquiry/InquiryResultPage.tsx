@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Descriptions, Tag, Progress, Spin, Alert, Button, Space, Result, Row, Col, message, Input, Form, Modal } from 'antd'
+import { Card, Descriptions, Tag, Progress, Spin, Alert, Button, Space, Result, Row, Col, message, Input, Form, Modal, Typography } from 'antd'
 import { CheckCircleOutlined, WarningOutlined, InboxOutlined, ThunderboltOutlined, RobotOutlined, EditOutlined, CheckOutlined, CloseOutlined, ArrowLeftOutlined } from '@/iconMap'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import { CHART_COLORS } from '../../styles/chartColors'
 import styles from './InquiryResultPage.module.css'
 import formStyles from '../../styles/form.module.css'
+
+const { Text, Title } = Typography
 
 interface ParseResult {
   category: string
@@ -223,7 +225,7 @@ export const InquiryResultPage: React.FC = () => {
           <Button type="link" icon={<ArrowLeftOutlined />} onClick={() => navigate('/inquiry/list')} className={styles.backButton}>
             返回线索池
           </Button>
-          <h2 className={styles.title}>AI 解析结果</h2>
+          <Title level={3} className={styles.title}>AI 解析结果</Title>
         </div>
         <Space>
           {engineType === 'rule_engine' ? (
