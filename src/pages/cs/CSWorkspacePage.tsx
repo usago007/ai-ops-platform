@@ -4,6 +4,7 @@ import { SendOutlined, RobotOutlined, UserOutlined, CustomerServiceOutlined } fr
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { csService } from '../../services'
 import styles from './CSWorkspacePage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 const { Text } = Typography
 type SceneMode = 'general' | 'marketing'
@@ -52,7 +53,7 @@ export const CSWorkspacePage: React.FC = () => {
         const list = data.suggestions || data.recommendations?.map((item: { product: string; reason: string }) => `${item.product}｜${item.reason}`) || []
         setSuggestions(list)
       }
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
     finally { setSuggestionsLoading(false) }
   }
 
@@ -62,7 +63,7 @@ export const CSWorkspacePage: React.FC = () => {
       const result = await csService.getMessages(id)
       if (result.success) setMessages(result.data.messages)
       loadSuggestions(id)
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
   }
 
   const loadSessions = async () => {
@@ -81,7 +82,7 @@ export const CSWorkspacePage: React.FC = () => {
           selectSession(result.data.sessions[0].id)
         }
       }
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
     finally { setLoading(false) }
   }
 
@@ -187,7 +188,7 @@ export const CSWorkspacePage: React.FC = () => {
             suggestions.length === 0 ? (
               <Empty description="暂无推荐话术" image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
-              <Space direction="vertical" className={styles.fullWidth}>
+              <Space direction="vertical" className={formStyles.fullWidth}>
                 {suggestions.map((s, i) => (
                   <Card key={i} size="small" className={styles.suggestionCard} hoverable onClick={() => useSuggestion(s)}>
                     <div className={styles.suggestionText}>{s}</div>

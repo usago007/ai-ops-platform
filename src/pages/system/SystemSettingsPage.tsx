@@ -4,6 +4,7 @@ import { SaveOutlined, DeleteOutlined, PlusOutlined } from '@/iconMap'
 import type { ColumnsType } from 'antd/es/table'
 import { systemService } from '../../services'
 import styles from './SystemSettingsPage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 interface SystemSettings {
   performance: {
@@ -234,17 +235,17 @@ export const SystemSettingsPage: React.FC = () => {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item label="AI 推理超时时间 (ms)" name={['performance', 'aiTimeout']}>
-                <InputNumber min={1000} max={10000} step={500} className={styles.fullWidth} />
+                <InputNumber min={1000} max={10000} step={500} className={formStyles.fullWidth} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="批量处理并发数" name={['performance', 'maxConcurrent']}>
-                <InputNumber min={10} max={200} step={10} className={styles.fullWidth} />
+                <InputNumber min={10} max={200} step={10} className={formStyles.fullWidth} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="API 限流阈值 (QPS)" name={['performance', 'apiRateLimit']}>
-                <InputNumber min={100} max={5000} step={100} className={styles.fullWidth} />
+                <InputNumber min={100} max={5000} step={100} className={formStyles.fullWidth} />
               </Form.Item>
             </Col>
           </Row>
@@ -253,7 +254,7 @@ export const SystemSettingsPage: React.FC = () => {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item label="API 密钥轮换周期 (天)" name={['security', 'keyRotationDays']}>
-                <InputNumber min={30} max={365} step={30} className={styles.fullWidth} />
+                <InputNumber min={30} max={365} step={30} className={formStyles.fullWidth} />
               </Form.Item>
             </Col>
           </Row>
@@ -269,12 +270,12 @@ export const SystemSettingsPage: React.FC = () => {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item label="归类准确率阈值" name={['business', 'classificationThreshold']}>
-                <InputNumber min={0.8} max={0.99} step={0.01} className={styles.fullWidth} />
+                <InputNumber min={0.8} max={0.99} step={0.01} className={formStyles.fullWidth} />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item label="商品完整度阈值 (分)" name={['business', 'productQualityThreshold']}>
-                <InputNumber min={40} max={80} step={5} className={styles.fullWidth} />
+                <InputNumber min={40} max={80} step={5} className={formStyles.fullWidth} />
               </Form.Item>
             </Col>
           </Row>

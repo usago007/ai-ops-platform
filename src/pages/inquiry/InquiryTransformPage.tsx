@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Card, Button, Tag, Space, Typography, Spin, Progress, Result, Divider, Alert, List } from 'antd'
+import { Card, Button, Tag, Space, Typography, Spin, Result, Divider, Alert, List } from 'antd'
 import {
   ThunderboltOutlined,
   CheckCircleOutlined,
@@ -11,6 +11,7 @@ import {
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './InquiryTransformPage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 const { Title, Text } = Typography
 
@@ -80,7 +81,7 @@ export const InquiryTransformPage: React.FC = () => {
           startTransform(initialTasks)
         }
       }
-    } catch (e) {
+    } catch {
       console.error(e)
     } finally {
       setLoading(false)
@@ -202,7 +203,7 @@ export const InquiryTransformPage: React.FC = () => {
 
           {allCompleted > 0 && (
             <Card title={<Space><CheckCircleOutlined className={styles.iconSuccess} /><Text strong>已完成 ({allCompleted}/{tasks.length})</Text></Space>} className={styles.completedCard}>
-              <Space direction="vertical" className={styles.fullWidth} size="middle">
+              <Space direction="vertical" className={formStyles.fullWidth} size="middle">
                 {tasks.filter(t => t.status === 'done').map(task => (
                   <Card key={task.leadId} size="small" className={styles.resultCard}>
                     <div className={styles.resultHeader}>

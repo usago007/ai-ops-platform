@@ -24,9 +24,7 @@
   box-shadow: var(--shadow-md);
 }
 
-.fullWidth {
-  width: 100%;
-}
+
 
 .emptyState {
   display: flex;

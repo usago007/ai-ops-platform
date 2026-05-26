@@ -76,7 +76,7 @@ export const OverviewTab: React.FC = () => {
       if (templatesRes.success) setTemplates(templatesRes.data.templates || [])
       if (trendRes.success) setTrend(trendRes.data.trend)
       if (attrRes.success) setAttribution(attrRes.data.items || [])
-    } catch (e) {
+    } catch {
       console.error(e)
       setStats({ generated: 0, avg_latency: 0, compliance_rate: 0, ctr_lift: 0 })
       setTemplates([])

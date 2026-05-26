@@ -4,6 +4,7 @@ import { ArrowLeftOutlined, SendOutlined, FileTextOutlined, CheckCircleOutlined 
 import { useParams, useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './QuotationEditPage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 const { Title, Text } = Typography
 
@@ -43,7 +44,7 @@ export const QuotationEditPage: React.FC = () => {
       ])
       if (leadResult.success) setLead(leadResult.data)
       if (similarResult.success) setSimilarQuotations(similarResult.data.similar)
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)
@@ -58,7 +59,7 @@ export const QuotationEditPage: React.FC = () => {
         message.success('报价已保存并发送')
         navigate(`/inquiry/quotation-detail/${id}`)
       }
-    } catch (e) {
+    } catch {
       message.error('保存失败')
     } finally {
       setSubmitting(false)
@@ -116,7 +117,7 @@ export const QuotationEditPage: React.FC = () => {
                         </Col>
                         <Col span={4}>
                           <Form.Item {...restField} name={[name, 'quantity']} label="数量" rules={[{ required: true }]}>
-                            <InputNumber className={styles.fullWidth} min={1} />
+                            <InputNumber className={formStyles.fullWidth} min={1} />
                           </Form.Item>
                         </Col>
                         <Col span={5}>
@@ -126,7 +127,7 @@ export const QuotationEditPage: React.FC = () => {
                         </Col>
                         <Col span={5}>
                           <Form.Item {...restField} name={[name, 'unitPrice']} label="单价(元)" rules={[{ required: true }]}>
-                            <InputNumber className={styles.fullWidth} min={0} precision={2} />
+                            <InputNumber className={formStyles.fullWidth} min={0} precision={2} />
                           </Form.Item>
                         </Col>
                         <Col span={2}>

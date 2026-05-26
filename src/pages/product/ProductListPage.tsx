@@ -47,7 +47,7 @@ export const ProductListPage: React.FC = () => {
       if (result.success) {
         setProducts(result.data.items)
       }
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)
@@ -61,7 +61,7 @@ export const ProductListPage: React.FC = () => {
       if (result.success) {
         message.success(`已创建批量结构化任务，共 ${result.data.total} 个商品`)
       }
-    } catch (e) {
+    } catch {
       message.error('任务创建失败')
     } finally {
       setBatchLoading(false)

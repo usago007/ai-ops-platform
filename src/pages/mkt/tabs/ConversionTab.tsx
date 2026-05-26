@@ -45,7 +45,7 @@ export const ConversionTab: React.FC = () => {
     try {
       const result = await marketingService.getConversionFunnel()
       if (result.success) setFunnelData(result.data)
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
     finally { setLoading(false) }
   }
 

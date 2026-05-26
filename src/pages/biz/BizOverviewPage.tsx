@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Row, Col, Button, Space, Typography, Tag, Modal, Descriptions, Spin, Table, Divider } from 'antd'
+import { Card, Row, Col, Button, Space, Typography, Tag, Modal, Descriptions, Spin, Table } from 'antd'
 import {
   InboxOutlined,
   ThunderboltOutlined,
-  CheckCircleOutlined,
-  ClockCircleOutlined,
   RocketOutlined,
   SearchOutlined,
   BookOutlined,
@@ -134,7 +132,7 @@ export const BizOverviewPage: React.FC = () => {
       if (categoriesRes.success) setCategories(categoriesRes.data.categories)
       if (kbRes.success) setKnowledgeBase(kbRes.data.items)
       if (trendRes.success) setTrend(trendRes.data.trend)
-    } catch (e) {
+    } catch {
       console.error(e)
     } finally {
       setLoading(false)

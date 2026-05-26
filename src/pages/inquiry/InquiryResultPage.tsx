@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import { CHART_COLORS } from '../../styles/chartColors'
 import styles from './InquiryResultPage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 interface ParseResult {
   category: string
@@ -66,7 +67,7 @@ export const InquiryResultPage: React.FC = () => {
       if (result.success) {
         setClassifyResult(result.data)
       }
-    } catch (e) {
+    } catch {
       console.error(e)
     } finally {
       setClassifyLoading(false)
@@ -79,7 +80,7 @@ export const InquiryResultPage: React.FC = () => {
       if (result.success) {
         setSimilarItems(result.data)
       }
-    } catch (e) {
+    } catch {
       console.error(e)
     }
   }
@@ -106,7 +107,7 @@ export const InquiryResultPage: React.FC = () => {
         handleClassify()
         handleSimilar()
       }
-    } catch (e) {
+    } catch {
       message.error('加载线索失败')
     } finally {
       setLoading(false)
@@ -186,7 +187,7 @@ export const InquiryResultPage: React.FC = () => {
         message.success('归类已确认，线索池状态已更新')
         setTimeout(() => navigate('/inquiry/list'), 500)
       }
-    } catch (e) {
+    } catch {
       message.error('确认失败')
     }
   }
@@ -318,7 +319,7 @@ export const InquiryResultPage: React.FC = () => {
           <Card title="AI 归类结果" className={styles.card} loading={classifyLoading}>
             {classifyResult && (
               <div>
-                <Space direction="vertical" size="large" className={styles.fullWidth}>
+                <Space direction="vertical" size="large" className={formStyles.fullWidth}>
                   <div>
                     <span className={styles.label}>一级类目：</span>
                     <Tag color="blue" className={styles.categoryTag}>
@@ -346,7 +347,7 @@ export const InquiryResultPage: React.FC = () => {
         <Col span={8}>
           <Card title="相似询价推荐">
             {similarItems.length > 0 ? (
-              <Space direction="vertical" className={styles.fullWidth}>
+              <Space direction="vertical" className={formStyles.fullWidth}>
                 {similarItems.map((item: SimilarItem) => (
                   <Card key={item.id} size="small" className={styles.similarCard}>
                     <div className={styles.similarTitle}>{item.title}</div>

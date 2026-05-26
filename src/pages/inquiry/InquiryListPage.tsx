@@ -69,7 +69,7 @@ export const InquiryListPage: React.FC = () => {
     try {
       const result = await inquiryService.getInquiryList()
       if (result.success) setLeads(result.data.items)
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)
@@ -88,7 +88,7 @@ export const InquiryListPage: React.FC = () => {
         setSelectedRowKeys([])
         loadLeads()
       }
-    } catch (e) {
+    } catch {
       message.error('批量转化失败')
     }
   }
@@ -121,7 +121,7 @@ export const InquiryListPage: React.FC = () => {
           },
         })
       }
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     }
   }

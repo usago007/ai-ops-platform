@@ -40,7 +40,7 @@ export const QuotationListPage: React.FC = () => {
         const quotingLeads = result.data.items.filter((l: QuotationLead) => l.status === 'quoting' || l.status === 'quoted')
         setLeads(quotingLeads)
       }
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)

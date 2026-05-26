@@ -51,7 +51,7 @@ export const ProductDetailPage: React.FC = () => {
       if (result.success) {
         setProduct({ ...result.data, id })
       }
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)
@@ -71,7 +71,7 @@ export const ProductDetailPage: React.FC = () => {
         message.success('结构化结果已确认并保存')
         loadProduct()
       }
-    } catch (e) {
+    } catch {
       message.error('保存失败')
     } finally {
       setSubmitting(false)

@@ -231,9 +231,7 @@
   font-size: var(--font-size-xs);
 }
 
-.fullWidth {
-  width: 100%;
-}
+
 
 .categoryTag {
   font-size: 14px;

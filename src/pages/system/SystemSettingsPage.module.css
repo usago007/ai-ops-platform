@@ -34,9 +34,7 @@
   border: 1px solid var(--border-secondary) !important;
 }
 
-.fullWidth {
-  width: 100%;
-}
+
 
 .addWordActions {
   margin-top: var(--spacing-lg);

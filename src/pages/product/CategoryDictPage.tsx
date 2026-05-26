@@ -4,6 +4,7 @@ import { ArrowLeftOutlined, PlusOutlined, EditOutlined, DeleteOutlined, Appstore
 import { useNavigate } from 'react-router-dom'
 import { productService } from '../../services'
 import styles from './CategoryDictPage.module.css'
+import formStyles from '../../styles/form.module.css'
 import { STATUS_COLORS } from '../../styles/chartColors'
 
 const { Title, Text } = Typography
@@ -40,7 +41,7 @@ export const CategoryDictPage: React.FC = () => {
       if (result.success) {
         setCategories(result.data.categories || [])
       }
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)
@@ -71,7 +72,7 @@ export const CategoryDictPage: React.FC = () => {
         setModalVisible(false)
         loadCategories()
       }
-    } catch (e) {
+    } catch {
       message.error('操作失败')
     }
   }
@@ -175,7 +176,7 @@ export const CategoryDictPage: React.FC = () => {
         onOk={() => form.submit()}
         onCancel={() => setModalVisible(false)}
       >
-        <Form form={form} layout="vertical" onFinish={handleSubmit} className={styles.formMarginTop}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit} className={formStyles.marginTop}>
           <Form.Item label="一级品类" name="level1" rules={[{ required: true }]}>
             <Select
               placeholder="选择一级品类"

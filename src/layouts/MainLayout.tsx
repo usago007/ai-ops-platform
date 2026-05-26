@@ -6,7 +6,6 @@ import {
   ShoppingOutlined,
   FileTextOutlined,
   CustomerServiceOutlined,
-  EditOutlined,
   TagsOutlined,
   ShopOutlined,
   LineChartOutlined,
@@ -21,9 +20,6 @@ import {
   PlusOutlined,
   DollarOutlined,
   AppstoreOutlined,
-  ExperimentOutlined,
-  MonitorOutlined,
-  PieChartOutlined,
 } from '@/iconMap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './MainLayout.module.css'

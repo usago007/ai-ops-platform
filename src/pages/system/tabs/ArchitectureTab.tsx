@@ -16,6 +16,7 @@ import {
   SettingOutlined,
 } from '@/iconMap'
 import styles from '../AgentOrchestrationPage.module.css'
+import formStyles from '../../../styles/form.module.css'
 import type { LLMGatewayConfig, WorkflowEngine, RAGService, PromptVersion, HealthStatus, BusinessMapping } from '../AgentOrchestrationPage.types'
 import { workflowEngineIcons } from '../AgentOrchestrationPage.types'
 
@@ -215,7 +216,7 @@ export const ArchitectureTab: React.FC<ArchitectureTabProps> = ({
             items={activeAlerts.map(alert => ({
               color: alert.level === 'error' ? 'red' : 'orange',
               children: (
-                <Space direction="vertical" size="small" className={styles.fullWidth}>
+                <Space direction="vertical" size="small" className={formStyles.fullWidth}>
                   <div>
                     <Tag color={alert.level === 'error' ? 'error' : 'warning'}>
                       {alert.level === 'error' ? '错误' : '警告'}
@@ -354,7 +355,7 @@ export const ArchitectureTab: React.FC<ArchitectureTabProps> = ({
                   <span className={styles.mappingIconLarge}>{mapping.icon}</span>
                   <div className={styles.mappingNameLarge}>{mapping.moduleName}</div>
                 </div>
-                <Space direction="vertical" size="small" className={styles.fullWidth}>
+                <Space direction="vertical" size="small" className={formStyles.fullWidth}>
                   {mapping.workflowId && (
                     <div className={styles.mappingDetailRow}>
                       <Tag color="green">工作流</Tag>

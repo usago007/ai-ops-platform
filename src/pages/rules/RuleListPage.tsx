@@ -3,6 +3,7 @@ import { Card, Table, Button, Tag, Space, message, Modal, Input, Upload, Timelin
 import { PlusOutlined, ImportOutlined, SearchOutlined, HistoryOutlined, WarningOutlined, FileTextOutlined, EditOutlined, EyeOutlined, PoweroffOutlined } from '@/iconMap'
 import { ruleService } from '../../services'
 import styles from './RuleListPage.module.css'
+import formStyles from '../../styles/form.module.css'
 import { EmptyState } from '../../components/EmptyState'
 
 const { TextArea } = Input
@@ -72,7 +73,7 @@ export const RuleListPage: React.FC = () => {
     try {
       const result = await ruleService.getRuleList()
       if (result.success) setRules(result.data.items)
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally { setLoading(false) }
   }
@@ -88,7 +89,7 @@ export const RuleListPage: React.FC = () => {
         }
         loadRules()
       }
-    } catch (e) { message.error('导入失败') }
+    } catch { message.error('导入失败') }
   }
 
   const handleCreateRule = async (values: RuleFormValues) => {
@@ -104,7 +105,7 @@ export const RuleListPage: React.FC = () => {
         createForm.resetFields()
         loadRules()
       }
-    } catch (e) { message.error('创建失败') }
+    } catch { message.error('创建失败') }
   }
 
   const handleEditRule = async (values: RuleFormValues) => {
@@ -121,7 +122,7 @@ export const RuleListPage: React.FC = () => {
         setSelectedRule(null)
         loadRules()
       }
-    } catch (e) { message.error('更新失败') }
+    } catch { message.error('更新失败') }
   }
 
   const handleToggleRule = async (rule: RuleItem) => {
@@ -131,7 +132,7 @@ export const RuleListPage: React.FC = () => {
         message.success(`规则已${result.data.status === 'active' ? '启用' : '禁用'}`)
         loadRules()
       }
-    } catch (e) { message.error('操作失败') }
+    } catch { message.error('操作失败') }
   }
 
   const handleViewDetail = (rule: RuleItem) => {
@@ -160,7 +161,7 @@ export const RuleListPage: React.FC = () => {
         setConflictResult(result.data)
         setConflictVisible(true)
       }
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
   }
 
   const showVersions = async (id: string) => {
@@ -170,7 +171,7 @@ export const RuleListPage: React.FC = () => {
         setVersions(result.data.versions)
         setVersionsVisible(true)
       }
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
   }
 
   const columns = [
@@ -249,7 +250,7 @@ export const RuleListPage: React.FC = () => {
         cancelText="取消"
         width={700}
       >
-        <Form form={createForm} layout="vertical" onFinish={handleCreateRule} className={styles.formMarginTop}>
+        <Form form={createForm} layout="vertical" onFinish={handleCreateRule} className={formStyles.marginTop}>
           <Form.Item label="规则名称" name="name" rules={[{ required: true, message: '请输入规则名称' }]}>
             <Input placeholder="如：高价值订单优先处理规则" />
           </Form.Item>
@@ -269,7 +270,7 @@ export const RuleListPage: React.FC = () => {
             </Col>
           </Row>
           <Form.Item label="优先级" name="priority" initialValue={50}>
-            <InputNumber min={0} max={100} className={styles.fullWidth} />
+            <InputNumber min={0} max={100} className={formStyles.fullWidth} />
           </Form.Item>
           <Form.Item label="适用品类标签" name="tags">
             <Input placeholder="多个标签用逗号分隔，如：PLC,变频器,传感器" />
@@ -290,7 +291,7 @@ export const RuleListPage: React.FC = () => {
         cancelText="取消"
         width={700}
       >
-        <Form form={editForm} layout="vertical" onFinish={handleEditRule} className={styles.formMarginTop}>
+        <Form form={editForm} layout="vertical" onFinish={handleEditRule} className={formStyles.marginTop}>
           <Form.Item label="规则名称" name="name" rules={[{ required: true, message: '请输入规则名称' }]}>
             <Input />
           </Form.Item>
@@ -310,7 +311,7 @@ export const RuleListPage: React.FC = () => {
             </Col>
           </Row>
           <Form.Item label="优先级" name="priority">
-            <InputNumber min={0} max={100} className={styles.fullWidth} />
+            <InputNumber min={0} max={100} className={formStyles.fullWidth} />
           </Form.Item>
           <Form.Item label="适用品类标签" name="tags">
             <Input placeholder="多个标签用逗号分隔" />

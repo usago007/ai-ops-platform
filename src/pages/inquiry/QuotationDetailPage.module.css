@@ -96,9 +96,7 @@
   margin-bottom: 12px;
 }
 
-.fullWidth {
-  width: 100%;
-}
+
 
 .wonButton {
   background: var(--success);

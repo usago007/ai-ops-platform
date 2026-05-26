@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { marketingService } from '../../services'
 import styles from './SellingPointPage.module.css'
+import formStyles from '../../styles/form.module.css'
 import { CHART_COLORS, CHART_LABEL_COLOR } from '../../styles/chartColors'
 
 const { Text, Title } = Typography
@@ -42,7 +43,7 @@ export const SellingPointPage: React.FC = () => {
     try {
       const response = await marketingService.getSellingPoints()
       if (response.success) setData(response.data)
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
     finally { setLoading(false) }
   }
 
@@ -95,7 +96,7 @@ export const SellingPointPage: React.FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={16}>
           <Card title={<span><StarOutlined className={styles.iconWarning} /> 核心卖点 (Top 3)</span>} className={styles.card}>
-            <Space direction="vertical" className={styles.fullWidth} size="large">
+            <Space direction="vertical" className={formStyles.fullWidth} size="large">
               {data.core.map((sp: SellingPointItem, i: number) => (
                 <Card key={i} size="small" className={styles.coreSellingCard}>
                   <div className={styles.coreRank}>#{i + 1}</div>

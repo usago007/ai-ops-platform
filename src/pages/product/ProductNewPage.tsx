@@ -67,7 +67,7 @@ export const ProductNewPage: React.FC = () => {
         )
         if (cats.length > 0) setCategories(cats)
       }
-    } catch (e) {}
+    } catch {}
   }
 
   const handleCategoryChange = (value: string) => {
@@ -99,7 +99,7 @@ export const ProductNewPage: React.FC = () => {
         handleCategoryChange(parsed.category)
         message.success('AI 提取成功，已自动填充字段')
       }
-    } catch (e) {
+    } catch {
       message.error('AI 提取失败')
     } finally {
       setExtracting(false)
@@ -122,7 +122,7 @@ export const ProductNewPage: React.FC = () => {
         message.success('商品已创建')
         navigate(`/product/${result.data.product.id}`)
       }
-    } catch (e) {
+    } catch {
       message.error('创建失败')
     } finally {
       setLoading(false)

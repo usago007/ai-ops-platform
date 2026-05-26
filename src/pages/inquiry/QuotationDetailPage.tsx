@@ -4,6 +4,7 @@ import { ArrowLeftOutlined, ClockCircleOutlined, PlusOutlined, TrophyOutlined, F
 import { useParams, useNavigate } from 'react-router-dom'
 import { inquiryService } from '../../services'
 import styles from './QuotationDetailPage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 const { Title, Text } = Typography
 
@@ -93,7 +94,7 @@ export const QuotationDetailPage: React.FC = () => {
       if (leadResult.success) setLead(leadResult.data)
       if (followUpsResult.success) setFollowUps(followUpsResult.data.items || [])
       if (historyResult.success) setQuotationHistory(historyResult.data.versions || [])
-    } catch (e) {
+    } catch {
       message.error('加载失败')
     } finally {
       setLoading(false)
@@ -109,7 +110,7 @@ export const QuotationDetailPage: React.FC = () => {
         form.resetFields()
         loadData()
       }
-    } catch (e) {
+    } catch {
       message.error('添加失败')
     } finally {
       setSubmitting(false)
@@ -131,7 +132,7 @@ export const QuotationDetailPage: React.FC = () => {
         setReason('')
         loadData()
       }
-    } catch (e) {
+    } catch {
       message.error('标记失败')
     } finally {
       setSubmitting(false)
@@ -272,7 +273,7 @@ export const QuotationDetailPage: React.FC = () => {
             <Text type="secondary" className={styles.hintText}>
               根据最终结果更新线索状态
             </Text>
-            <Space direction="vertical" className={styles.fullWidth}>
+            <Space direction="vertical" className={formStyles.fullWidth}>
               <Button
                 type="primary"
                 icon={<TrophyOutlined />}

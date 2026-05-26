@@ -3,6 +3,7 @@ import { Card, Table, Button, Modal, Form, Input, InputNumber, Switch, Tag, Spin
 import { EditOutlined, StopOutlined, ThunderboltOutlined, PlusOutlined, InboxOutlined } from '@/iconMap'
 import { modelService } from '../../services'
 import styles from './ModelConfigPage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 interface ModelConfig {
   id: string
@@ -229,13 +230,13 @@ export const ModelConfigPage: React.FC = () => {
             <Input disabled />
           </Form.Item>
           <Form.Item label="Temperature" name="temperature" rules={[{ type: 'number', min: 0, max: 2, message: '温度范围 0-2' }]}>
-            <InputNumber min={0} max={1} step={0.1} className={styles.fullWidth} />
+            <InputNumber min={0} max={1} step={0.1} className={formStyles.fullWidth} />
           </Form.Item>
           <Form.Item label="Top P" name="topP" rules={[{ type: 'number', min: 0, max: 1, message: 'Top P 范围 0-1' }]}>
-            <InputNumber min={0} max={1} step={0.05} className={styles.fullWidth} />
+            <InputNumber min={0} max={1} step={0.05} className={formStyles.fullWidth} />
           </Form.Item>
           <Form.Item label="Max Tokens" name="maxTokens" rules={[{ type: 'number', min: 1, max: 128000, message: 'Max Tokens 范围 1-128000' }]}>
-            <InputNumber min={256} max={8192} step={256} className={styles.fullWidth} />
+            <InputNumber min={256} max={8192} step={256} className={formStyles.fullWidth} />
           </Form.Item>
         </Form>
       </Modal>
@@ -267,13 +268,13 @@ export const ModelConfigPage: React.FC = () => {
             <Input placeholder="例如：https://api.openai.com/v1" />
           </Form.Item>
           <Form.Item label="Temperature" name="temperature" initialValue={0.7}>
-            <InputNumber min={0} max={1} step={0.1} className={styles.fullWidth} />
+            <InputNumber min={0} max={1} step={0.1} className={formStyles.fullWidth} />
           </Form.Item>
           <Form.Item label="Top P" name="topP" initialValue={0.9}>
-            <InputNumber min={0} max={1} step={0.05} className={styles.fullWidth} />
+            <InputNumber min={0} max={1} step={0.05} className={formStyles.fullWidth} />
           </Form.Item>
           <Form.Item label="Max Tokens" name="maxTokens" initialValue={2048}>
-            <InputNumber min={256} max={8192} step={256} className={styles.fullWidth} />
+            <InputNumber min={256} max={8192} step={256} className={formStyles.fullWidth} />
           </Form.Item>
         </Form>
       </Modal>

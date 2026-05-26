@@ -3,6 +3,7 @@ import { Modal, Form, Input, InputNumber, Select, Divider, Row, Col, Button, Swi
 import { WarningOutlined } from '@/iconMap'
 import type { WorkflowEngine, BusinessMapping, PromptVersion } from '../AgentOrchestrationPage.types'
 import styles from '../AgentOrchestrationPage.module.css'
+import formStyles from '../../../styles/form.module.css'
 
 const { TextArea } = Input
 
@@ -94,7 +95,7 @@ export const WorkflowConfigModal: React.FC<WorkflowConfigModalProps> = ({
         )}
 
         <Card title="关联业务模块" size="small" className={styles.modalSubCard}>
-          <Space direction="vertical" size="small" className={styles.fullWidth}>
+          <Space direction="vertical" size="small" className={formStyles.fullWidth}>
             {selectedEngineForConfig && businessMappings
               .filter(m => m.workflowId === selectedEngineForConfig.id)
               .map(mapping => (

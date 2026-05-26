@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { CapabilityBanner } from '../../components/CapabilityBanner/CapabilityBanner'
 import { marketingService } from '../../services'
 import styles from './ContentCreatePage.module.css'
+import formStyles from '../../styles/form.module.css'
 
 const { Text } = Typography
 
@@ -78,7 +79,7 @@ export const ContentCreatePage: React.FC = () => {
         setResult(response.data)
         loadMaterials()
       }
-    } catch (e) { message.error('生成失败') }
+    } catch { message.error('生成失败') }
     finally { setLoading(false) }
   }
 
@@ -86,7 +87,7 @@ export const ContentCreatePage: React.FC = () => {
     try {
       const response = await marketingService.getMaterials()
       if (response.success) setMaterials(response.data.materials || [])
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
   }
 
   const handleComplianceCheck = async (content: string) => {
@@ -94,7 +95,7 @@ export const ContentCreatePage: React.FC = () => {
     try {
       const response = await marketingService.complianceCheck({ content })
       if (response.success) setComplianceResult(response.data)
-    } catch (e) { console.error(e) }
+    } catch { console.error(e) }
     finally { setComplianceScanning(false) }
   }
 
@@ -148,7 +149,7 @@ export const ContentCreatePage: React.FC = () => {
 
         {materials.length > 0 && (
           <Card title="素材推荐" size="small" className={styles.materialCard}>
-            <Space direction="vertical" className={styles.fullWidth}>
+            <Space direction="vertical" className={formStyles.fullWidth}>
               {materials.map(m => (
                 <div key={m.id} className={styles.materialItem}>
                   <Image src={m.url} width={60} height={45} preview={false} />
