@@ -160,7 +160,11 @@ export const QuotationEditPage: React.FC = () => {
               </Row>
 
               <Form.Item name="note" label="备注">
-                <Input.TextArea rows={3} placeholder="补充说明、优惠条件等" />
+                <Row gutter={16}>
+                  <Col span={24}>
+                    <Input.TextArea rows={3} placeholder="补充说明、优惠条件等" />
+                  </Col>
+                </Row>
               </Form.Item>
 
               <Form.Item>

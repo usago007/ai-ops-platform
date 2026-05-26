@@ -256,7 +256,9 @@ export const SystemSettingsPage: React.FC = () => {
                 <InputNumber min={30} max={365} step={30} className={styles.fullWidth} />
               </Form.Item>
             </Col>
-            <Col span={16}>
+          </Row>
+          <Row gutter={16}>
+            <Col span={24}>
               <Form.Item label="IP 白名单" name={['security', 'ipWhitelist']}>
                 <Input.TextArea rows={3} placeholder="多个 IP 用逗号分隔" />
               </Form.Item>

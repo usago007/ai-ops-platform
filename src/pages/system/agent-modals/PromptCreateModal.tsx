@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal, Form, Input } from 'antd'
 import type { FormInstance } from 'antd/es/form'
+import formStyles from '../../../styles/form.module.css'
 
 const { TextArea } = Input
 
@@ -25,7 +26,7 @@ export const PromptCreateModal: React.FC<PromptCreateModalProps> = ({ open, form
           <Input placeholder="如：询报价分类 Prompt" />
         </Form.Item>
         <Form.Item label="Prompt 内容" name="content" rules={[{ required: true, message: '请输入内容' }]}>
-          <TextArea rows={10} placeholder="请输入 Prompt 模板内容..." />
+          <TextArea rows={8} className={formStyles.textarea} placeholder="请输入 Prompt 模板内容..." />
         </Form.Item>
       </Form>
     </Modal>

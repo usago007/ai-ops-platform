@@ -1,0 +1,12 @@
+.fullWidth {
+  width: 100%;
+}
+
+.textarea {
+  max-height: 180px;
+  resize: vertical;
+}
+
+.marginTop {
+  margin-top: 16px;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Table, Button, Tag, Space, message, Modal, Input, Upload, Timeline, Spin, Form, Select, Tag as AntTag, Divider, Descriptions, Switch, InputNumber } from 'antd'
+import { Card, Table, Button, Tag, Space, message, Modal, Input, Upload, Timeline, Spin, Form, Select, Tag as AntTag, Divider, Descriptions, Switch, InputNumber, Row, Col } from 'antd'
 import { PlusOutlined, ImportOutlined, SearchOutlined, HistoryOutlined, WarningOutlined, FileTextOutlined, EditOutlined, EyeOutlined, PoweroffOutlined } from '@/iconMap'
 import { ruleService } from '../../services'
 import styles from './RuleListPage.module.css'
@@ -256,12 +256,18 @@ export const RuleListPage: React.FC = () => {
           <Form.Item label="规则描述" name="description">
             <TextArea rows={2} placeholder="描述规则的用途和适用场景" />
           </Form.Item>
-          <Form.Item label="触发条件（IF）" name="condition" rules={[{ required: true, message: '请输入触发条件' }]}>
-            <TextArea rows={3} placeholder="如：订单金额 > 10000 且 客户等级 = VIP" />
-          </Form.Item>
-          <Form.Item label="执行动作（THEN）" name="action" rules={[{ required: true, message: '请输入执行动作' }]}>
-            <TextArea rows={3} placeholder="如：标记为高优先级，分配给高级客服" />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="触发条件（IF）" name="condition" rules={[{ required: true, message: '请输入触发条件' }]}>
+                <TextArea rows={3} placeholder="如：订单金额 > 10000 且 客户等级 = VIP" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="执行动作（THEN）" name="action" rules={[{ required: true, message: '请输入执行动作' }]}>
+                <TextArea rows={3} placeholder="如：标记为高优先级，分配给高级客服" />
+              </Form.Item>
+            </Col>
+          </Row>
           <Form.Item label="优先级" name="priority" initialValue={50}>
             <InputNumber min={0} max={100} className={styles.fullWidth} />
           </Form.Item>
@@ -291,12 +297,18 @@ export const RuleListPage: React.FC = () => {
           <Form.Item label="规则描述" name="description">
             <TextArea rows={2} />
           </Form.Item>
-          <Form.Item label="触发条件（IF）" name="condition" rules={[{ required: true, message: '请输入触发条件' }]}>
-            <TextArea rows={3} />
-          </Form.Item>
-          <Form.Item label="执行动作（THEN）" name="action" rules={[{ required: true, message: '请输入执行动作' }]}>
-            <TextArea rows={3} />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="触发条件（IF）" name="condition" rules={[{ required: true, message: '请输入触发条件' }]}>
+                <TextArea rows={3} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="执行动作（THEN）" name="action" rules={[{ required: true, message: '请输入执行动作' }]}>
+                <TextArea rows={3} />
+              </Form.Item>
+            </Col>
+          </Row>
           <Form.Item label="优先级" name="priority">
             <InputNumber min={0} max={100} className={styles.fullWidth} />
           </Form.Item>
