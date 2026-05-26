@@ -48,7 +48,7 @@ export const HealthOverviewTab: React.FC = () => {
   const latencyData = chartData
 
   if (loading) {
-    return <Spin size="large" className={styles.loading} />
+    return <Spin size="large" className={styles.loading} tip="加载系统健康数据..." />
   }
 
   return (

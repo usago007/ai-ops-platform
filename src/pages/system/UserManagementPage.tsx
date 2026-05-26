@@ -180,7 +180,7 @@ export const UserManagementPage: React.FC = () => {
   ]
 
   if (loading) {
-    return <Spin size="large" className={styles.loading} />
+    return <Spin size="large" className={styles.loading} tip="加载用户列表..." />
   }
 
   return (

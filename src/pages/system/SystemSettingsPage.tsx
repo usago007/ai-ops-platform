@@ -222,7 +222,7 @@ export const SystemSettingsPage: React.FC = () => {
   ]
 
   if (loading) {
-    return <Spin size="large" className={styles.loading} />
+    return <Spin size="large" className={styles.loading} tip="加载系统参数..." />
   }
 
   const tabItems = [
