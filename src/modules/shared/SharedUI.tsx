@@ -14,18 +14,22 @@ const { Title, Text } = Typography
 // ── PageShell ──
 
 interface PageShellProps {
+  icon?: React.ReactNode
   title?: React.ReactNode
   extra?: React.ReactNode
   children: React.ReactNode
   loading?: boolean
 }
-export const PageShell: React.FC<PageShellProps> = ({ title, extra, children, loading }) => {
+export const PageShell: React.FC<PageShellProps> = ({ icon, title, extra, children, loading }) => {
   if (loading) return <PageLoader />
   return (
     <div className={styles.shell}>
       {title && (
         <div className={styles.shellTitle}>
-          <Title level={3} className={styles.shellHeading}>{title}</Title>
+          <Title level={3} className={styles.shellHeading}>
+            {icon && <span className={styles.pageTitleIcon}>{icon}</span>}
+            {title}
+          </Title>
           {extra}
         </div>
       )}
@@ -44,7 +48,22 @@ interface SectionHeaderProps {
 export const SectionHeader: React.FC<SectionHeaderProps> = ({ icon, title, extra }) => (
   <div className={styles.sectionHeader}>
     <div className={styles.sectionTitle}>
-      {icon}
+      {icon && <span className={styles.sectionIcon}>{icon}</span>}
+      <Text strong>{title}</Text>
+    </div>
+    {extra}
+  </div>
+)
+
+interface CardTitleProps {
+  icon?: React.ReactNode
+  title: React.ReactNode
+  extra?: React.ReactNode
+}
+export const CardTitle: React.FC<CardTitleProps> = ({ icon, title, extra }) => (
+  <div className={styles.cardTitle}>
+    <div className={styles.cardTitleMain}>
+      {icon && <span className={styles.sectionIcon}>{icon}</span>}
       <Text strong>{title}</Text>
     </div>
     {extra}
@@ -83,7 +102,7 @@ export const EntitySummaryCard: React.FC<EntitySummaryCardProps> = ({ icon, titl
   <Card
     size="small"
     className={styles.entityCard}
-    title={<div className={styles.entityCardTitle}>{icon}{title}</div>}
+    title={<div className={styles.entityCardTitle}>{icon && <span className={styles.sectionIcon}>{icon}</span>}{title}</div>}
     extra={extra}
   >
     {children}
@@ -281,7 +300,7 @@ export const ReferenceList: React.FC<ReferenceListProps> = ({ items, title }) =>
 interface TraceSummaryItem { step: string; engine: string; source: string; result?: string }
 interface TraceSummaryProps { items: TraceSummaryItem[]; title?: string }
 export const TraceSummary: React.FC<TraceSummaryProps> = ({ items, title }) => (
-  <Card size="small" className={styles.tracePanel} title={title && <Text strong>{title}</Text>}>
+  <Card size="small" className={styles.systemInsightPanel} title={title && <Text strong>{title}</Text>}>
     <Space orientation="vertical" size={4} className={styles.traceStack}>
       {items.map((t, i) => (
         <div key={i} className={styles.traceRow}>

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { mockLeadAdapter } from '../../adapters'
 import { PageShell } from '../shared/SharedUI'
 import sharedStyles from '../shared/SharedUI.module.css'
+import { formatDateTime } from '../shared/formatters'
 import { MetricRibbon } from '../shared/MetricRibbon'
 import { FilterToolbar } from '../shared/FilterToolbar'
 import { ObjectTable } from '../shared/ObjectTable'
@@ -58,7 +59,7 @@ export const LeadListPage: React.FC = () => {
   if (error) return <PageShell><Alert type="error" title={error} showIcon style={{ marginTop: 16 }} /></PageShell>
 
   return (
-    <PageShell title={<><AimOutlined style={{ marginRight: 8 }} />线索列表</>} loading={loading}>
+    <PageShell icon={<AimOutlined />} title="线索列表" loading={loading}>
       <MetricRibbon items={[
         { label: '线索总数', value: leads.length },
         { label: '活跃中', value: active, color: 'var(--brand-primary)' },
@@ -90,9 +91,7 @@ export const LeadListPage: React.FC = () => {
             { title: '业务价值', dataIndex: 'businessValueScore', width: 80, render: (v: number) => isNaN(v) ? '—' : `${v}/100` },
             { title: '负责人', dataIndex: 'assignedTo', width: 100 },
             { title: '标签', dataIndex: 'tags', width: 160, render: (tags: string[]) => (Array.isArray(tags) ? tags.slice(0, 3) : []).map(t => <Tag key={t}>{t}</Tag>) },
-            { title: '更新时间', dataIndex: 'updatedAt', width: 160, render: (v: string) => {
-              const d = new Date(v); return isNaN(d.getTime()) ? '—' : d.toLocaleDateString()
-            }},
+            { title: '更新时间', dataIndex: 'updatedAt', width: 200, render: (v: string) => formatDateTime(v) },
           ]}
           onRowClick={(record) => navigate(`/leads/${record.id}`)}
           pagination={{ pageSize: 15, showSizeChanger: true, showTotal: (total) => `共 ${total} 条` }}

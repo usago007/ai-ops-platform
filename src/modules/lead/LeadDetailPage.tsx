@@ -203,7 +203,7 @@ export const LeadDetailPage: React.FC = () => {
       {/* AI Engine Trace */}
       {traceEvidence.length > 0 && (
         <div style={{ marginTop: 20 }}>
-          <h3 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 10 }}>AI 引擎追踪</h3>
+          <h3 className={sharedStyles.subHeading}>AI 引擎追踪</h3>
           <EvidenceTimeline items={traceEvidence} />
         </div>
       )}
@@ -211,13 +211,13 @@ export const LeadDetailPage: React.FC = () => {
       {/* Solution Recommendation summary */}
       {solution && (
         <div style={{ marginTop: 20 }}>
-          <h3 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 10 }}>方案推荐</h3>
+          <h3 className={sharedStyles.subHeading}>方案推荐</h3>
           <Text type="secondary">{solution.reasoningSummary}</Text>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
             {solution.recommendedProducts.slice(0, 4).map(p => (
               <div key={p.productId} style={{ padding: '8px 12px', border: '1px solid var(--border-primary)', borderRadius: 'var(--radius-sm)' }}>
                 <Space><Text strong>{p.productName}</Text><Tag color="blue">{p.matchScore}分</Tag></Space>
-                <br /><Text type="secondary" style={{ fontSize: 'var(--font-size-sm)' }}>{p.reason}</Text>
+                <br /><Text type="secondary" className={sharedStyles.bodySm}>{p.reason}</Text>
               </div>
             ))}
           </div>
@@ -245,8 +245,8 @@ export const LeadDetailPage: React.FC = () => {
       {/* Object tracking chain */}
       {(lead.selectedSolutionId || lead.selectedReplyDraftId || lead.selectedQuotationDraftId || lead.outcomeId) && (
         <div style={{ marginTop: 20 }}>
-          <h3 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 10 }}>
-            <LinkOutlined /> 对象追踪链
+          <h3 className={sharedStyles.subHeading}>
+            <span className={sharedStyles.bodyIcon}><LinkOutlined /></span> 对象追踪链
           </h3>
           <EvidenceTimeline
             items={[

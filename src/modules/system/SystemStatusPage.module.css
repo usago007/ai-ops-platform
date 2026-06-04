@@ -1,0 +1,263 @@
+.headerMeta {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.quickJumpGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quickJump {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.quickJump:hover,
+.resourceList button:hover {
+  border-color: var(--brand-primary);
+  background: var(--bg-tertiary);
+}
+
+.quickJump:active,
+.resourceList button:active {
+  transform: translateY(1px);
+}
+
+.quickIcon,
+.quickIcon svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.quickIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-primary);
+}
+
+.quickJump strong,
+.quickJump small,
+.resourceList strong,
+.resourceList small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quickJump strong,
+.resourceList strong {
+  font-size: var(--font-size-sm);
+  line-height: 1.25;
+}
+
+.quickJump small,
+.resourceList small {
+  margin-top: 2px;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.panel {
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  padding: var(--panel-gap);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--panel-gap);
+}
+
+.panelHeader h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.panelHeader span {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.capabilityMap {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.capabilityNode {
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  padding: 14px;
+  min-width: 0;
+}
+
+.nodeTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.nodeTop strong {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.nodeMetrics {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.nodeMetrics span,
+.capabilityNode small {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.progressTrack {
+  height: 6px;
+  margin: 12px 0 8px;
+  border-radius: var(--radius-full);
+  background: var(--border-secondary);
+  overflow: hidden;
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brand-primary);
+}
+
+.analysisGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+  gap: var(--panel-gap-lg);
+  align-items: stretch;
+}
+
+.chartShort {
+  height: 230px;
+}
+
+.assetGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.assetGrid div,
+.riskStrip div {
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.assetGrid span,
+.riskStrip span {
+  display: block;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.assetGrid strong,
+.riskStrip strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+.riskStrip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: var(--panel-gap);
+}
+
+.resourceList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.resourceList button {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 4px 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.resourceList small {
+  grid-column: 2;
+}
+
+@media (max-width: 1280px) {
+  .quickJumpGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .capabilityMap {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .analysisGrid,
+  .capabilityMap {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .quickJumpGrid,
+  .resourceList,
+  .assetGrid,
+  .riskStrip {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+}

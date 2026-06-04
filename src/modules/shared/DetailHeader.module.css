@@ -23,6 +23,9 @@
 }
 
 .titleText {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--text-primary);
@@ -32,6 +35,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.titleLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .actions {

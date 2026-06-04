@@ -5,7 +5,21 @@
  * 页面只负责展示 query 返回的结果。
  * 后续对接真实后端时，这些 query 可直接映射为 API 调用。
  */
-import type { Lead, ProductAsset, Outcome, KnowledgeItem, SolutionRecommendation, ReplyDraft, QuotationDraft } from '../contracts'
+import type {
+  AgentConfig,
+  AuditEntry,
+  Lead,
+  MetricSnapshot,
+  ModelConfig,
+  Outcome,
+  KnowledgeItem,
+  ProductAsset,
+  SolutionRecommendation,
+  ReplyDraft,
+  QuotationDraft,
+  SystemHealth,
+} from '../contracts'
+import { STEP_MAIN_CHAIN_MAP } from '../contracts/system-health'
 
 // ── Engine Trace ──
 
@@ -232,6 +246,107 @@ export function getOverviewSummary(
     totalKnowledgeItems: knowledgeItems.length,
     avgChainCompleteness: avgCompleteness,
     topProduct: productContributions[0] || null,
+  }
+}
+
+// ── System Foundation Overview ──
+
+export interface SystemCapabilityNode {
+  key: string
+  step: string
+  calls: number
+  callShare: number
+  modelCount: number
+  enabledModelCount: number
+  agentCount: number
+  enabledAgentCount: number
+  avgLatencyMs: number
+  successRate: number
+  status: 'normal' | 'warning' | 'critical'
+}
+
+export interface SystemFoundationOverview {
+  healthScore: number
+  enabledModels: number
+  enabledAgents: number
+  failureAudits: number
+  reviewAudits: number
+  publishedKnowledgeItems: number
+  metricSnapshots: number
+  capabilityNodes: SystemCapabilityNode[]
+  providerDistribution: Array<{ name: string; value: number }>
+  auditDistribution: Array<{ name: string; value: number }>
+  agentDistribution: Array<{ name: string; value: number }>
+}
+
+export function getSystemFoundationOverview(
+  health: SystemHealth,
+  models: ModelConfig[],
+  agents: AgentConfig[],
+  audits: AuditEntry[],
+  knowledgeItems: KnowledgeItem[],
+  metrics: MetricSnapshot[],
+): SystemFoundationOverview {
+  const totalCalls = health.totalModelCalls || 1
+  const failureAudits = audits.filter(a => a.result === 'failure').length
+  const reviewAudits = audits.filter(a => a.result === 'review_required').length
+  const enabledModels = models.filter(m => m.enabled).length
+  const enabledAgents = agents.filter(a => a.enabled).length
+  const errorPenalty = Math.min(35, Math.round(health.errorRate * 1000))
+  const latencyPenalty = health.avgLatencyMs > 500 ? 10 : health.avgLatencyMs > 350 ? 5 : 0
+  const coveragePenalty = enabledModels === 0 || enabledAgents === 0 ? 18 : 0
+  const healthScore = Math.max(0, Math.min(100, 100 - errorPenalty - latencyPenalty - coveragePenalty))
+
+  const capabilityNodes = Object.entries(health.modelCallsByStep).map(([key, calls]) => {
+    const stepModels = models.filter(m => m.step === key)
+    const stepAgents = agents.filter(a => a.step === key)
+    const avgLatencyMs = stepModels.length > 0
+      ? Math.round(stepModels.reduce((sum, m) => sum + m.avgLatencyMs, 0) / stepModels.length)
+      : health.avgLatencyMs
+    const successRate = stepAgents.length > 0
+      ? stepAgents.reduce((sum, a) => sum + a.successRate, 0) / stepAgents.length
+      : 1 - health.errorRate
+    const status = successRate < 0.86 || avgLatencyMs > 520
+      ? 'critical'
+      : successRate < 0.9 || avgLatencyMs > 380
+        ? 'warning'
+        : 'normal'
+    return {
+      key,
+      step: STEP_MAIN_CHAIN_MAP[key] || key,
+      calls,
+      callShare: calls / totalCalls,
+      modelCount: stepModels.length,
+      enabledModelCount: stepModels.filter(m => m.enabled).length,
+      agentCount: stepAgents.length,
+      enabledAgentCount: stepAgents.filter(a => a.enabled).length,
+      avgLatencyMs,
+      successRate,
+      status,
+    }
+  })
+
+  const countBy = <T,>(items: T[], getKey: (item: T) => string) => {
+    const result = new Map<string, number>()
+    items.forEach(item => {
+      const key = getKey(item)
+      result.set(key, (result.get(key) || 0) + 1)
+    })
+    return Array.from(result.entries()).map(([name, value]) => ({ name, value }))
+  }
+
+  return {
+    healthScore,
+    enabledModels,
+    enabledAgents,
+    failureAudits,
+    reviewAudits,
+    publishedKnowledgeItems: knowledgeItems.filter(k => k.status === 'published').length,
+    metricSnapshots: metrics.length,
+    capabilityNodes,
+    providerDistribution: countBy(models, m => m.provider),
+    auditDistribution: countBy(audits, a => a.result),
+    agentDistribution: countBy(agents, a => a.type),
   }
 }
 

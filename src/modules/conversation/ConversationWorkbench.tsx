@@ -17,9 +17,10 @@ import {
 } from '@/iconMap'
 import { mockConversationAdapter, mockInquiryDraftAdapter, mockLeadAdapter } from '../../adapters'
 import { advanceConversation, advanceInquiryDraft } from '../../domain'
-import { PageShell, FlowPanel, InsightCallout, InfoStrip } from '../shared/SharedUI'
+import { CardTitle, PageShell, FlowPanel, InsightCallout, InfoStrip } from '../shared/SharedUI'
 import { PageLoader } from '../shared/PageLoader'
 import sharedStyles from '../shared/SharedUI.module.css'
+import { formatDateTime } from '../shared/formatters'
 import formStyles from '../../styles/form.module.css'
 import type { Conversation, InquiryDraft, Lead } from '../../contracts'
 
@@ -280,7 +281,7 @@ export const ConversationWorkbench: React.FC = () => {
       <div className={sharedStyles.convContainer}>
         {/* LEFT: Conversation List */}
         <Card
-          title={<Space><InboxOutlined /><Text strong>客户会话</Text></Space>}
+          title={<CardTitle icon={<InboxOutlined />} title="客户会话" />}
           className={sharedStyles.convList}
           styles={{ body: { padding: 0 } }}
         >
@@ -350,7 +351,7 @@ export const ConversationWorkbench: React.FC = () => {
           <>
             {/* ── Step 0: Raw Messages ── */}
             <Card
-              title={<Space><UserOutlined /><Text strong>原始消息</Text><Tag>{selectedConv.channel}</Tag></Space>}
+              title={<CardTitle icon={<UserOutlined />} title="原始消息" extra={<Tag>{selectedConv.channel}</Tag>} />}
               extra={
                 !draft && (
                   <Button type="primary" icon={<ThunderboltOutlined />} loading={parsing} onClick={handleParse}>
@@ -363,7 +364,7 @@ export const ConversationWorkbench: React.FC = () => {
                 { label: '客户', value: selectedConv.customerName },
                 { label: '公司', value: selectedConv.companyName },
                 { label: '联系方式', value: selectedConv.contactInfo },
-                { label: '接收时间', value: selectedConv.receivedAt },
+                { label: '接收时间', value: formatDateTime(selectedConv.receivedAt) },
               ]} />
               <Divider className={sharedStyles.compactDivider} />
               <div>
@@ -389,7 +390,7 @@ export const ConversationWorkbench: React.FC = () => {
               <Card
                 title={
                   <Space>
-                    <ThunderboltOutlined className={sharedStyles.accentIcon} />
+                    <span className={sharedStyles.bodyIcon}><ThunderboltOutlined className={sharedStyles.accentIcon} /></span>
                     <Text strong>AI 理解结果</Text>
                     <Tag color={draft.confidenceScore >= 0.8 ? 'green' : draft.confidenceScore >= 0.5 ? 'orange' : 'red'}>
                       置信度 {Math.round(draft.confidenceScore * 100)}%
@@ -514,7 +515,7 @@ export const ConversationWorkbench: React.FC = () => {
               <Card
                 title={
                   <Space>
-                    <CheckCircleOutlined className={sharedStyles.successIcon} />
+                    <span className={sharedStyles.bodyIcon}><CheckCircleOutlined className={sharedStyles.successIcon} /></span>
                     <Text strong>线索已创建 — {createdLead.id}</Text>
                   </Space>
                 }

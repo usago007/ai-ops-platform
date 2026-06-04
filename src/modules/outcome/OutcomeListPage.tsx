@@ -9,6 +9,7 @@ import { CheckCircleOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import { mockOutcomeAdapter, mockLeadAdapter } from '../../adapters'
 import { PageShell, SectionHeader } from '../shared/SharedUI'
+import { formatDateTime } from '../shared/formatters'
 import sharedStyles from '../shared/SharedUI.module.css'
 import { FilterToolbar } from '../shared/FilterToolbar'
 import { ObjectTable } from '../shared/ObjectTable'
@@ -64,7 +65,7 @@ export const OutcomeListPage: React.FC = () => {
   const closed = won + lost
 
   return (
-    <PageShell title={<><CheckCircleOutlined style={{ marginRight: 8 }} />结果列表</>} loading={loading}>
+    <PageShell icon={<CheckCircleOutlined />} title="结果列表" loading={loading}>
       <MetricRibbon items={[
         { label: '结果总数', value: outcomes.length },
         { label: '赢单数', value: won, color: 'var(--success)' },
@@ -97,7 +98,7 @@ export const OutcomeListPage: React.FC = () => {
             { title: '原因', dataIndex: 'reasonDetail', width: 200, ellipsis: true },
             { title: 'AI 贡献', dataIndex: 'aiContributionTags', width: 160, render: (tags: string[]) => tags.slice(0, 2).map(t => <Tag key={t} color="blue">{t}</Tag>) },
             { title: '回流', dataIndex: 'loopbackStatus', width: 80, render: (v: string) => <Tag color={v === 'processed' ? 'green' : 'orange'}>{v === 'processed' ? '已处理' : '待处理'}</Tag> },
-            { title: '结单时间', dataIndex: 'closedAt', width: 160, render: (v: string) => new Date(v).toLocaleDateString() },
+            { title: '结单时间', dataIndex: 'closedAt', width: 180, render: (v: string) => formatDateTime(v) },
           ]}
           onRowClick={(record) => navigate(`/outcome/${record.id}`)}
           pagination={{ pageSize: 15, showSizeChanger: true, showTotal: (total) => `共 ${total} 条` }}

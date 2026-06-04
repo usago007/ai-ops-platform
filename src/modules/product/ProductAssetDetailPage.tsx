@@ -13,7 +13,7 @@ import { Card, Descriptions, Tag, Space, Typography, Empty, Divider, Table, Aler
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { LinkOutlined, FileTextOutlined, ThunderboltOutlined, CheckCircleOutlined, ReloadOutlined } from '@/iconMap'
 import { mockProductAssetAdapter, mockLeadAdapter, mockOutcomeAdapter, mockSolutionRecommendationAdapter, mockKnowledgeItemAdapter } from '../../adapters'
-import { PageShell } from '../shared/SharedUI'
+import { CardTitle, PageShell } from '../shared/SharedUI'
 import { DetailHeader } from '../shared/DetailHeader'
 import sharedStyles from '../shared/SharedUI.module.css'
 import type { ProductAsset, Lead, Outcome, SolutionRecommendation, KnowledgeItem } from '../../contracts'
@@ -161,14 +161,14 @@ export const ProductAssetDetailPage: React.FC = () => {
         </Col>
 
         <Col xs={24} lg={10}>
-          <Card title={<Space><LinkOutlined /><Text strong>主链关联</Text></Space>} size="small">
+          <Card title={<CardTitle icon={<LinkOutlined />} title="主链关联" />} size="small">
             {linkedLeads.length > 0 && (
               <>
                 <Text type="secondary">关联线索：</Text>
                 {linkedLeads.map(l => (
                   <div key={l.id} className={sharedStyles.refRow}>
                     <Link to={`/leads/${l.id}`}>
-                      <Space><FileTextOutlined /><Text>{l.id}</Text><Tag>{l.companyName}</Tag>
+                      <Space><span className={sharedStyles.bodyIcon}><FileTextOutlined /></span><Text>{l.id}</Text><Tag>{l.companyName}</Tag>
                         <Tag color={l.status === 'won' ? 'green' : l.status === 'lost' ? 'red' : 'blue'}>{l.status}</Tag>
                       </Space>
                     </Link>
@@ -184,7 +184,7 @@ export const ProductAssetDetailPage: React.FC = () => {
                 {linkedSolutions.map(s => (
                   <div key={s.id} className={sharedStyles.refRow}>
                     <Link to={`/leads/${s.leadId}/solution`}>
-                      <Space><ThunderboltOutlined /><Text>{s.id}</Text><Tag>{Math.round(s.confidenceScore * 100)}% 置信</Tag></Space>
+                      <Space><span className={sharedStyles.bodyIcon}><ThunderboltOutlined /></span><Text>{s.id}</Text><Tag>{Math.round(s.confidenceScore * 100)}% 置信</Tag></Space>
                     </Link>
                   </div>
                 ))}
@@ -198,7 +198,7 @@ export const ProductAssetDetailPage: React.FC = () => {
                 {linkedOutcomes.map(o => (
                   <div key={o.id} className={sharedStyles.refRow}>
                     <Link to={`/leads/${o.leadId}/outcome`}>
-                      <Space><CheckCircleOutlined />
+                      <Space><span className={sharedStyles.bodyIcon}><CheckCircleOutlined /></span>
                         <Tag color={o.resultType === 'won' ? 'green' : 'red'}>{o.resultType === 'won' ? '赢单' : '丢单'}</Tag>
                         {o.finalAmount && <Text>¥{o.finalAmount.toLocaleString()}</Text>}
                       </Space>
@@ -214,7 +214,7 @@ export const ProductAssetDetailPage: React.FC = () => {
                 <Text type="secondary">关联知识回流：</Text>
                 {linkedKnowledge.map(k => (
                   <div key={k.id} className={sharedStyles.refRow}>
-                    <Space size={4}><ReloadOutlined />
+                    <Space size={4}><span className={sharedStyles.bodyIcon}><ReloadOutlined /></span>
                       <Tag color={k.type === 'pricing_strategy' ? 'purple' : k.type === 'loss_analysis' ? 'red' : 'blue'}>{k.type}</Tag>
                       <Text ellipsis className={sharedStyles.ellipsisNarrow}>{k.title}</Text>
                     </Space>

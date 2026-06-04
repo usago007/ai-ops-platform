@@ -23,7 +23,7 @@ export const LegacyRoutePage: React.FC<LegacyRoutePageProps> = ({
   const navigate = useNavigate()
 
   return (
-    <PageShell title={<><HistoryOutlined style={{ marginRight: 8 }} />{title}</>}>
+    <PageShell icon={<HistoryOutlined />} title={title}>
       <Card className={styles.noticeCard}>
         <Space orientation="vertical" size={12}>
           <Space>

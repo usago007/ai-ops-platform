@@ -10,11 +10,13 @@ import { Button, Tag, Typography } from 'antd'
 import { ArrowLeftOutlined } from '@/iconMap'
 import { useNavigate } from 'react-router-dom'
 import styles from './DetailHeader.module.css'
+import sharedStyles from './SharedUI.module.css'
 
 const { Text } = Typography
 
 interface DetailHeaderProps {
   backTo: { label: string; path: string }
+  icon?: React.ReactNode
   title: React.ReactNode
   status?: { label: string; color?: string }
   actions?: React.ReactNode
@@ -22,6 +24,7 @@ interface DetailHeaderProps {
 
 export const DetailHeader: React.FC<DetailHeaderProps> = ({
   backTo,
+  icon,
   title,
   status,
   actions,
@@ -40,7 +43,10 @@ export const DetailHeader: React.FC<DetailHeaderProps> = ({
         </Button>
       </div>
       <div className={styles.titleRow}>
-        <Text strong className={styles.titleText}>{title}</Text>
+        <Text strong className={styles.titleText}>
+          {icon && <span className={sharedStyles.pageTitleIcon}>{icon}</span>}
+          <span className={styles.titleLabel}>{title}</span>
+        </Text>
         {status && <Tag color={status.color || 'blue'}>{status.label}</Tag>}
         {actions && <div className={styles.actions}>{actions}</div>}
       </div>

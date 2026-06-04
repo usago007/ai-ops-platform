@@ -7,6 +7,7 @@ import { InboxOutlined } from '@/iconMap'
 import { useParams } from 'react-router-dom'
 import { mockModelConfigAdapter } from '../../adapters'
 import { PageShell, InfoStrip } from '../shared/SharedUI'
+import { formatDateTime } from '../shared/formatters'
 import { DetailHeader } from '../shared/DetailHeader'
 import type { ModelConfig } from '../../contracts'
 
@@ -41,7 +42,8 @@ export const ModelDetailPage: React.FC = () => {
     <PageShell>
       <DetailHeader
         backTo={{ label: '返回模型配置', path: '/sys/model-config' }}
-        title={<><InboxOutlined /> 模型详情 — {model.name}</>}
+        icon={<InboxOutlined />}
+        title={`模型详情 — ${model.name}`}
       />
       <Card>
         <InfoStrip
@@ -56,7 +58,7 @@ export const ModelDetailPage: React.FC = () => {
             { label: '版本', value: model.version },
             { label: '平均延迟', value: `${model.avgLatencyMs}ms` },
             { label: '调用次数', value: model.callCount.toLocaleString() },
-            { label: '更新时间', value: model.updatedAt },
+            { label: '更新时间', value: formatDateTime(model.updatedAt) },
           ]}
         />
       </Card>

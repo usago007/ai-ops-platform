@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './PrimaryMetric.module.css'
+import sharedStyles from './SharedUI.module.css'
 
 interface PrimaryMetricProps {
   label: string
@@ -20,7 +21,7 @@ export const PrimaryMetric: React.FC<PrimaryMetricProps> = ({
 
   return (
     <div className={cls}>
-      {prefix && <div className={styles.prefix}>{prefix}</div>}
+      {prefix && <span className={sharedStyles.metricIcon}>{prefix}</span>}
       <div className={styles.label}>{label}</div>
       <div className={styles.value} style={color ? { color } : undefined}>
         {value}

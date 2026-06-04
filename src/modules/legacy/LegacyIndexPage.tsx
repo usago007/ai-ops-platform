@@ -42,7 +42,7 @@ export const LegacyIndexPage: React.FC = () => {
   const navigate = useNavigate()
 
   return (
-    <PageShell title={<><HistoryOutlined style={{ marginRight: 8 }} />历史页面隔离区</>}>
+    <PageShell icon={<HistoryOutlined />} title="历史页面隔离区">
       <div className={styles.hero}>
         <Title level={3} className={styles.title}>旧页面已冻结，不再属于主产品。</Title>
         <Paragraph className={styles.description}>

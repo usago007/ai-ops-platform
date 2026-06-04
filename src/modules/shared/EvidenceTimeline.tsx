@@ -6,6 +6,8 @@
 import React from 'react'
 import { Timeline, Tag, Space, Typography } from 'antd'
 import type { TimelineItemProps } from 'antd'
+import sharedStyles from './SharedUI.module.css'
+import { formatDateTime } from './formatters'
 
 const { Text } = Typography
 
@@ -56,7 +58,7 @@ export const EvidenceTimeline: React.FC<EvidenceTimelineProps> = ({
             <Text type="secondary">{item.description}</Text>
           )}
           {item.timestamp && (
-            <Text type="secondary" style={{ fontSize: 'var(--font-size-sm)' }}>{item.timestamp}</Text>
+            <Text type="secondary" className={sharedStyles.bodySm}>{formatDateTime(item.timestamp)}</Text>
           )}
         </Space>
       </div>

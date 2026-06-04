@@ -6,13 +6,14 @@
 import React from 'react'
 import { Card } from 'antd'
 import { SectionHeader } from './SharedUI'
+import styles from './SharedUI.module.css'
 
 interface InsightPanelProps {
   title: string
   icon?: React.ReactNode
   extra?: React.ReactNode
   children: React.ReactNode
-  /** Use 'compact' for tighter padding; avoids collision with antd Card `variant` prop */
+  /** Use 'compact' for tighter padding */
   displayVariant?: 'default' | 'compact'
 }
 
@@ -25,7 +26,7 @@ export const InsightPanel: React.FC<InsightPanelProps> = ({
 }) => {
   return (
     <Card
-      variant={displayVariant === 'compact' ? undefined : 'borderless'}
+      className={styles.systemInsightPanel}
       size={displayVariant === 'compact' ? 'small' : undefined}
     >
       <SectionHeader icon={icon} title={title} extra={extra} />

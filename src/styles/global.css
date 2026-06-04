@@ -138,6 +138,56 @@
     outline-offset: 2px;
     border-radius: var(--radius-xs);
   }
+
+  /* ── Typography & Icon Contract ── */
+
+  /* Content area baseline: body/table/form text at 14px */
+  main {
+    font-size: var(--font-size-base);
+  }
+
+  /* Cap inline SVGs in content to text-relative size.
+     Opt-out: add data-size-override to any SVG that must keep its native size. */
+  main svg:not([data-size-override]) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* Per-control icon constraints */
+  .ant-btn > svg:not([data-size-override]),
+  .ant-btn > .anticon svg:not([data-size-override]) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  .ant-tag svg:not([data-size-override]) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  .ant-input-prefix svg:not([data-size-override]) {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* Exclude chart surfaces from the SVG cap */
+  [class*="recharts"] svg {
+    width: revert-layer;
+    height: revert-layer;
+    flex-shrink: revert-layer;
+  }
+
+  /* Heading line-height sanity */
+  h1, h2, h3, h4 {
+    line-height: 1.25;
+  }
+
+  h1 { line-height: 1.15; }
+  h2 { line-height: 1.2; }
 }
 
 @layer utilities {

@@ -5,6 +5,7 @@
  */
 import React from 'react'
 import { Typography } from 'antd'
+import styles from './SharedUI.module.css'
 
 const { Text } = Typography
 
@@ -25,21 +26,15 @@ export const MetricSummaryStrip: React.FC<MetricSummaryStripProps> = ({
   columns = 4,
   size = 'default',
 }) => {
-  const fontSize = size === 'compact' ? 'var(--font-size-lg)' : 'var(--font-size-xl)'
+  const valueClass = size === 'compact' ? styles.metricStripValueCompact : styles.metricStripValue
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gap: 12,
-      }}
-    >
+    <div className={styles.metricStripGrid} style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
       {items.map((item, i) => (
         <div key={i}>
-          <Text type="secondary" style={{ fontSize: 'var(--font-size-sm)' }}>{item.label}</Text>
+          <Text type="secondary" className={styles.metricStripLabel}>{item.label}</Text>
           <br />
-          <Text strong style={{ fontSize: fontSize, color: item.color }}>
+          <Text strong className={valueClass} style={item.color ? { color: item.color } : undefined}>
             {item.value}
           </Text>
         </div>

@@ -6,7 +6,8 @@ import { Button, Card, Tag, Space, Typography, Empty, Divider } from 'antd'
 import { FileTextOutlined, LinkOutlined } from '@/iconMap'
 import { useParams, Link } from 'react-router-dom'
 import { mockKnowledgeItemAdapter, mockLeadAdapter, mockOutcomeAdapter, mockProductAssetAdapter } from '../../adapters'
-import { PageShell, InfoStrip } from '../shared/SharedUI'
+import { CardTitle, PageShell, InfoStrip } from '../shared/SharedUI'
+import { formatDateTime } from '../shared/formatters'
 import { DetailHeader } from '../shared/DetailHeader'
 import sharedStyles from '../shared/SharedUI.module.css'
 import type { KnowledgeItem, Lead, Outcome, ProductAsset } from '../../contracts'
@@ -64,7 +65,8 @@ export const KnowledgeItemDetailPage: React.FC = () => {
     <PageShell>
       <DetailHeader
         backTo={{ label: '返回知识库', path: '/knowledge/list' }}
-        title={<><FileTextOutlined /> 知识条目 — {item.title}</>}
+        icon={<FileTextOutlined />}
+        title={`知识条目 — ${item.title}`}
       />
       <Card>
         <InfoStrip
@@ -75,23 +77,23 @@ export const KnowledgeItemDetailPage: React.FC = () => {
             { label: '状态', value: <Tag color={item.status === 'published' ? 'green' : item.status === 'draft' ? 'orange' : 'default'}>{item.status}</Tag> },
             { label: '创建方式', value: <Tag>{item.createdBy === 'ai' ? 'AI 自动' : '人工'}</Tag> },
             { label: '标签', value: <Space wrap>{item.tags.map(t => <Tag key={t}>{t}</Tag>)}</Space>, span: 2 },
-            { label: '创建时间', value: item.createdAt },
-            { label: '更新时间', value: item.updatedAt },
+            { label: '创建时间', value: formatDateTime(item.createdAt) },
+            { label: '更新时间', value: formatDateTime(item.updatedAt) },
           ]}
         />
       </Card>
 
-      <Card title={<Space><FileTextOutlined /><Text strong>摘要</Text></Space>} className={sharedStyles.sectionTopMd}>
+      <Card title={<CardTitle icon={<FileTextOutlined />} title="摘要" />} className={sharedStyles.sectionTopMd}>
         <Paragraph>{item.summary}</Paragraph>
       </Card>
 
-      <Card title={<Space><FileTextOutlined /><Text strong>完整内容</Text></Space>} className={sharedStyles.sectionTopMd}>
+      <Card title={<CardTitle icon={<FileTextOutlined />} title="完整内容" />} className={sharedStyles.sectionTopMd}>
         <Paragraph className={sharedStyles.preWrap}>{item.content}</Paragraph>
       </Card>
 
       {/* Related objects */}
       <div className={sharedStyles.sectionTopMd}>
-        <Card title={<Space><LinkOutlined /><Text strong>关联对象</Text></Space>}>
+        <Card title={<CardTitle icon={<LinkOutlined />} title="关联对象" />}>
           {sourceOutcome && (
             <>
               <Text type="secondary">来源结果</Text>

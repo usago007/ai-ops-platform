@@ -1,12 +1,13 @@
 .shell { padding: var(--page-gutter-y) var(--page-gutter-x); width: 100%; max-width: none; margin: 0; box-sizing: border-box; }
 @media (min-width: 1600px) { .shell { padding: var(--page-gutter-y) var(--page-gutter-x-wide); } }
 .shellTitle { margin-bottom: var(--page-section-gap); display: flex; align-items: center; gap: var(--panel-gap); flex-wrap: wrap; }
-.shellHeading { margin: 0 !important; }
+.shellHeading { margin: 0 !important; font-size: 24px !important; display: inline-flex; align-items: center; gap: 8px; }
 
 .section { margin-top: var(--page-section-gap); }
 .contentGap { margin-top: var(--page-section-gap); }
-.sectionHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.sectionTitle { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+.sectionHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.sectionTitle { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; min-width: max-content; line-height: 1.25; padding-top: 3px; }
+.sectionHeader > :not(.sectionTitle) { flex: 1 1 auto; min-width: 0; display: flex; justify-content: flex-end; }
 
 .metricGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--panel-gap); }
 .metricGridCol2 { grid-template-columns: repeat(2, 1fr); }
@@ -66,6 +67,8 @@
 .mutedText { color: var(--text-secondary); }
 .smallMutedText { color: var(--text-secondary); font-size: 12px; }
 .tinyMutedText { color: var(--text-secondary); font-size: 11px; }
+.subHeading { font-size: var(--font-size-sm); font-weight: 600; color: var(--text-primary); margin: 0 0 10px 0; }
+.bodySm { font-size: var(--font-size-sm); }
 .strongLink { font-weight: 600; }
 .centeredLoading { padding: 80px; text-align: center; }
 .centeredSection { margin-top: 16px; text-align: center; }
@@ -84,6 +87,20 @@
 .tinyTag { font-size: 11px; }
 .accentIcon { color: var(--brand-secondary); }
 .successIcon { color: var(--success); }
+
+/* ── Icon size contract ── */
+/* Each wrapper uses inline-flex centering so icons don't drift on text baseline.
+   Child SVG gets display:block to opt out of inline baseline participation. */
+.pageTitleIcon, .pageTitleIcon svg { width: 18px !important; height: 18px !important; flex-shrink: 0; display: block; }
+.pageTitleIcon { display: inline-flex; align-items: center; justify-content: center; line-height: 0; vertical-align: middle; }
+.sectionIcon, .sectionIcon svg { width: 16px !important; height: 16px !important; flex-shrink: 0; display: block; }
+.sectionIcon { display: inline-flex; align-items: center; justify-content: center; line-height: 0; vertical-align: middle; }
+.bodyIcon, .bodyIcon svg { width: 14px !important; height: 14px !important; flex-shrink: 0; display: block; }
+.bodyIcon { display: inline-flex; align-items: center; justify-content: center; line-height: 0; vertical-align: middle; }
+.metricIcon, .metricIcon svg { width: 16px !important; height: 16px !important; flex-shrink: 0; display: block; }
+.metricIcon { display: inline-flex; align-items: center; justify-content: center; line-height: 0; vertical-align: middle; }
+.cardTitle { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-sm); min-width: 0; line-height: 1; }
+.cardTitleMain { display: inline-flex; align-items: center; gap: var(--spacing-sm); min-width: 0; line-height: 1; }
 .cardSuccessBorder { border-color: var(--success) !important; }
 .noteList { margin: 4px 0; padding-left: 20px; }
 .refRow { margin: 4px 0; }
@@ -98,7 +115,54 @@
 .pageContainer { padding: var(--page-gutter-y) var(--page-gutter-x); width: 100%; max-width: none; margin: 0; box-sizing: border-box; }
 .pageHeader { margin-bottom: var(--page-section-gap); }
 .introText { margin-bottom: 16px; display: block; }
+
+/* EmptyScene */
+.emptyScene { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; text-align: center; }
+.emptySceneIcon { width: 48px; height: 48px; border-radius: var(--radius-full); background: var(--bg-primary); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.emptySceneIcon svg { width: 20px; height: 20px; }
+.emptySceneTitle { font-size: var(--font-size-sm); font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+.emptySceneDesc { font-size: var(--font-size-xs); color: var(--text-tertiary); max-width: 280px; }
+.emptySceneAction { margin-top: 12px; }
 .inputCompact { margin-bottom: 16px; max-width: 400px; }
+
+/* ── System page layout ── */
+.systemStack { display: flex; flex-direction: column; gap: 24px; }
+.systemStack > * { margin: 0 !important; min-width: 0; }
+.systemStack :global(.ant-card) { margin: 0 !important; }
+.systemStack .tracePanel { margin: 0 !important; }
+.systemPanelGrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--page-section-gap); align-items: stretch; }
+.systemPanelGrid > * { min-width: 0; }
+@media (max-width: 760px) { .systemPanelGrid { grid-template-columns: 1fr; } }
+.systemToolbar { margin-bottom: var(--panel-gap); }
+.systemToolbarItem { min-width: 120px; }
+.systemInsightPanel { border: 1px solid var(--border-primary) !important; border-radius: var(--radius-lg) !important; background: var(--bg-surface); overflow: hidden; }
+.systemInsightPanel :global(.ant-card-body) { padding: var(--panel-gap); }
+.systemTableWrap { overflow-x: auto; }
+
+/* ── PipelineBoard ── */
+.pipelineBoard { border: 1px solid var(--border-primary); border-radius: var(--radius-lg); padding: 16px; background: var(--bg-surface); }
+.pipelineBoardTitle { font-size: var(--font-size-sm); font-weight: 600; margin-bottom: 12px; color: var(--text-primary); }
+.pipelineStageRow { display: flex; align-items: center; gap: 10px; }
+.pipelineStageLabel { width: 90px; font-size: var(--font-size-xs); color: var(--text-tertiary); text-align: right; flex-shrink: 0; }
+.pipelineBarTrack { flex: 1; height: 28px; background: var(--bg-primary); border-radius: var(--radius-sm); overflow: hidden; position: relative; }
+.pipelineBarFill { height: 100%; border-radius: var(--radius-sm); transition: width var(--transition-slow); display: flex; align-items: center; padding-left: 8px; }
+.pipelineBarValue { font-size: var(--font-size-xs); font-weight: 600; color: var(--text-on-brand); }
+.pipelineFraction { width: 50px; font-size: var(--font-size-xs); color: var(--text-tertiary); }
+
+/* ── FoundationSummary ── */
+.foundationSummary { border: 1px solid var(--border-primary); border-radius: var(--radius-lg); padding: 16px; background: var(--bg-surface); }
+.foundationTitle { font-size: var(--font-size-sm); font-weight: 600; margin-bottom: 10px; color: var(--text-primary); }
+.foundationGrid { display: grid; gap: 12px; }
+.foundationItem { padding: 8px 12px; background: var(--bg-primary); border-radius: var(--radius-sm); }
+.foundationLabel { font-size: var(--font-size-xs); color: var(--text-tertiary); margin-bottom: 2px; }
+.foundationValue { font-size: var(--font-size-lg); font-weight: 700; color: var(--text-primary); }
+.foundationDetail { font-size: var(--font-size-xs); color: var(--text-tertiary); margin-top: 2px; }
+
+/* ── MetricSummaryStrip ── */
+.metricStripGrid { display: grid; gap: 12px; }
+.metricStripLabel { font-size: var(--font-size-sm); }
+.metricStripValue { font-size: var(--font-size-xl); }
+.metricStripValueCompact { font-size: var(--font-size-lg); }
 
 @media (max-width: 760px) {
   .gridSplit { grid-template-columns: 1fr; }

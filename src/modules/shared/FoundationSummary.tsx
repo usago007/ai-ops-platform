@@ -2,6 +2,7 @@
  * FoundationSummary — 底座摘要面板
  */
 import React from 'react'
+import styles from './SharedUI.module.css'
 
 interface FoundationItem {
   label: string
@@ -21,14 +22,14 @@ export const FoundationSummary: React.FC<FoundationSummaryProps> = ({
   columns = 3,
 }) => {
   return (
-    <div style={{ border: '1px solid var(--border-primary)', borderRadius: 'var(--radius-lg)', padding: 16, background: 'var(--bg-surface)' }}>
-      {title && <div style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 10, color: 'var(--text-primary)' }}>{title}</div>}
-      <div style={{ display: 'grid', gridTemplateColumns: `repeat(${columns}, 1fr)`, gap: 12 }}>
+    <div className={styles.foundationSummary}>
+      {title && <div className={styles.foundationTitle}>{title}</div>}
+      <div className={styles.foundationGrid} style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
         {items.map((item, i) => (
-          <div key={i} style={{ padding: '8px 12px', background: 'var(--bg-primary)', borderRadius: 'var(--radius-sm)' }}>
-            <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-tertiary)', marginBottom: 2 }}>{item.label}</div>
-            <div style={{ fontSize: 'var(--font-size-lg)', fontWeight: 700, color: 'var(--text-primary)' }}>{item.value}</div>
-            {item.detail && <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-tertiary)', marginTop: 2 }}>{item.detail}</div>}
+          <div key={i} className={styles.foundationItem}>
+            <div className={styles.foundationLabel}>{item.label}</div>
+            <div className={styles.foundationValue}>{item.value}</div>
+            {item.detail && <div className={styles.foundationDetail}>{item.detail}</div>}
           </div>
         ))}
       </div>

@@ -6,8 +6,9 @@ import { Card, Button, Tag, Space, Typography, Descriptions, Empty, Alert, Divid
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { CheckCircleOutlined, CloseCircleOutlined, ThunderboltOutlined, EditOutlined } from '@/iconMap'
 import { mockSolutionRecommendationAdapter, mockQuotationDraftAdapter, mockLeadAdapter } from '../../adapters'
-import { PageShell } from '../shared/SharedUI'
+import { CardTitle, PageShell } from '../shared/SharedUI'
 import { DetailHeader } from '../shared/DetailHeader'
+import { formatDateTime } from '../shared/formatters'
 import type { SolutionRecommendation, QuotationDraft, Lead } from '../../contracts'
 
 const { Text } = Typography
@@ -79,7 +80,7 @@ export const SolutionReviewPage: React.FC = () => {
       />
       {/* Solution */}
       <Card
-        title={<Space><ThunderboltOutlined style={{ color: 'var(--brand-primary)' }} /><Text strong>AI 推荐方案</Text></Space>}
+        title={<CardTitle icon={<ThunderboltOutlined style={{ color: 'var(--brand-primary)' }} />} title="AI 推荐方案" />}
         extra={
           !reviewed ? (
             <Space>
@@ -146,7 +147,7 @@ export const SolutionReviewPage: React.FC = () => {
             <Descriptions.Item label="总金额"><Text strong>¥{quotation.totalAmount.toLocaleString()}</Text></Descriptions.Item>
             <Descriptions.Item label="币种">{quotation.currency}</Descriptions.Item>
             <Descriptions.Item label="交期">{quotation.deliveryTerms}</Descriptions.Item>
-            <Descriptions.Item label="有效期">{quotation.validUntil}</Descriptions.Item>
+            <Descriptions.Item label="有效期">{formatDateTime(quotation.validUntil)}</Descriptions.Item>
           </Descriptions>
         </Card>
       )}

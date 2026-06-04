@@ -19,6 +19,7 @@ interface FilterToolbarProps {
   filters?: FilterOption[]
   activeFilters?: Record<string, string | undefined>
   onFilterChange?: (key: string, value: string | undefined) => void
+  variant?: 'default' | 'inline'
 }
 
 export const FilterToolbar: React.FC<FilterToolbarProps> = ({
@@ -27,6 +28,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
   filters,
   activeFilters = {},
   onFilterChange,
+  variant = 'default',
 }) => {
   const [searchValue, setSearchValue] = useState('')
 
@@ -45,8 +47,10 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
     }
   }
 
+  const isInline = variant === 'inline'
+
   return (
-    <Space orientation="vertical" size={8} style={{ width: '100%', marginBottom: 12 }}>
+    <Space orientation="vertical" size={8} style={{ width: isInline ? 'auto' : '100%', marginBottom: isInline ? 0 : 12 }}>
       <Space size={8} wrap>
         <Input
           allowClear
@@ -54,7 +58,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
           prefix={<SearchOutlined />}
           value={searchValue}
           onChange={e => handleSearch(e.target.value)}
-          style={{ width: 240 }}
+          style={{ width: isInline ? 180 : 240 }}
           size="small"
         />
         {filters?.map(f => (
@@ -66,7 +70,7 @@ export const FilterToolbar: React.FC<FilterToolbarProps> = ({
             onChange={val => onFilterChange?.(f.key, val)}
             options={f.options}
             size="small"
-            style={{ minWidth: 120 }}
+            style={{ minWidth: isInline ? 100 : 120 }}
           />
         ))}
         {hasActiveFilters && (

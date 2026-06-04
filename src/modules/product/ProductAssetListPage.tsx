@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { mockProductAssetAdapter } from '../../adapters'
 import { PageShell } from '../shared/SharedUI'
 import sharedStyles from '../shared/SharedUI.module.css'
+import { formatDateTime } from '../shared/formatters'
 import { MetricRibbon } from '../shared/MetricRibbon'
 import { FilterToolbar } from '../shared/FilterToolbar'
 import { ObjectTable } from '../shared/ObjectTable'
@@ -40,7 +41,7 @@ export const ProductAssetListPage: React.FC = () => {
   if (error) return <PageShell><Alert type="error" title={error} showIcon style={{ marginTop: 16 }} /></PageShell>
 
   return (
-    <PageShell title={<><TagsOutlined style={{ marginRight: 8 }} />商品资产中心</>} loading={loading}>
+    <PageShell icon={<TagsOutlined />} title="商品资产中心" loading={loading}>
       <MetricRibbon items={[
         { label: '商品总数', value: products.length },
         { label: '品牌数', value: brands.size, color: 'var(--brand-primary)' },
@@ -56,7 +57,7 @@ export const ProductAssetListPage: React.FC = () => {
             { title: '商品', dataIndex: 'name', width: 180, render: (v: string, record: ProductAsset) => (
               <div>
                 <Text strong style={{ color: 'var(--brand-primary)' }}>{v}</Text>
-                <br /><Text type="secondary" style={{ fontSize: 'var(--font-size-xs)' }}>{record.brand} · {record.category}</Text>
+                <br /><Text type="secondary" className={sharedStyles.tinyMutedText}>{record.brand} · {record.category}</Text>
               </div>
             )},
             { title: 'SKU', dataIndex: 'sku', width: 100 },
@@ -70,9 +71,7 @@ export const ProductAssetListPage: React.FC = () => {
             { title: '历史成交率', dataIndex: 'historicalWinRate', width: 100, render: (v: number | undefined) => (
               v != null ? <Progress percent={Math.round(v * 100)} size="small" style={{ width: 80 }} /> : '—'
             )},
-            { title: '更新', dataIndex: 'lastUpdatedAt', width: 140, render: (v: string) => {
-              const d = new Date(v); return isNaN(d.getTime()) ? '—' : d.toLocaleDateString()
-            }},
+            { title: '更新', dataIndex: 'lastUpdatedAt', width: 200, render: (v: string) => formatDateTime(v) },
           ]}
           onRowClick={(record) => navigate(`/product/${record.id}`)}
           pagination={{ pageSize: 15, showSizeChanger: true, showTotal: (total) => `共 ${total} 件商品` }}

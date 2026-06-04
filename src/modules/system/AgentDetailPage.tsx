@@ -7,6 +7,7 @@ import { ApiOutlined } from '@/iconMap'
 import { useParams } from 'react-router-dom'
 import { mockAgentConfigAdapter } from '../../adapters'
 import { PageShell, InfoStrip } from '../shared/SharedUI'
+import { formatDateTime } from '../shared/formatters'
 import { DetailHeader } from '../shared/DetailHeader'
 import type { AgentConfig } from '../../contracts'
 
@@ -49,7 +50,8 @@ export const AgentDetailPage: React.FC = () => {
     <PageShell>
       <DetailHeader
         backTo={{ label: '返回 Agent 编排', path: '/sys/agent-orchestration' }}
-        title={<><ApiOutlined /> Agent 详情 — {agent.name}</>}
+        icon={<ApiOutlined />}
+        title={`Agent 详情 — ${agent.name}`}
       />
       <Card>
         <InfoStrip
@@ -65,7 +67,7 @@ export const AgentDetailPage: React.FC = () => {
             { label: '状态', value: <Tag color={agent.enabled ? 'green' : 'default'}>{agent.enabled ? '启用' : '禁用'}</Tag> },
             { label: '成功率', value: `${Math.round(agent.successRate * 100)}%` },
             { label: '版本', value: agent.version },
-            { label: '更新时间', value: agent.updatedAt },
+            { label: '更新时间', value: formatDateTime(agent.updatedAt) },
           ]}
         />
       </Card>

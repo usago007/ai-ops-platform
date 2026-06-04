@@ -11,8 +11,9 @@ import {
   BarChartOutlined,
 } from '@/iconMap'
 import { mockOutcomeAdapter, mockKnowledgeItemAdapter, mockLeadAdapter } from '../../adapters'
-import { PageShell } from '../shared/SharedUI'
+import { CardTitle, PageShell } from '../shared/SharedUI'
 import { DetailHeader } from '../shared/DetailHeader'
+import { formatDateTime } from '../shared/formatters'
 import sharedStyles from '../shared/SharedUI.module.css'
 import formStyles from '../../styles/form.module.css'
 import type { Outcome, KnowledgeItem, Lead } from '../../contracts'
@@ -99,7 +100,7 @@ export const OutcomeRecordPage: React.FC = () => {
       {/* ── No outcome: show create form ── */}
       {!outcome && (
         <Card
-          title={<Space><CheckCircleOutlined /><Text strong>创建结果记录</Text></Space>}
+          title={<CardTitle icon={<CheckCircleOutlined />} title="创建结果记录" />}
         >
           <Space orientation="vertical" className={formStyles.fullWidth} size="middle">
             <div>
@@ -181,7 +182,7 @@ export const OutcomeRecordPage: React.FC = () => {
               <Descriptions.Item label="成交金额">
                 {outcome.finalAmount ? `¥${outcome.finalAmount.toLocaleString()}` : '—'}
               </Descriptions.Item>
-              <Descriptions.Item label="结单时间">{new Date(outcome.closedAt).toLocaleString()}</Descriptions.Item>
+              <Descriptions.Item label="结单时间">{formatDateTime(outcome.closedAt)}</Descriptions.Item>
               <Descriptions.Item label="回流状态">
                 <Tag color={outcome.loopbackStatus === 'processed' ? 'green' : 'orange'}>
                   {outcome.loopbackStatus === 'processed' ? '已回流' : '待回流'}
@@ -196,7 +197,7 @@ export const OutcomeRecordPage: React.FC = () => {
 
           {/* Knowledge loopback */}
           {knowledgeItems.length > 0 && (
-            <Card title={<Space><ReloadOutlined /><Text strong>AI 知识回流</Text></Space>} style={{ marginTop: 16 }}>
+            <Card title={<CardTitle icon={<ReloadOutlined />} title="AI 知识回流" />} style={{ marginTop: 16 }}>
               {knowledgeItems.map(ki => (
                 <Card key={ki.id} size="small" className={sharedStyles.sectionBottomMd}>
                   <Space orientation="vertical" className={formStyles.fullWidth}>

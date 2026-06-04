@@ -6,8 +6,9 @@ import { Alert, Card, Tag, Space, Typography, Empty, Button } from 'antd'
 import { FileSearchOutlined, LinkOutlined } from '@/iconMap'
 import { useParams, Link } from 'react-router-dom'
 import { mockAuditAdapter, mockLeadAdapter } from '../../adapters'
-import { PageShell, InfoStrip } from '../shared/SharedUI'
+import { CardTitle, PageShell, InfoStrip } from '../shared/SharedUI'
 import { DetailHeader } from '../shared/DetailHeader'
+import { formatDateTime } from '../shared/formatters'
 import type { AuditEntry, Lead } from '../../contracts'
 
 const { Text } = Typography
@@ -62,7 +63,8 @@ export const AuditEntryDetailPage: React.FC = () => {
     <PageShell>
       <DetailHeader
         backTo={{ label: '返回审计日志', path: '/sys/audit-log' }}
-        title={<><FileSearchOutlined /> 审计详情 — {entry.id}</>}
+        icon={<FileSearchOutlined />}
+        title={`审计详情 — ${entry.id}`}
       />
       <Card>
         <InfoStrip
@@ -74,7 +76,7 @@ export const AuditEntryDetailPage: React.FC = () => {
             { label: '目标 ID', value: entry.targetId },
             { label: '操作者', value: <Tag color={entry.actor === 'ai' ? 'purple' : 'default'}>{entry.actor === 'ai' ? 'AI' : entry.actor}</Tag> },
             { label: '结果', value: <Tag color={RESULT_COLORS[entry.result] || 'default'}>{entry.result}</Tag> },
-            { label: '时间', value: entry.timestamp },
+            { label: '时间', value: formatDateTime(entry.timestamp) },
           ]}
         />
       </Card>
@@ -85,7 +87,7 @@ export const AuditEntryDetailPage: React.FC = () => {
 
       {linkedLead && (
         <Card
-          title={<Space><LinkOutlined /><Text strong>关联线索</Text></Space>}
+          title={<CardTitle icon={<LinkOutlined />} title="关联线索" />}
           style={{ marginTop: 16 }}
         >
           <Space>

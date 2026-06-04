@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { mockKnowledgeItemAdapter } from '../../adapters'
 import { PageShell, SectionHeader } from '../shared/SharedUI'
 import sharedStyles from '../shared/SharedUI.module.css'
+import { formatDateTime } from '../shared/formatters'
 import { FilterToolbar } from '../shared/FilterToolbar'
 import { ObjectTable } from '../shared/ObjectTable'
 import { MetricRibbon } from '../shared/MetricRibbon'
@@ -47,7 +48,7 @@ export const KnowledgeListPage: React.FC = () => {
   }, [items, search, typeFilter, statusFilter])
 
   return (
-    <PageShell title={<><BookOutlined style={{ marginRight: 8 }} />知识库</>} loading={loading}>
+    <PageShell icon={<BookOutlined />} title="知识库" loading={loading}>
       <MetricRibbon items={[
         { label: '知识条目', value: items.length },
         { label: '已发布', value: items.filter(k => k.status === 'published').length, color: 'var(--success)' },
@@ -85,7 +86,7 @@ export const KnowledgeListPage: React.FC = () => {
             { title: '摘要', dataIndex: 'summary', width: 240, ellipsis: true },
             { title: '关联', dataIndex: 'relatedProductIds', width: 80, render: (ids: string[]) => `${ids.length} 商品` },
             { title: '创建方式', dataIndex: 'createdBy', width: 80, render: (v: string) => <Tag>{v === 'ai' ? 'AI' : '人工'}</Tag> },
-            { title: '创建时间', dataIndex: 'createdAt', width: 160, render: (v: string) => new Date(v).toLocaleDateString() },
+            { title: '创建时间', dataIndex: 'createdAt', width: 200, render: (v: string) => formatDateTime(v) },
           ]}
           onRowClick={(record) => navigate(`/knowledge/${record.id}`)}
           pagination={{ pageSize: 15, showSizeChanger: true, showTotal: (total) => `共 ${total} 条` }}

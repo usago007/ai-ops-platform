@@ -8,7 +8,8 @@ import { Card, Tag, Space, Typography, Empty, Button, Divider } from 'antd'
 import { CheckCircleOutlined, LinkOutlined } from '@/iconMap'
 import { useParams, Link } from 'react-router-dom'
 import { mockOutcomeAdapter, mockLeadAdapter, mockKnowledgeItemAdapter, mockProductAssetAdapter, mockSolutionRecommendationAdapter } from '../../adapters'
-import { PageShell, InfoStrip } from '../shared/SharedUI'
+import { CardTitle, PageShell, InfoStrip } from '../shared/SharedUI'
+import { formatDateTime } from '../shared/formatters'
 import { DetailHeader } from '../shared/DetailHeader'
 import sharedStyles from '../shared/SharedUI.module.css'
 import type { Outcome, Lead, KnowledgeItem, ProductAsset, SolutionRecommendation } from '../../contracts'
@@ -70,7 +71,8 @@ export const OutcomeDetailPage: React.FC = () => {
     <PageShell>
       <DetailHeader
         backTo={{ label: '返回结果列表', path: '/outcome/list' }}
-        title={<><CheckCircleOutlined /> 结果详情 — {outcome.id}</>}
+        icon={<CheckCircleOutlined />}
+        title={`结果详情 — ${outcome.id}`}
       />
       <Card>
         <InfoStrip
@@ -80,8 +82,8 @@ export const OutcomeDetailPage: React.FC = () => {
             { label: '最终金额', value: outcome.finalAmount ? `¥${outcome.finalAmount.toLocaleString()}` : '—' },
             { label: '原因编码', value: outcome.reasonCode || '—' },
             { label: '回流状态', value: <Tag color={outcome.loopbackStatus === 'processed' ? 'green' : 'orange'}>{outcome.loopbackStatus === 'processed' ? '已处理' : '待处理'}</Tag> },
-            { label: '结单时间', value: outcome.closedAt },
-            { label: '创建时间', value: outcome.createdAt },
+            { label: '结单时间', value: formatDateTime(outcome.closedAt) },
+            { label: '创建时间', value: formatDateTime(outcome.createdAt) },
           ]}
         />
       </Card>
@@ -113,7 +115,7 @@ export const OutcomeDetailPage: React.FC = () => {
       )}
 
       {/* Related objects */}
-      <Card title={<Space><LinkOutlined /><Text strong>关联对象</Text></Space>} className={sharedStyles.sectionTopMd}>
+      <Card title={<CardTitle icon={<LinkOutlined />} title="关联对象" />} className={sharedStyles.sectionTopMd}>
         {lead && (
           <>
             <Text type="secondary">来源线索</Text>
