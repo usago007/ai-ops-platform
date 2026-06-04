@@ -1,5 +1,5 @@
 import React from 'react'
-import { Steps, Tooltip } from 'antd'
+import { Steps } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import styles from './ProcessFlow.module.css'
 
@@ -22,12 +22,6 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
   mode = 'horizontal',
 }) => {
   const navigate = useNavigate()
-
-  const statusMap: Record<string, number> = {
-    completed: 3,
-    active: 2,
-    pending: 1,
-  }
 
   const items = steps.map(step => ({
     title: step.route ? (

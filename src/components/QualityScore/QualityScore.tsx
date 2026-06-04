@@ -1,5 +1,4 @@
 import React from 'react'
-import { Card } from 'antd'
 import styles from './QualityScore.module.css'
 import { STATUS_COLORS } from '../../styles/chartColors'
 

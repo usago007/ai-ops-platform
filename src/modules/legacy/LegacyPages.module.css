@@ -1,0 +1,64 @@
+.hero {
+  max-width: 760px;
+}
+
+.title {
+  margin: 0 0 12px !important;
+}
+
+.description {
+  max-width: 60ch;
+  color: var(--text-secondary);
+}
+
+.listCard {
+  margin-top: 16px;
+}
+
+.legacyList {
+  display: flex;
+  flex-direction: column;
+}
+
+.legacyItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.legacyItem:last-child {
+  border-bottom: none;
+}
+
+.linkRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.linkMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.itemActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.noticeCard {
+  max-width: 760px;
+}
+
+.ctaBar {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}

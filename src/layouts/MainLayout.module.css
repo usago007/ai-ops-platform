@@ -49,6 +49,66 @@
 .menu {
   border-right: none !important;
   padding: var(--spacing-sm) var(--spacing-xs);
+  font-family: var(--font-sans);
+}
+
+/* Group title */
+.menu :global(.ant-menu-item-group-title) {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+/* Menu items */
+.menu :global(.ant-menu-item) {
+  height: 40px;
+  line-height: 40px;
+  margin: 2px var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+}
+
+.menu :global(.ant-menu-item .anticon) {
+  font-size: 18px;
+}
+
+.menu :global(.ant-menu-item-selected) {
+  background: var(--info-bg);
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.menu :global(.ant-menu-item:hover) {
+  color: var(--brand-primary);
+}
+
+.menu :global(.ant-menu-item:active) {
+  background: var(--info-bg);
+}
+
+/* Collapsed sider — hide group titles and logo text */
+.sider:global(.ant-layout-sider-collapsed) :global(.ant-menu-item-group-title) {
+  display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.sider:global(.ant-layout-sider-collapsed) .logoText {
+  display: none;
+}
+
+.sider:global(.ant-layout-sider-collapsed) .logo {
+  padding: 0;
+  justify-content: center;
 }
 
 .logo {
@@ -68,9 +128,14 @@
   flex-shrink: 0;
 }
 
+.logoText {
+  white-space: nowrap;
+}
+
 .logo svg {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
 .header {
@@ -160,10 +225,10 @@
 }
 
 .content {
-  margin: 20px;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
   background: var(--bg-secondary);
-  border-radius: var(--radius-3xl);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border-primary);
   min-height: 0;
   flex: 1;

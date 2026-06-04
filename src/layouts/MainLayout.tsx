@@ -1,58 +1,62 @@
+/**
+ * MainLayout — V2 主链接管版
+ *
+ * 改动：
+ * - 侧栏只保留 3 组正式产品入口
+ * - legacy 从主导航和头部移除，仅保留 /legacy 隔离区
+ * - breadcrumb 覆盖全部主链节点
+ * - legacy 路由自动显示 LegacyBanner
+ */
 import React from 'react'
-import { Layout, Menu, Avatar, Badge, Breadcrumb } from 'antd'
+import { Layout, Menu, Avatar, Badge, Breadcrumb, Alert, Button } from 'antd'
 import {
   UserOutlined,
   InboxOutlined,
-  ShoppingOutlined,
-  FileTextOutlined,
   CustomerServiceOutlined,
   TagsOutlined,
-  ShopOutlined,
-  LineChartOutlined,
   ApiOutlined,
-  SettingOutlined,
   FileSearchOutlined,
-  TeamOutlined,
   DashboardOutlined,
   BellOutlined,
   BarChartOutlined,
-  RocketOutlined,
-  PlusOutlined,
-  DollarOutlined,
-  AppstoreOutlined,
+  ThunderboltOutlined,
+  CheckCircleOutlined,
 } from '@/iconMap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from './MainLayout.module.css'
 
 const { Header, Content, Sider } = Layout
 
+// ── Breadcrumb map: covers all V1 main chain + legacy routes ──
 const breadcrumbRouteMap: Record<string, string[]> = {
-  '/biz/overview':            ['业务提效', '业务概览'],
-  '/inquiry/list':            ['业务提效', '询价线索池'],
-  '/inquiry/manual-entry':    ['业务提效', '手动录入'],
-  '/inquiry/quotation-list':  ['业务提效', '报价管理'],
-  '/inquiry/transform':       ['业务提效', '询价线索池', 'AI 转化'],
-  '/inquiry/result':          ['业务提效', '询价线索池', '转化结果'],
-  '/inquiry/quotation':       ['业务提效', '报价管理', '编辑报价'],
-  '/inquiry/quotation-detail':['业务提效', '报价管理', '报价详情'],
-  '/product/list':            ['业务提效', '商品结构化', '商品库'],
-  '/product/new':             ['业务提效', '商品结构化', '新增商品'],
-  '/product/categories':      ['业务提效', '商品结构化', '品类字典'],
-  '/product':                 ['业务提效', '商品结构化', '商品详情'],
-  '/rules':                   ['业务提效', '规则归纳'],
-  '/cs/workspace':            ['营销提效', '客服工作台'],
-  '/mkt/overview':            ['营销提效', '营销概览'],
-  '/marketing/create':        ['营销提效', '内容生成'],
-  '/selling-point':           ['营销提效', '卖点提炼'],
-  '/conversion/dashboard':    ['营销提效', '营销概览'],
-  '/conversion/agents':       ['营销提效', '营销概览', 'Agent 配置'],
-  '/landing-page/preview':    ['营销提效', '营销概览', '落地页预览'],
-  '/sys/agent-orchestration': ['系统管理', 'Agent 编排'],
-  '/sys/model-config':        ['系统管理', 'AI 模型配置'],
-  '/sys/settings':            ['系统管理', '系统参数'],
-  '/sys/audit-log':           ['系统管理', '操作日志'],
-  '/sys/users':               ['系统管理', '用户与权限'],
-  '/sys/dashboard':           ['系统管理', '系统概览'],
+  // NEW PRODUCT
+  '/overview':                       ['AI 经营总览'],
+  '/cs/workspace':                   ['主业务链路', '客服工作台'],
+  '/leads/list':                     ['主业务链路', '线索列表'],
+  '/leads':                          ['主业务链路', '线索详情'],
+  '/product/list':                   ['主业务链路', '商品资产中心'],
+  '/product':                        ['主业务链路', '商品资产中心', '商品详情'],
+  '/outcome/list':                   ['主业务链路', '结果列表'],
+  '/outcome':                        ['主业务链路', '结果详情'],
+  '/knowledge/list':                 ['主业务链路', '知识库'],
+  '/knowledge':                      ['主业务链路', '知识条目'],
+  '/sys/dashboard':                  ['AI 融入底座', '系统底座'],
+  '/sys/business-metrics':           ['AI 融入底座', '业务指标'],
+  '/sys/ai-cost':                    ['AI 融入底座', 'AI 成本'],
+  '/sys/observability':              ['AI 融入底座', '可观测性'],
+  '/sys/audit-log':                  ['AI 融入底座', '审计日志'],
+  '/sys/model-config':               ['AI 融入底座', '模型配置'],
+  '/sys/agent-orchestration':        ['AI 融入底座', 'Agent 编排'],
+
+  // LEGACY (frozen)
+  '/legacy/inquiry/list':            ['历史页面', '询价线索池'],
+  '/legacy/inquiry/quotation-list':  ['历史页面', '报价管理'],
+  '/legacy/sys/dashboard':           ['历史页面', '系统概览(旧)'],
+  '/legacy/sys/settings':            ['历史页面', '系统参数(旧)'],
+  '/legacy/sys/users':               ['历史页面', '用户与权限(旧)'],
+  '/legacy/sys/model-config':        ['历史页面', '模型配置(旧)'],
+  '/legacy/sys/audit-log':           ['历史页面', '审计日志(旧)'],
+  '/legacy/sys/agent-orchestration': ['历史页面', 'Agent 编排(旧)'],
 }
 
 function buildBreadcrumb(pathname: string): string[] {
@@ -64,59 +68,68 @@ function buildBreadcrumb(pathname: string): string[] {
   return ['AI Ops Platform']
 }
 
+/** 判断当前路径是否属于 legacy 页面 */
+function isLegacyPath(pathname: string): boolean {
+  return pathname.startsWith('/legacy/')
+    || pathname.startsWith('/product-legacy')
+}
+
 interface MainLayoutProps {
   children: React.ReactNode
 }
 
+function getLegacyGuidance(pathname: string): { targetLabel: string; targetPath: string; description: string } {
+  if (pathname.startsWith('/legacy/sys/')) {
+    return {
+      targetLabel: 'AI 融入底座',
+      targetPath: '/sys/dashboard',
+      description: '旧 system 页面已冻结，请使用新版 AI 融入底座查看模型、审计和系统底座能力。',
+    }
+  }
+  return {
+    targetLabel: '客服工作台',
+    targetPath: '/cs/workspace',
+    description: '该历史页面已冻结，请使用客服工作台从会话入口继续主业务流程。',
+  }
+}
+
+// ── Menu items — 侧栏只保留正式产品入口 ──
 const menuItems = [
   {
-    key: 'business',
-    label: '业务提效',
-    icon: <ShoppingOutlined />,
-    type: 'group',
+    key: 'overview',
+    label: 'AI 经营总览',
+    icon: <BarChartOutlined />,
+    type: 'group' as const,
     children: [
-      { key: '/biz/overview', label: '业务概览', icon: <DashboardOutlined /> },
-      { key: '/inquiry/list', label: '询价线索池', icon: <InboxOutlined /> },
-      { key: '/inquiry/manual-entry', label: '手动录入', icon: <PlusOutlined /> },
-      { key: '/inquiry/quotation-list', label: '报价管理', icon: <DollarOutlined /> },
-      {
-        key: 'product-group',
-        label: '商品结构化',
-        icon: <TagsOutlined />,
-        type: 'group',
-        children: [
-          { key: '/product/list', label: '商品库', icon: <TagsOutlined /> },
-          { key: '/product/new', label: '新增商品', icon: <PlusOutlined /> },
-          { key: '/product/categories', label: '品类字典', icon: <AppstoreOutlined /> },
-        ],
-      },
-      { key: '/rules', label: '规则归纳', icon: <FileTextOutlined /> },
+      { key: '/overview', label: '经营总览', icon: <BarChartOutlined /> },
     ],
   },
   {
-    key: 'marketing',
-    label: '营销提效',
-    icon: <LineChartOutlined />,
-    type: 'group',
+    key: 'main-chain',
+    label: '主业务链路',
+    icon: <ThunderboltOutlined />,
+    type: 'group' as const,
     children: [
-      { key: '/mkt/overview', label: '营销概览', icon: <BarChartOutlined /> },
       { key: '/cs/workspace', label: '客服工作台', icon: <CustomerServiceOutlined /> },
-      { key: '/marketing/create', label: '内容生成', icon: <RocketOutlined /> },
-      { key: '/selling-point', label: '卖点提炼', icon: <ShopOutlined /> },
+      { key: '/product/list', label: '商品资产中心', icon: <TagsOutlined /> },
+      { key: '/leads/list', label: '线索列表', icon: <ThunderboltOutlined /> },
+      { key: '/outcome/list', label: '结果列表', icon: <CheckCircleOutlined /> },
+      { key: '/knowledge/list', label: '知识库', icon: <InboxOutlined /> },
     ],
   },
   {
-    key: 'system',
-    label: '系统管理',
-    icon: <SettingOutlined />,
-    type: 'group',
+    key: 'ai-base',
+    label: 'AI 融入底座',
+    icon: <ApiOutlined />,
+    type: 'group' as const,
     children: [
-      { key: '/sys/dashboard', label: '系统概览', icon: <DashboardOutlined /> },
+      { key: '/sys/dashboard', label: '系统底座', icon: <DashboardOutlined /> },
+      { key: '/sys/business-metrics', label: '业务指标', icon: <BarChartOutlined /> },
+      { key: '/sys/ai-cost', label: 'AI 成本', icon: <ThunderboltOutlined /> },
+      { key: '/sys/observability', label: '可观测性', icon: <DashboardOutlined /> },
+      { key: '/sys/audit-log', label: '审计日志', icon: <FileSearchOutlined /> },
+      { key: '/sys/model-config', label: '模型配置', icon: <InboxOutlined /> },
       { key: '/sys/agent-orchestration', label: 'Agent 编排', icon: <ApiOutlined /> },
-      { key: '/sys/model-config', label: 'AI 模型配置', icon: <InboxOutlined /> },
-      { key: '/sys/settings', label: '系统参数', icon: <SettingOutlined /> },
-      { key: '/sys/audit-log', label: '操作日志', icon: <FileSearchOutlined /> },
-      { key: '/sys/users', label: '用户与权限', icon: <TeamOutlined /> },
     ],
   },
 ]
@@ -124,8 +137,9 @@ const menuItems = [
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const legacy = isLegacyPath(location.pathname)
 
-  // Collect all valid menu keys (including nested children in groups)
+  // Collect all valid menu keys
   const allMenuKeys = new Set<string>()
   for (const item of menuItems) {
     if (item.type !== 'group') {
@@ -138,9 +152,17 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     }
   }
 
-  const selectedKey = location.pathname.startsWith('/cs/')
+  const selectedKey = location.pathname === '/leads/list'
+    ? '/leads/list'
+    : location.pathname.startsWith('/leads/')
     ? '/cs/workspace'
-    : (allMenuKeys.has(location.pathname) ? location.pathname : '/')
+    : location.pathname.startsWith('/product/')
+    ? '/product/list'
+    : location.pathname.startsWith('/sys/')
+    ? location.pathname
+    : location.pathname.startsWith('/legacy/')
+    ? ''
+    : (allMenuKeys.has(location.pathname) ? location.pathname : '/cs/workspace')
 
   return (
     <Layout className={styles.layout}>
@@ -152,12 +174,12 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <path d="M2 17l10 5 10-5"/>
             <path d="M2 12l10 5 10-5"/>
           </svg>
-          AI Ops Platform
+          <span className={styles.logoText}>AI Ops Platform</span>
         </div>
         <Menu
           mode="inline"
-          selectedKeys={[selectedKey]}
-          defaultOpenKeys={['business', 'marketing', 'system']}
+          selectedKeys={selectedKey ? [selectedKey] : []}
+          defaultOpenKeys={['overview', 'main-chain', 'ai-base']}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
           className={styles.menu}
@@ -176,6 +198,23 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Avatar icon={<UserOutlined />} className={styles.avatar} aria-label="User menu" />
           </div>
         </Header>
+
+        {/* Legacy page banner */}
+        {legacy && (
+          <Alert
+            type="warning"
+            showIcon
+            title="此页面为旧版（legacy）"
+            description={getLegacyGuidance(location.pathname).description}
+            action={(
+              <Button type="primary" size="small" onClick={() => navigate(getLegacyGuidance(location.pathname).targetPath)}>
+                去 {getLegacyGuidance(location.pathname).targetLabel}
+              </Button>
+            )}
+            style={{ margin: '12px 16px 0', borderRadius: 6 }}
+            closable
+          />
+        )}
 
         <Content className={styles.content} role="main" id="main-content">{children}</Content>
       </Layout>

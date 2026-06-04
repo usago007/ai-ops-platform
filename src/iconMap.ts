@@ -70,4 +70,6 @@ export {
   XCircle as CloseCircleOutlined,
   Zap as ThunderboltOutlined,
   AlertTriangle as WarningOutlined,
+  Crosshair as AimOutlined,
+  Eraser as ClearOutlined,
 } from 'lucide-react'

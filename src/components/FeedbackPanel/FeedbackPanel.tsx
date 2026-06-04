@@ -24,7 +24,7 @@ export const FeedbackPanel: React.FC<FeedbackPanelProps> = ({ onFeedback }) => {
   }
 
   if (submitted) {
-    return <div className={styles.submitted}>✅ 感谢您的反馈</div>
+    return <div className={styles.submitted}>感谢您的反馈</div>
   }
 
   return (

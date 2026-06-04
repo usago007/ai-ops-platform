@@ -1,0 +1,21 @@
+// ── Contracts barrel export ──
+// 统一导出所有领域对象类型、枚举和状态机定义
+
+export type * from './shared'
+export type * from './conversation'
+export type * from './inquiry-draft'
+export type * from './lead'
+export type * from './product-asset'
+export type * from './solution-recommendation'
+export type * from './reply-draft'
+export type * from './quotation-draft'
+export type * from './outcome'
+export type * from './knowledge-item'
+export type * from './metric-snapshot'
+export type * from './system-health'
+export { STEP_MAIN_CHAIN_MAP } from './system-health'
+export type * from './audit-entry'
+export type * from './model-config'
+export type * from './agent-config'
+export { AGENT_STEP_MAP } from './agent-config'
+export * from './state-machine'

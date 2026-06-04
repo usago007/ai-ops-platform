@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Tag, Modal, Typography } from 'antd'
+import { Card, Tag, Typography } from 'antd'
 import styles from './CaseCard.module.css'
 
 const { Text } = Typography
@@ -16,9 +16,11 @@ export const CaseCard: React.FC<CaseCardProps> = ({
   title,
   description,
   difficulty,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- required by interface
   previewData,
   onClick,
 }) => {
+
   const difficultyConfig = {
     easy: { color: 'green', label: '简单' },
     medium: { color: 'orange', label: '中等' },

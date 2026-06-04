@@ -1,0 +1,55 @@
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: var(--spacing-2xl) 0;
+}
+
+.loaderInline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl) 0;
+  min-height: auto;
+}
+
+/* ── AI Pulse indicator — 3 vertical bars ── */
+.pulse {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 24px;
+  margin-bottom: var(--spacing-md);
+}
+
+.pulseBar {
+  width: 4px;
+  border-radius: 2px;
+  background: var(--brand-primary);
+  animation: pulse-bar 1.2s ease-in-out infinite;
+}
+
+.pulseBar:nth-child(1) { height: 12px; animation-delay: 0s; }
+.pulseBar:nth-child(2) { height: 20px; animation-delay: 0.15s; background: var(--brand-secondary); }
+.pulseBar:nth-child(3) { height: 16px; animation-delay: 0.3s; }
+
+@keyframes pulse-bar {
+  0%, 60%, 100% {
+    opacity: 0.35;
+    transform: scaleY(1);
+  }
+  30% {
+    opacity: 1;
+    transform: scaleY(1.2);
+  }
+}
+
+/* ── Description text ── */
+.text {
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  user-select: none;
+}

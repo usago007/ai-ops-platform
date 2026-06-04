@@ -23,7 +23,7 @@
 }
 
 .stepTitle:hover {
-  color: var(--primary-color);
+  color: var(--brand-primary);
 }
 
 .stepTitle:active {

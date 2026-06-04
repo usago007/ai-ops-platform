@@ -1,0 +1,123 @@
+.errorState {
+  padding: var(--spacing-3xl);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+/* ── Flow container: all direct children get uniform gap, zero margin ── */
+.overviewFlow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page-section-gap);
+}
+
+.heroBlock,
+.metricBlock,
+.primaryGrid,
+.secondaryGrid,
+.trendBlock {
+  margin: 0;
+}
+
+/* ── Primary grid: funnel + actions ── */
+.primaryGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  gap: var(--panel-gap-lg);
+  align-items: start;
+}
+
+/* ── Secondary grid: 3-column signal boards ── */
+.secondaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--panel-gap-lg);
+}
+
+/* ── Trend section ── */
+.sectionTitle {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+/* ── Funnel: compact horizontal pipeline ── */
+.funnel {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+
+.funnelNode {
+  flex: 1;
+  text-align: center;
+  padding: 14px 10px;
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+}
+
+/* Arrow between nodes */
+.funnelNode + .funnelNode::before {
+  content: '→';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.funnelLabel {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.funnelNum {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.funnelSub {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 1200px) {
+  .primaryGrid {
+    grid-template-columns: 1fr;
+  }
+  .secondaryGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .primaryGrid,
+  .secondaryGrid {
+    grid-template-columns: 1fr;
+  }
+  .funnel {
+    flex-wrap: wrap;
+  }
+  .funnelNode {
+    flex: 1 1 40%;
+  }
+  .funnelNode + .funnelNode::before {
+    display: none;
+  }
+}

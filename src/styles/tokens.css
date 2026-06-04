@@ -79,6 +79,17 @@
   --spacing-2xl: 32px;
   --spacing-3xl: 48px;
 
+  /* Page Layout */
+  --page-gutter-x: 24px;
+  --page-gutter-y: 24px;
+  --page-gutter-x-wide: 32px;
+  --page-section-gap: 24px;
+  --page-section-gap-lg: 32px;
+  --panel-gap: 16px;
+  --panel-gap-lg: 20px;
+  --content-max-width: none;
+  --content-readable-max-width: 1440px;
+
   /* Typography */
   --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;

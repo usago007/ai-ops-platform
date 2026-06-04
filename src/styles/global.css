@@ -1,7 +1,4 @@
 @import './tokens.css';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @font-face {
   font-family: 'Geist';
@@ -58,6 +55,12 @@
     box-sizing: border-box;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html,
   body,
   #root {
@@ -81,6 +84,24 @@
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Inherit font-family to all form/UI elements — prevents browser defaults */
+  button,
+  input,
+  select,
+  textarea,
+  table,
+  pre,
+  code,
+  .ant-btn,
+  .ant-input,
+  .ant-select,
+  .ant-table,
+  .ant-form-item,
+  .ant-tag,
+  .ant-descriptions {
+    font-family: var(--font-sans);
   }
 
   h1, h2, h3, h4 {

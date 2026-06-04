@@ -20,7 +20,8 @@ export const generateInquiries = () => {
   return inquiries
 }
 
-export const generateParseResult = (text: string) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- frozen legacy param
+export const generateParseResult = (_text: string) => {
   const products = ['PLC控制器 FX3U-64MT', '温度传感器 PT100', '变频器 ACS580-01', '伺服电机 MR-J4-70A']
   return {
     category: '工业自动化',
@@ -187,6 +188,7 @@ export const generateFunnelData = () => ({
 })
 
 export const generateLandingPageConfig = (source = 'default') => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- frozen legacy mock data factory
   const configs: Record<string, any> = {
     search: {
       title: 'PLC控制器 FX3U-64MT 价格/参数/现货',
@@ -211,12 +213,12 @@ export const generateLandingPageConfig = (source = 'default') => {
 }
 
 export const generateTemplates = () => [
-  { id: 'tpl-1', name: '节日促销', description: '春节/中秋/双11等节日营销模板', category: '促销', image: '🎉' },
-  { id: 'tpl-2', name: '新品发布', description: '新品上市推广文案模板', category: '发布', image: '🚀' },
-  { id: 'tpl-3', name: '限时秒杀', description: '倒计时+紧迫感营销模板', category: '促销', image: '⚡' },
-  { id: 'tpl-4', name: '会员专属', description: 'VIP会员特权营销模板', category: '会员', image: '👑' },
-  { id: 'tpl-5', name: '清仓处理', description: '库存清仓降价促销模板', category: '促销', image: '📦' },
-  { id: 'tpl-6', name: '品牌故事', description: '品牌历史与价值观宣传模板', category: '品牌', image: '📖' },
+  { id: 'tpl-1', name: '节日促销', description: '春节/中秋/双11等节日营销模板', category: '促销', image: 'promo' },
+  { id: 'tpl-2', name: '新品发布', description: '新品上市推广文案模板', category: '发布', image: 'new' },
+  { id: 'tpl-3', name: '限时秒杀', description: '倒计时+紧迫感营销模板', category: '促销', image: 'flash-sale' },
+  { id: 'tpl-4', name: '会员专属', description: 'VIP会员特权营销模板', category: '会员', image: 'vip' },
+  { id: 'tpl-5', name: '清仓处理', description: '库存清仓降价促销模板', category: '促销', image: 'clearance' },
+  { id: 'tpl-6', name: '品牌故事', description: '品牌历史与价值观宣传模板', category: '品牌', image: 'story' },
 ]
 
 export const generateMarketingSessions = () => [

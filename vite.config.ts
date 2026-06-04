@@ -6,7 +6,9 @@ const esToolkitCompat = (name: string) =>
   path.resolve(__dirname, `patches/es-toolkit/compat/${name}.mjs`)
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    exclude: [/node_modules/, /src\/app\/router\.tsx$/],
+  })],
   base: '/ai-ops-platform/',
   resolve: {
     alias: {

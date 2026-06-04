@@ -1,0 +1,44 @@
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 16px;
+}
+
+.metricLg .value {
+  font-size: var(--font-size-4xl);
+}
+
+.value {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  position: relative;
+}
+
+.value::after {
+  content: '';
+  display: block;
+  min-width: 24px;
+  width: 100%;
+  max-width: 48px;
+  height: 3px;
+  margin-top: 6px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.prefix {
+  margin-bottom: 4px;
+  color: var(--text-tertiary);
+}

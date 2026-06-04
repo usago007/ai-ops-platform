@@ -26,7 +26,7 @@ export const CapabilityBanner: React.FC<CapabilityBannerProps> = ({ title, icon,
   return (
     <Alert
       className={styles.banner}
-      message={
+      title={
         <div className={styles.header}>
           {icon && <span className={styles.icon}>{icon}</span>}
           <Text strong>{title}</Text>
