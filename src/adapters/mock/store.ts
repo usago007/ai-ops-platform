@@ -106,9 +106,11 @@ export const store = {
     return conversations
   },
   getConversation(id: string): Conversation | undefined {
+    ensureInit()
     return this.conversations.find(c => c.id === id)
   },
   updateConversation(id: string, patch: Partial<Conversation>): Conversation {
+    ensureInit()
     const idx = conversations.findIndex(c => c.id === id)
     if (idx === -1) throw new Error(`Conversation ${id} not found`)
     conversations[idx] = { ...conversations[idx], ...patch }
@@ -127,23 +129,28 @@ export const store = {
     return inquiryDrafts
   },
   getDraft(id: string): InquiryDraft | undefined {
+    ensureInit()
     return inquiryDrafts.find(d => d.id === id)
   },
   getDraftByConversation(convId: string): InquiryDraft | undefined {
+    ensureInit()
     return inquiryDrafts.find(d => d.conversationId === convId)
   },
   createDraft(data: Omit<InquiryDraft, 'id' | 'createdAt' | 'updatedAt'>): InquiryDraft {
+    ensureInit()
     const draft: InquiryDraft = { ...data, id: nextId('draft'), createdAt: now(), updatedAt: now() }
     inquiryDrafts.push(draft)
     return draft
   },
   confirmDraft(id: string): InquiryDraft {
+    ensureInit()
     const idx = inquiryDrafts.findIndex(d => d.id === id)
     if (idx === -1) throw new Error(`Draft ${id} not found`)
     inquiryDrafts[idx] = { ...inquiryDrafts[idx], status: 'confirmed', updatedAt: now() }
     return inquiryDrafts[idx]
   },
   rejectDraft(id: string, reason: string): InquiryDraft {
+    ensureInit()
     const idx = inquiryDrafts.findIndex(d => d.id === id)
     if (idx === -1) throw new Error(`Draft ${id} not found`)
     inquiryDrafts[idx] = {
@@ -160,20 +167,24 @@ export const store = {
     return leads
   },
   getLead(id: string): Lead | undefined {
+    ensureInit()
     return leads.find(l => l.id === id)
   },
   createLead(data: Omit<Lead, 'id' | 'createdAt' | 'updatedAt'>): Lead {
+    ensureInit()
     const lead: Lead = { ...data, id: nextId('lead'), createdAt: now(), updatedAt: now() }
     leads.push(lead)
     return lead
   },
   transitionLead(id: string, newStatus: Lead['status']): Lead {
+    ensureInit()
     const idx = leads.findIndex(l => l.id === id)
     if (idx === -1) throw new Error(`Lead ${id} not found`)
     leads[idx] = { ...leads[idx], status: newStatus, lastActionAt: now(), updatedAt: now() }
     return leads[idx]
   },
   updateLead(id: string, patch: Partial<Lead>): Lead {
+    ensureInit()
     const idx = leads.findIndex(l => l.id === id)
     if (idx === -1) throw new Error(`Lead ${id} not found`)
     leads[idx] = { ...leads[idx], ...patch, updatedAt: now() }
@@ -186,6 +197,7 @@ export const store = {
     return productAssets
   },
   getProduct(id: string): ProductAsset | undefined {
+    ensureInit()
     return productAssets.find(p => p.id === id)
   },
 
@@ -195,17 +207,21 @@ export const store = {
     return solutionRecommendations
   },
   getSolution(id: string): SolutionRecommendation | undefined {
+    ensureInit()
     return solutionRecommendations.find(s => s.id === id)
   },
   getSolutionByLead(leadId: string): SolutionRecommendation | undefined {
+    ensureInit()
     return solutionRecommendations.find(s => s.leadId === leadId)
   },
   createSolution(data: Omit<SolutionRecommendation, 'id' | 'createdAt' | 'updatedAt'>): SolutionRecommendation {
+    ensureInit()
     const sol: SolutionRecommendation = { ...data, id: nextId('sol'), createdAt: now(), updatedAt: now() }
     solutionRecommendations.push(sol)
     return sol
   },
   reviewSolution(id: string, status: SolutionRecommendation['status'], notes?: string): SolutionRecommendation {
+    ensureInit()
     const idx = solutionRecommendations.findIndex(s => s.id === id)
     if (idx === -1) throw new Error(`Solution ${id} not found`)
     solutionRecommendations[idx] = { ...solutionRecommendations[idx], status, reviewNotes: notes || null, updatedAt: now() }
@@ -218,17 +234,21 @@ export const store = {
     return replyDrafts
   },
   getReply(id: string): ReplyDraft | undefined {
+    ensureInit()
     return replyDrafts.find(r => r.id === id)
   },
   getRepliesByLead(leadId: string): ReplyDraft[] {
+    ensureInit()
     return replyDrafts.filter(r => r.leadId === leadId)
   },
   createReply(data: Omit<ReplyDraft, 'id' | 'createdAt' | 'updatedAt'>): ReplyDraft {
+    ensureInit()
     const reply: ReplyDraft = { ...data, id: nextId('reply'), createdAt: now(), updatedAt: now() }
     replyDrafts.push(reply)
     return reply
   },
   updateReply(id: string, patch: Partial<ReplyDraft>): ReplyDraft {
+    ensureInit()
     const idx = replyDrafts.findIndex(r => r.id === id)
     if (idx === -1) throw new Error(`Reply ${id} not found`)
     replyDrafts[idx] = { ...replyDrafts[idx], ...patch, updatedAt: now() }
@@ -244,17 +264,21 @@ export const store = {
     return quotationDrafts
   },
   getQuotation(id: string): QuotationDraft | undefined {
+    ensureInit()
     return quotationDrafts.find(q => q.id === id)
   },
   getQuotationsByLead(leadId: string): QuotationDraft[] {
+    ensureInit()
     return quotationDrafts.filter(q => q.leadId === leadId)
   },
   createQuotation(data: Omit<QuotationDraft, 'id' | 'createdAt' | 'updatedAt'>): QuotationDraft {
+    ensureInit()
     const quote: QuotationDraft = { ...data, id: nextId('quot'), createdAt: now(), updatedAt: now() }
     quotationDrafts.push(quote)
     return quote
   },
   sendQuotation(id: string): QuotationDraft {
+    ensureInit()
     const idx = quotationDrafts.findIndex(q => q.id === id)
     if (idx === -1) throw new Error(`Quotation ${id} not found`)
     quotationDrafts[idx] = { ...quotationDrafts[idx], status: 'sent', updatedAt: now() }
@@ -267,17 +291,21 @@ export const store = {
     return outcomes
   },
   getOutcome(id: string): Outcome | undefined {
+    ensureInit()
     return outcomes.find(o => o.id === id)
   },
   getOutcomeByLead(leadId: string): Outcome | undefined {
+    ensureInit()
     return outcomes.find(o => o.leadId === leadId)
   },
   createOutcome(data: Omit<Outcome, 'id' | 'createdAt'>): Outcome {
+    ensureInit()
     const outcome: Outcome = { ...data, id: nextId('outcome'), createdAt: now() }
     outcomes.push(outcome)
     return outcome
   },
   markOutcomeProcessed(id: string): Outcome {
+    ensureInit()
     const idx = outcomes.findIndex(o => o.id === id)
     if (idx === -1) throw new Error(`Outcome ${id} not found`)
     outcomes[idx] = { ...outcomes[idx], loopbackStatus: 'processed' }
@@ -290,26 +318,33 @@ export const store = {
     return knowledgeItems
   },
   addKnowledgeItem(item: KnowledgeItem): void {
+    ensureInit()
     knowledgeItems.push(item)
   },
   getKnowledgeItem(id: string): KnowledgeItem | undefined {
+    ensureInit()
     return knowledgeItems.find(k => k.id === id)
   },
   getKnowledgeByOutcome(outcomeId: string): KnowledgeItem[] {
+    ensureInit()
     return knowledgeItems.filter(k => k.sourceOutcomeId === outcomeId)
   },
   getLeadsByProduct(productId: string): Lead[] {
+    ensureInit()
     return leads.filter(l => l.relatedProductIds.includes(productId))
   },
   getOutcomesByProduct(productId: string): Outcome[] {
+    ensureInit()
     return outcomes.filter(o => o.relatedProductIds.includes(productId))
   },
   getSolutionsByProduct(productId: string): SolutionRecommendation[] {
+    ensureInit()
     return solutionRecommendations.filter(s =>
       s.recommendedProducts.some(p => p.productId === productId)
     )
   },
   getKnowledgeByProduct(productId: string): KnowledgeItem[] {
+    ensureInit()
     return knowledgeItems.filter(k => k.relatedProductIds.includes(productId))
   },
 
@@ -319,11 +354,13 @@ export const store = {
     return metricSnapshots
   },
   getLatestMetrics(): MetricSnapshot {
+    ensureInit()
     return metricSnapshots[0]
   },
 
   // ── Composite: recompute metrics ──
   recomputeMetrics(): MetricSnapshot {
+    ensureInit()
     const total = leads.length
     const won = leads.filter(l => l.status === 'won').length
     const lost = leads.filter(l => l.status === 'lost').length
@@ -368,6 +405,7 @@ export const store = {
     return auditEntries
   },
   getAuditEntry(id: string): AuditEntry | undefined {
+    ensureInit()
     return auditEntries.find(e => e.id === id)
   },
   get modelConfigs(): ModelConfig[] {
@@ -375,6 +413,7 @@ export const store = {
     return modelConfigs
   },
   getModelConfig(id: string): ModelConfig | undefined {
+    ensureInit()
     return modelConfigs.find(m => m.id === id)
   },
   get agentConfigs(): AgentConfig[] {
@@ -382,6 +421,7 @@ export const store = {
     return agentConfigs
   },
   getAgentConfig(id: string): AgentConfig | undefined {
+    ensureInit()
     return agentConfigs.find(a => a.id === id)
   },
 }
