@@ -1,5 +1,7 @@
 # AI Ops Platform
 
+[![Deployed on GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Visit%20Online-1d4ed8?style=for-the-badge&logo=github)](https://usago007.github.io/ai-ops-platform/)
+
 AI Ops Platform is an operational command centre for B2B enquiry handling, product matching, knowledge reuse, and AI foundation governance. It is built for teams that need one place to track business intake, assisted response generation, quotation progress, outcome feedback, and the runtime health of the AI capabilities behind those workflows.
 
 ## Solution Scenario
@@ -58,7 +60,7 @@ src/
 
 ## Build and Deployment
 
-The repository includes a GitHub Pages workflow at `.github/workflows/deploy.yml`. Every push to `main` installs dependencies with Node.js 20, runs the production build, uploads `dist`, and publishes the application through GitHub Pages.
+The repository includes a GitHub Pages workflow at `.github/workflows/deploy.yml`. Every push to `main` installs dependencies with Node.js 20, runs the production build, uploads `dist`, and publishes the application through GitHub Pages. The live deployment is available at [https://usago007.github.io/ai-ops-platform/](https://usago007.github.io/ai-ops-platform/).
 
 Local verification commands:
 
